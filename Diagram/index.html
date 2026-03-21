@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FoodERP / Forkify — Complete System Diagrams</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --primary: #58a6ff;
+    --success: #3fb950;
+    --warn: #d29922;
+    --danger: #f85149;
+    --purple: #bc8cff;
+    --teal: #39d353;
+    --orange: #f0883e;
+    --text: #e6edf3;
+    --muted: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  h1 { font-size: 28px; color: var(--primary); margin-bottom: 6px; }
+  .subtitle { color: var(--muted); margin-bottom: 32px; font-size: 14px; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+  .toc a {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--primary); text-decoration: none; padding: 6px 14px;
+    border-radius: 20px; font-size: 13px; transition: all .2s;
+  }
+  .toc a:hover { background: var(--primary); color: var(--bg); }
+  .section { margin-bottom: 56px; }
+  .section-title {
+    font-size: 20px; font-weight: 700; color: var(--primary);
+    border-left: 4px solid var(--primary); padding-left: 12px;
+    margin-bottom: 20px;
+  }
+  .diagram-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .diagram-card h3 { font-size: 15px; color: var(--warn); margin-bottom: 16px; }
+  svg { font-family: 'Segoe UI', system-ui, sans-serif; }
+
+  /* ── LEGEND ── */
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; font-size: 12px; color: var(--muted); }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<h1>🍴 FoodERP / Forkify — Complete System Diagrams</h1>
+<p class="subtitle">Covers: Spring Boot Backend (src) · React Web Frontend (food-management) · React Native Mobile (ForkifyERP 2)</p>
+
+<div class="toc">
+  <a href="#arch">1. System Architecture</a>
+  <a href="#auth">2. Auth Flow</a>
+  <a href="#er">3. ER Diagram</a>
+  <a href="#pages">4. Page/Screen Map</a>
+  <a href="#roles">5. Role Access Matrix</a>
+  <a href="#procurement">6. Procurement Flow</a>
+  <a href="#production">7. Production Flow</a>
+  <a href="#inventory">8. Inventory Flow</a>
+  <a href="#mealplan">9. Meal Planning Flow</a>
+  <a href="#sales">10. Sales Flow</a>
+  <a href="#api">11. API Endpoint Map</a>
+  <a href="#state">12. Redux State</a>
+  <a href="#mobile">13. Mobile Navigation</a>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. SYSTEM ARCHITECTURE -->
+<!-- ============================================================ -->
+<div class="section" id="arch">
+  <div class="section-title">1. System Architecture Overview</div>
+  <div class="diagram-card">
+    <h3>Three-Tier Full-Stack Architecture</h3>
+    <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <defs>
+        <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#58a6ff"/>
+        </marker>
+        <marker id="arr2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#3fb950"/>
+        </marker>
+      </defs>
+
+      <!-- Web Frontend box -->
+      <rect x="20" y="30" width="200" height="360" rx="10" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="120" y="58" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="700">React Web App</text>
+      <text x="120" y="74" text-anchor="middle" fill="#8b949e" font-size="11">food-management</text>
+      <rect x="35" y="85" width="170" height="26" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="120" y="103" text-anchor="middle" fill="#e6edf3" font-size="11">Redux Store (auth + recipes)</text>
+      <rect x="35" y="118" width="170" height="26" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="120" y="136" text-anchor="middle" fill="#e6edf3" font-size="11">React Router v6</text>
+      <rect x="35" y="151" width="170" height="26" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="120" y="169" text-anchor="middle" fill="#e6edf3" font-size="11">Axios HTTP Services</text>
+      <rect x="35" y="184" width="170" height="26" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="120" y="202" text-anchor="middle" fill="#e6edf3" font-size="11">JWT in localStorage</text>
+      <text x="120" y="232" text-anchor="middle" fill="#8b949e" font-size="10">Pages: Dashboard, Recipes,</text>
+      <text x="120" y="248" text-anchor="middle" fill="#8b949e" font-size="10">Inventory, Procurement,</text>
+      <text x="120" y="264" text-anchor="middle" fill="#8b949e" font-size="10">Meal Plan, Menu, Sales,</text>
+      <text x="120" y="280" text-anchor="middle" fill="#8b949e" font-size="10">Reports, CRM, Admin</text>
+      <text x="120" y="310" text-anchor="middle" fill="#f0883e" font-size="11">localhost:3000</text>
+
+      <!-- Mobile Frontend box -->
+      <rect x="680" y="30" width="200" height="360" rx="10" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="780" y="58" text-anchor="middle" fill="#bc8cff" font-size="13" font-weight="700">React Native App</text>
+      <text x="780" y="74" text-anchor="middle" fill="#8b949e" font-size="11">ForkifyERP 2 (Expo)</text>
+      <rect x="695" y="85" width="170" height="26" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="780" y="103" text-anchor="middle" fill="#e6edf3" font-size="11">Expo Router (file-based)</text>
+      <rect x="695" y="118" width="170" height="26" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="780" y="136" text-anchor="middle" fill="#e6edf3" font-size="11">Redux Store (auth)</text>
+      <rect x="695" y="151" width="170" height="26" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="780" y="169" text-anchor="middle" fill="#e6edf3" font-size="11">Axios HTTP Services</text>
+      <rect x="695" y="184" width="170" height="26" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="780" y="202" text-anchor="middle" fill="#e6edf3" font-size="11">JWT in SecureStore</text>
+      <text x="780" y="232" text-anchor="middle" fill="#8b949e" font-size="10">Tabs: Dashboard, Inventory,</text>
+      <text x="780" y="248" text-anchor="middle" fill="#8b949e" font-size="10">Recipes, Procurement, More</text>
+      <text x="780" y="264" text-anchor="middle" fill="#8b949e" font-size="10">Screens: Sales, Customers,</text>
+      <text x="780" y="280" text-anchor="middle" fill="#8b949e" font-size="10">Staff, Admin, Reports</text>
+      <text x="780" y="310" text-anchor="middle" fill="#f0883e" font-size="11">iOS / Android</text>
+
+      <!-- Backend box -->
+      <rect x="310" y="30" width="280" height="260" rx="10" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="450" y="58" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">Spring Boot Backend</text>
+      <text x="450" y="74" text-anchor="middle" fill="#8b949e" font-size="11">com.fooderp (Java 17)</text>
+      <rect x="325" y="85" width="250" height="24" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="450" y="102" text-anchor="middle" fill="#e6edf3" font-size="11">Spring Security + JWT Filter Chain</text>
+      <rect x="325" y="116" width="118" height="24" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="384" y="133" text-anchor="middle" fill="#e6edf3" font-size="10">28 REST Controllers</text>
+      <rect x="453" y="116" width="122" height="24" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="514" y="133" text-anchor="middle" fill="#e6edf3" font-size="10">10 Service Classes</text>
+      <rect x="325" y="147" width="118" height="24" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="384" y="164" text-anchor="middle" fill="#e6edf3" font-size="10">28 JPA Repositories</text>
+      <rect x="453" y="147" width="122" height="24" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="514" y="164" text-anchor="middle" fill="#e6edf3" font-size="10">20 Entity Classes</text>
+      <rect x="325" y="178" width="118" height="24" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="384" y="195" text-anchor="middle" fill="#e6edf3" font-size="10">Groq AI Integration</text>
+      <rect x="453" y="178" width="122" height="24" rx="5" fill="#0d1117" stroke="#30363d"/>
+      <text x="514" y="195" text-anchor="middle" fill="#e6edf3" font-size="10">Async Audit Log</text>
+      <text x="450" y="228" text-anchor="middle" fill="#f0883e" font-size="11">localhost:8080</text>
+      <text x="450" y="246" text-anchor="middle" fill="#8b949e" font-size="10">/api/auth, /api/recipes, /api/inventory</text>
+      <text x="450" y="262" text-anchor="middle" fill="#8b949e" font-size="10">/api/procurement, /api/sales, ...</text>
+
+      <!-- Database box -->
+      <rect x="360" y="320" width="180" height="70" rx="10" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="450" y="345" text-anchor="middle" fill="#d29922" font-size="13" font-weight="700">MySQL 8</text>
+      <text x="450" y="363" text-anchor="middle" fill="#8b949e" font-size="11">food_erp_db</text>
+      <text x="450" y="379" text-anchor="middle" fill="#8b949e" font-size="10">~28 tables · HikariCP pool</text>
+
+      <!-- Arrows Web → Backend -->
+      <line x1="220" y1="200" x2="308" y2="200" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="264" y="193" text-anchor="middle" fill="#58a6ff" font-size="10">HTTPS/JSON</text>
+      <text x="264" y="207" text-anchor="middle" fill="#8b949e" font-size="9">Bearer JWT</text>
+
+      <!-- Arrows Mobile → Backend -->
+      <line x1="680" y1="200" x2="592" y2="200" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="636" y="193" text-anchor="middle" fill="#bc8cff" font-size="10">HTTPS/JSON</text>
+      <text x="636" y="207" text-anchor="middle" fill="#8b949e" font-size="9">Bearer JWT</text>
+
+      <!-- Backend → DB -->
+      <line x1="450" y1="290" x2="450" y2="318" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="470" y="307" fill="#3fb950" font-size="10">JPA/Hibernate</text>
+    </svg>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> React Web (Port 3000)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div> Spring Boot (Port 8080)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#d29922"></div> MySQL Database</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#bc8cff"></div> React Native Mobile (Expo)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. AUTH FLOW -->
+<!-- ============================================================ -->
+<div class="section" id="auth">
+  <div class="section-title">2. Authentication Flow</div>
+  <div class="diagram-card">
+    <h3>JWT-based Authentication — Login, Token Handling, Route Protection</h3>
+    <svg viewBox="0 0 860 500" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <defs>
+        <marker id="a1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#58a6ff"/>
+        </marker>
+        <marker id="a2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#3fb950"/>
+        </marker>
+        <marker id="a3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#f85149"/>
+        </marker>
+        <marker id="a4" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#d29922"/>
+        </marker>
+      </defs>
+
+      <!-- Columns -->
+      <text x="80" y="22" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="700">USER</text>
+      <text x="270" y="22" text-anchor="middle" fill="#bc8cff" font-size="12" font-weight="700">FRONTEND</text>
+      <text x="480" y="22" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="700">SPRING SECURITY</text>
+      <text x="700" y="22" text-anchor="middle" fill="#d29922" font-size="12" font-weight="700">DATABASE</text>
+
+      <!-- Swimlane lines -->
+      <line x1="80" y1="30" x2="80" y2="490" stroke="#30363d" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="270" y1="30" x2="270" y2="490" stroke="#30363d" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="480" y1="30" x2="480" y2="490" stroke="#30363d" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="700" y1="30" x2="700" y2="490" stroke="#30363d" stroke-width="1" stroke-dasharray="4,4"/>
+
+      <!-- Step 1: User visits app -->
+      <rect x="20" y="40" width="120" height="28" rx="5" fill="#1c2333" stroke="#58a6ff"/>
+      <text x="80" y="59" text-anchor="middle" fill="#e6edf3" font-size="11">Visit /login</text>
+      <line x1="140" y1="54" x2="208" y2="54" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <!-- Step 2: Redux checks localStorage -->
+      <rect x="185" y="40" width="170" height="28" rx="5" fill="#1c2333" stroke="#bc8cff"/>
+      <text x="270" y="54" text-anchor="middle" fill="#e6edf3" font-size="11">Check Redux + localStorage JWT</text>
+
+      <!-- Decision: Token exists? -->
+      <polygon points="270,88 310,108 270,128 230,108" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="270" y="113" text-anchor="middle" fill="#d29922" font-size="10">Token?</text>
+      <text x="195" y="130" fill="#3fb950" font-size="10">Yes → /fooderp/dashboard</text>
+      <text x="290" y="140" fill="#f85149" font-size="10">No → show Login form</text>
+
+      <!-- Step 3: Enter credentials -->
+      <rect x="20" y="155" width="120" height="28" rx="5" fill="#1c2333" stroke="#58a6ff"/>
+      <text x="80" y="174" text-anchor="middle" fill="#e6edf3" font-size="11">Enter credentials</text>
+      <line x1="140" y1="169" x2="208" y2="169" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <!-- POST /api/auth/login -->
+      <rect x="185" y="155" width="170" height="28" rx="5" fill="#1c2333" stroke="#bc8cff"/>
+      <text x="270" y="169" text-anchor="middle" fill="#e6edf3" font-size="11">POST /api/auth/login</text>
+      <line x1="355" y1="169" x2="418" y2="169" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <!-- AuthFilter -->
+      <rect x="395" y="155" width="170" height="28" rx="5" fill="#1c2333" stroke="#3fb950"/>
+      <text x="480" y="169" text-anchor="middle" fill="#e6edf3" font-size="11">AuthController.login()</text>
+      <line x1="565" y1="169" x2="638" y2="169" stroke="#3fb950" stroke-width="1.5" marker-end="url(#a2)"/>
+
+      <!-- DB lookup -->
+      <rect x="620" y="155" width="160" height="28" rx="5" fill="#1c2333" stroke="#d29922"/>
+      <text x="700" y="169" text-anchor="middle" fill="#e6edf3" font-size="11">UserRepository lookup</text>
+
+      <!-- Return JWT -->
+      <line x1="620" y1="195" x2="565" y2="195" stroke="#3fb950" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="395" y="183" width="170" height="24" rx="5" fill="#1c2333" stroke="#3fb950"/>
+      <text x="480" y="200" text-anchor="middle" fill="#3fb950" font-size="11">Generate JWT (24h expiry)</text>
+      <line x1="395" y1="195" x2="358" y2="195" stroke="#3fb950" stroke-width="1.5" marker-end="url(#a2)"/>
+
+      <!-- Store JWT -->
+      <rect x="185" y="218" width="170" height="28" rx="5" fill="#1c2333" stroke="#bc8cff"/>
+      <text x="270" y="232" text-anchor="middle" fill="#e6edf3" font-size="11">Store JWT + user in Redux</text>
+      <text x="270" y="257" text-anchor="middle" fill="#8b949e" font-size="10">localStorage.setItem('token')</text>
+
+      <!-- Redirect -->
+      <rect x="185" y="270" width="170" height="28" rx="5" fill="#1c2333" stroke="#bc8cff"/>
+      <text x="270" y="284" text-anchor="middle" fill="#3fb950" font-size="11">Redirect → /fooderp/dashboard</text>
+
+      <!-- Subsequent requests -->
+      <text x="80" y="325" text-anchor="middle" fill="#8b949e" font-size="11">Any API Call</text>
+      <line x1="140" y1="320" x2="208" y2="320" stroke="#58a6ff" stroke-width="1" marker-end="url(#a1)"/>
+      <rect x="185" y="308" width="170" height="28" rx="5" fill="#1c2333" stroke="#bc8cff"/>
+      <text x="270" y="322" text-anchor="middle" fill="#e6edf3" font-size="11">Axios adds Authorization: Bearer</text>
+      <line x1="355" y1="322" x2="418" y2="322" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#a1)"/>
+      <rect x="395" y="308" width="170" height="28" rx="5" fill="#1c2333" stroke="#3fb950"/>
+      <text x="480" y="322" text-anchor="middle" fill="#e6edf3" font-size="11">AuthTokenFilter validates JWT</text>
+
+      <!-- Role check -->
+      <polygon points="480,358 520,378 480,398 440,378" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="480" y="383" text-anchor="middle" fill="#d29922" font-size="10">Role OK?</text>
+      <text x="405" y="400" fill="#3fb950" font-size="10">Yes → proceed</text>
+      <text x="500" y="400" fill="#f85149" font-size="10">No → 403</text>
+
+      <!-- 401 → auto logout -->
+      <rect x="185" y="415" width="170" height="28" rx="5" fill="#1c2333" stroke="#f85149"/>
+      <text x="270" y="429" text-anchor="middle" fill="#f85149" font-size="11">Axios 401 → auth:logout event</text>
+      <rect x="185" y="452" width="170" height="28" rx="5" fill="#1c2333" stroke="#f85149"/>
+      <text x="270" y="466" text-anchor="middle" fill="#e6edf3" font-size="11">Redux logout → /login</text>
+    </svg>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> User action</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#bc8cff"></div> Frontend (React/Redux)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div> Spring Security</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#d29922"></div> Decision / Database</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f85149"></div> Error path</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. ER DIAGRAM -->
+<!-- ============================================================ -->
+<div class="section" id="er">
+  <div class="section-title">3. Entity Relationship Diagram</div>
+  <div class="diagram-card">
+    <h3>All 20 JPA Entities — Relationships and Key Fields</h3>
+    <svg viewBox="0 0 1000 780" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <defs>
+        <marker id="er_arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#30363d"/>
+        </marker>
+      </defs>
+
+      <!-- ── ENTITY BOXES ── -->
+      <!-- User -->
+      <rect x="10" y="10" width="160" height="100" rx="6" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <rect x="10" y="10" width="160" height="24" rx="6" fill="#58a6ff"/>
+      <text x="90" y="27" text-anchor="middle" fill="#0d1117" font-size="12" font-weight="700">User</text>
+      <text x="18" y="50" fill="#e6edf3" font-size="10">id, username, email, password</text>
+      <text x="18" y="64" fill="#e6edf3" font-size="10">fullName, role (ADMIN/MANAGER</text>
+      <text x="18" y="78" fill="#e6edf3" font-size="10">/STAFF/USER), branch_id</text>
+      <text x="18" y="92" fill="#8b949e" font-size="9">active, createdAt</text>
+
+      <!-- Branch -->
+      <rect x="200" y="10" width="160" height="90" rx="6" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <rect x="200" y="10" width="160" height="24" rx="6" fill="#3fb950"/>
+      <text x="280" y="27" text-anchor="middle" fill="#0d1117" font-size="12" font-weight="700">Branch</text>
+      <text x="208" y="50" fill="#e6edf3" font-size="10">id, name, city, address</text>
+      <text x="208" y="64" fill="#e6edf3" font-size="10">phone, type (HQ/BRANCH)</text>
+      <text x="208" y="78" fill="#8b949e" font-size="9">active, createdAt</text>
+
+      <!-- Recipe -->
+      <rect x="390" y="10" width="170" height="100" rx="6" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <rect x="390" y="10" width="170" height="24" rx="6" fill="#d29922"/>
+      <text x="475" y="27" text-anchor="middle" fill="#0d1117" font-size="12" font-weight="700">Recipe</text>
+      <text x="398" y="50" fill="#e6edf3" font-size="10">id, name, description</text>
+      <text x="398" y="64" fill="#e6edf3" font-size="10">category, servings, prepTime</text>
+      <text x="398" y="78" fill="#e6edf3" font-size="10">cookTime, costPerServing</text>
+      <text x="398" y="92" fill="#8b949e" font-size="9">isActive, allergens, createdBy</text>
+
+      <!-- Ingredient -->
+      <rect x="590" y="10" width="170" height="90" rx="6" fill="#1c2333" stroke="#f0883e" stroke-width="1.5"/>
+      <rect x="590" y="10" width="170" height="24" rx="6" fill="#f0883e"/>
+      <text x="675" y="27" text-anchor="middle" fill="#0d1117" font-size="12" font-weight="700">Ingredient</text>
+      <text x="598" y="50" fill="#e6edf3" font-size="10">id, name, unit, category</text>
+      <text x="598" y="64" fill="#e6edf3" font-size="10">costPerUnit, reorderLevel</text>
+      <text x="598" y="78" fill="#8b949e" font-size="9">allergens, isActive</text>
+
+      <!-- RecipeIngredient (junction) -->
+      <rect x="420" y="140" width="160" height="70" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <rect x="420" y="140" width="160" height="24" rx="6" fill="#bc8cff"/>
+      <text x="500" y="157" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">RecipeIngredient</text>
+      <text x="428" y="178" fill="#e6edf3" font-size="10">recipe_id, ingredient_id</text>
+      <text x="428" y="192" fill="#e6edf3" font-size="10">quantity, unit, notes</text>
+
+      <!-- RecipeStep -->
+      <rect x="600" y="130" width="155" height="70" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <rect x="600" y="130" width="155" height="24" rx="6" fill="#bc8cff"/>
+      <text x="677" y="147" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">RecipeStep</text>
+      <text x="608" y="168" fill="#e6edf3" font-size="10">recipe_id, stepNumber</text>
+      <text x="608" y="182" fill="#e6edf3" font-size="10">title, instruction, duration</text>
+
+      <!-- RecipeVersion -->
+      <rect x="800" y="10" width="170" height="80" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <rect x="800" y="10" width="170" height="24" rx="6" fill="#bc8cff"/>
+      <text x="885" y="27" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">RecipeVersion</text>
+      <text x="808" y="48" fill="#e6edf3" font-size="10">recipe_id, version</text>
+      <text x="808" y="62" fill="#e6edf3" font-size="10">snapshotJson, costPerServing</text>
+      <text x="808" y="76" fill="#8b949e" font-size="9">changeSummary, createdBy</text>
+
+      <!-- InventoryItem -->
+      <rect x="590" y="230" width="180" height="80" rx="6" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <rect x="590" y="230" width="180" height="24" rx="6" fill="#39d353"/>
+      <text x="680" y="247" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">InventoryItem</text>
+      <text x="598" y="268" fill="#e6edf3" font-size="10">ingredient_id, branch_id</text>
+      <text x="598" y="282" fill="#e6edf3" font-size="10">currentQty, minStockLevel</text>
+      <text x="598" y="296" fill="#8b949e" font-size="9">lastUpdated, expiryDate</text>
+
+      <!-- StockTransaction -->
+      <rect x="800" y="220" width="170" height="90" rx="6" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <rect x="800" y="220" width="170" height="24" rx="6" fill="#39d353"/>
+      <text x="885" y="237" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">StockTransaction</text>
+      <text x="808" y="258" fill="#e6edf3" font-size="10">ingredient_id, branch_id</text>
+      <text x="808" y="272" fill="#e6edf3" font-size="10">type (IN/OUT/TRANSFER</text>
+      <text x="808" y="286" fill="#e6edf3" font-size="10">/WASTAGE/PRODUCTION)</text>
+      <text x="808" y="300" fill="#8b949e" font-size="9">qty, unitCost, balance, ref</text>
+
+      <!-- Supplier -->
+      <rect x="10" y="140" width="160" height="80" rx="6" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <rect x="10" y="140" width="160" height="24" rx="6" fill="#f85149"/>
+      <text x="90" y="157" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">Supplier</text>
+      <text x="18" y="178" fill="#e6edf3" font-size="10">id, name, contactPerson</text>
+      <text x="18" y="192" fill="#e6edf3" font-size="10">phone, email, category</text>
+      <text x="18" y="206" fill="#8b949e" font-size="9">rating, hqApproved, branch_id</text>
+
+      <!-- PurchaseOrder -->
+      <rect x="10" y="250" width="165" height="90" rx="6" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <rect x="10" y="250" width="165" height="24" rx="6" fill="#f85149"/>
+      <text x="92" y="267" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">PurchaseOrder</text>
+      <text x="18" y="288" fill="#e6edf3" font-size="10">poNumber, branch_id</text>
+      <text x="18" y="302" fill="#e6edf3" font-size="10">supplier_id, status (DRAFT</text>
+      <text x="18" y="316" fill="#e6edf3" font-size="10">/SENT/APPROVED/RECEIVED)</text>
+      <text x="18" y="330" fill="#8b949e" font-size="9">totalAmount, expectedDate</text>
+
+      <!-- GoodsReceived (GRN) -->
+      <rect x="195" y="250" width="165" height="90" rx="6" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <rect x="195" y="250" width="165" height="24" rx="6" fill="#f85149"/>
+      <text x="277" y="267" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">GoodsReceived (GRN)</text>
+      <text x="203" y="288" fill="#e6edf3" font-size="10">grnNumber, po_id, branch_id</text>
+      <text x="203" y="302" fill="#e6edf3" font-size="10">status (PENDING/COMPLETE)</text>
+      <text x="203" y="316" fill="#e6edf3" font-size="10">receivedDate, notes</text>
+      <text x="203" y="330" fill="#8b949e" font-size="9">→ GRNItem (ingredient, qty)</text>
+
+      <!-- MaterialIndent -->
+      <rect x="10" y="365" width="165" height="90" rx="6" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <rect x="10" y="365" width="165" height="24" rx="6" fill="#f85149"/>
+      <text x="92" y="382" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">MaterialIndent</text>
+      <text x="18" y="403" fill="#e6edf3" font-size="10">indentNumber, branch_id</text>
+      <text x="18" y="417" fill="#e6edf3" font-size="10">status (PENDING/APPROVED</text>
+      <text x="18" y="431" fill="#e6edf3" font-size="10">/REJECTED)</text>
+      <text x="18" y="445" fill="#8b949e" font-size="9">raisedBy, approvedBy</text>
+
+      <!-- ProductionLog -->
+      <rect x="390" y="250" width="165" height="90" rx="6" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <rect x="390" y="250" width="165" height="24" rx="6" fill="#d29922"/>
+      <text x="472" y="267" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">ProductionLog</text>
+      <text x="398" y="288" fill="#e6edf3" font-size="10">recipe_id, branch_id</text>
+      <text x="398" y="302" fill="#e6edf3" font-size="10">servingsProduced, totalCost</text>
+      <text x="398" y="316" fill="#e6edf3" font-size="10">costPerServing, producedBy</text>
+      <text x="398" y="330" fill="#8b949e" font-size="9">productionDate, notes</text>
+
+      <!-- FinishedGoodStock -->
+      <rect x="390" y="365" width="165" height="80" rx="6" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <rect x="390" y="365" width="165" height="24" rx="6" fill="#39d353"/>
+      <text x="472" y="382" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">FinishedGoodStock</text>
+      <text x="398" y="403" fill="#e6edf3" font-size="10">recipe_id, branch_id</text>
+      <text x="398" y="417" fill="#e6edf3" font-size="10">availableServings</text>
+      <text x="398" y="431" fill="#8b949e" font-size="9">lastUpdated</text>
+
+      <!-- SalesEntry -->
+      <rect x="195" y="365" width="165" height="90" rx="6" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <rect x="195" y="365" width="165" height="24" rx="6" fill="#58a6ff"/>
+      <text x="277" y="382" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">SalesEntry</text>
+      <text x="203" y="403" fill="#e6edf3" font-size="10">branch_id, recipe_id</text>
+      <text x="203" y="417" fill="#e6edf3" font-size="10">menuItem_id, customer_id</text>
+      <text x="203" y="431" fill="#e6edf3" font-size="10">qty, unitPrice, totalPrice</text>
+      <text x="203" y="445" fill="#8b949e" font-size="9">saleDate, shift_id</text>
+
+      <!-- MealPlan -->
+      <rect x="590" y="365" width="165" height="80" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <rect x="590" y="365" width="165" height="24" rx="6" fill="#bc8cff"/>
+      <text x="672" y="382" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">MealPlan</text>
+      <text x="598" y="403" fill="#e6edf3" font-size="10">planName, weekNum, year</text>
+      <text x="598" y="417" fill="#e6edf3" font-size="10">branch_id, status (DRAFT</text>
+      <text x="598" y="431" fill="#8b949e" font-size="9">/ACTIVE) → MealPlanItem</text>
+
+      <!-- Menu -->
+      <rect x="800" y="370" width="165" height="80" rx="6" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <rect x="800" y="370" width="165" height="24" rx="6" fill="#d29922"/>
+      <text x="882" y="387" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">Menu → MenuItem</text>
+      <text x="808" y="408" fill="#e6edf3" font-size="10">name, season, validFrom/To</text>
+      <text x="808" y="422" fill="#e6edf3" font-size="10">isActive → recipe_id</text>
+      <text x="808" y="436" fill="#8b949e" font-size="9">basePrice, BranchMenuPrice</text>
+
+      <!-- WastageRecord -->
+      <rect x="590" y="470" width="165" height="80" rx="6" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <rect x="590" y="470" width="165" height="24" rx="6" fill="#f85149"/>
+      <text x="672" y="487" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">WastageRecord</text>
+      <text x="598" y="508" fill="#e6edf3" font-size="10">wastageType (INGREDIENT/FG)</text>
+      <text x="598" y="522" fill="#e6edf3" font-size="10">ingredient_id or recipe_id</text>
+      <text x="598" y="536" fill="#8b949e" font-size="9">branch_id, qty, reason, cost</text>
+
+      <!-- Customer -->
+      <rect x="10" y="480" width="165" height="80" rx="6" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <rect x="10" y="480" width="165" height="24" rx="6" fill="#58a6ff"/>
+      <text x="92" y="497" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">Customer</text>
+      <text x="18" y="518" fill="#e6edf3" font-size="10">name, phone, email</text>
+      <text x="18" y="532" fill="#e6edf3" font-size="10">loyaltyPoints, totalSpend</text>
+      <text x="18" y="546" fill="#8b949e" font-size="9">dob, anniversary, tier</text>
+
+      <!-- Shift -->
+      <rect x="195" y="480" width="165" height="80" rx="6" fill="#1c2333" stroke="#8b949e" stroke-width="1.5"/>
+      <rect x="195" y="480" width="165" height="24" rx="6" fill="#8b949e"/>
+      <text x="277" y="497" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">Shift</text>
+      <text x="203" y="518" fill="#e6edf3" font-size="10">user_id, branch_id</text>
+      <text x="203" y="532" fill="#e6edf3" font-size="10">shiftDate, startTime, endTime</text>
+      <text x="203" y="546" fill="#8b949e" font-size="9">status (SCHEDULED/COMPLETE)</text>
+
+      <!-- AuditLog -->
+      <rect x="800" y="490" width="165" height="70" rx="6" fill="#1c2333" stroke="#8b949e" stroke-width="1.5"/>
+      <rect x="800" y="490" width="165" height="24" rx="6" fill="#8b949e"/>
+      <text x="882" y="507" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">AuditLog</text>
+      <text x="808" y="528" fill="#e6edf3" font-size="10">user_id, branch_id, action</text>
+      <text x="808" y="542" fill="#e6edf3" font-size="10">entityType, entityId, details</text>
+
+      <!-- StockTransfer -->
+      <rect x="800" y="110" width="165" height="90" rx="6" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <rect x="800" y="110" width="165" height="24" rx="6" fill="#39d353"/>
+      <text x="882" y="127" text-anchor="middle" fill="#0d1117" font-size="11" font-weight="700">StockTransfer</text>
+      <text x="808" y="148" fill="#e6edf3" font-size="10">transferNumber, fromBranch</text>
+      <text x="808" y="162" fill="#e6edf3" font-size="10">toBranch, status (PENDING</text>
+      <text x="808" y="176" fill="#e6edf3" font-size="10">/DISPATCHED/RECEIVED)</text>
+      <text x="808" y="190" fill="#8b949e" font-size="9">→ StockTransferItem</text>
+
+      <!-- KEY RELATIONSHIP LINES -->
+      <!-- User → Branch -->
+      <line x1="170" y1="60" x2="200" y2="55" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- Recipe → RecipeIngredient -->
+      <line x1="475" y1="110" x2="490" y2="140" stroke="#d29922" stroke-width="1.2" marker-end="url(#er_arr)"/>
+      <!-- Ingredient → RecipeIngredient -->
+      <line x1="650" y1="100" x2="560" y2="145" stroke="#f0883e" stroke-width="1.2" marker-end="url(#er_arr)"/>
+      <!-- Recipe → RecipeStep -->
+      <line x1="555" y1="70" x2="600" y2="135" stroke="#d29922" stroke-width="1.2" marker-end="url(#er_arr)"/>
+      <!-- Recipe → RecipeVersion -->
+      <line x1="560" y1="50" x2="800" y2="45" stroke="#d29922" stroke-width="1.2" marker-end="url(#er_arr)"/>
+      <!-- Ingredient → InventoryItem -->
+      <line x1="680" y1="100" x2="680" y2="230" stroke="#f0883e" stroke-width="1.2" marker-end="url(#er_arr)"/>
+      <!-- Branch → InventoryItem -->
+      <line x1="280" y1="100" x2="600" y2="250" stroke="#3fb950" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- PO → GRN -->
+      <line x1="175" y1="295" x2="195" y2="295" stroke="#f85149" stroke-width="1.2" marker-end="url(#er_arr)"/>
+      <!-- GRN → InventoryItem -->
+      <line x1="360" y1="295" x2="590" y2="270" stroke="#f85149" stroke-width="1" stroke-dasharray="4,4"/>
+      <!-- Recipe → ProductionLog -->
+      <line x1="475" y1="110" x2="470" y2="250" stroke="#d29922" stroke-width="1.2" marker-end="url(#er_arr)"/>
+      <!-- ProductionLog → FinishedGoodStock -->
+      <line x1="475" y1="340" x2="475" y2="365" stroke="#39d353" stroke-width="1.2" marker-end="url(#er_arr)"/>
+      <!-- FinishedGoodStock → SalesEntry -->
+      <line x1="390" y1="405" x2="360" y2="410" stroke="#39d353" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- Customer → SalesEntry -->
+      <line x1="175" y1="510" x2="200" y2="430" stroke="#58a6ff" stroke-width="1" stroke-dasharray="3,3"/>
+    </svg>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> Auth / User / Customer / Sales</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div> Branch / Organization</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#d29922"></div> Recipe / Menu</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f0883e"></div> Ingredient</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#39d353"></div> Inventory / Stock</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f85149"></div> Procurement</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#bc8cff"></div> Recipe detail / Meal Plan</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. PAGE / SCREEN MAP -->
+<!-- ============================================================ -->
+<div class="section" id="pages">
+  <div class="section-title">4. Frontend Page Map (React Web)</div>
+  <div class="diagram-card">
+    <h3>All Routes — Hierarchy, Nesting and Role Guards</h3>
+    <svg viewBox="0 0 980 640" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <!-- Root -->
+      <rect x="390" y="10" width="200" height="34" rx="6" fill="#58a6ff"/>
+      <text x="490" y="32" text-anchor="middle" fill="#0d1117" font-size="13" font-weight="700">/ (App Root)</text>
+      <!-- Fork -->
+      <line x1="490" y1="44" x2="490" y2="60" stroke="#30363d" stroke-width="1.5"/>
+      <line x1="200" y1="60" x2="780" y2="60" stroke="#30363d" stroke-width="1.5"/>
+
+      <!-- /login -->
+      <line x1="200" y1="60" x2="200" y2="78" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="120" y="78" width="160" height="28" rx="5" fill="#1c2333" stroke="#3fb950"/>
+      <text x="200" y="97" text-anchor="middle" fill="#3fb950" font-size="11">/login (public)</text>
+
+      <!-- /fooderp -->
+      <line x1="490" y1="60" x2="490" y2="78" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="380" y="78" width="220" height="28" rx="5" fill="#1c2333" stroke="#58a6ff"/>
+      <text x="490" y="97" text-anchor="middle" fill="#58a6ff" font-size="11">/fooderp (PrivateRoute + Layout)</text>
+
+      <!-- Children of /fooderp -->
+      <line x1="490" y1="106" x2="490" y2="125" stroke="#30363d" stroke-width="1.5"/>
+      <line x1="60" y1="125" x2="920" y2="125" stroke="#30363d" stroke-width="1.5"/>
+
+      <!-- dashboard -->
+      <line x1="60" y1="125" x2="60" y2="143" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="10" y="143" width="100" height="26" rx="4" fill="#1c2333" stroke="#3fb950"/>
+      <text x="60" y="161" text-anchor="middle" fill="#e6edf3" font-size="10">dashboard</text>
+
+      <!-- analytics -->
+      <line x1="160" y1="125" x2="160" y2="143" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="110" y="143" width="100" height="26" rx="4" fill="#1c2333" stroke="#d29922"/>
+      <text x="160" y="157" text-anchor="middle" fill="#e6edf3" font-size="10">analytics</text>
+      <text x="160" y="169" text-anchor="middle" fill="#d29922" font-size="9">🔒 ADMIN</text>
+
+      <!-- recipes -->
+      <line x1="270" y1="125" x2="270" y2="143" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="220" y="143" width="100" height="26" rx="4" fill="#1c2333" stroke="#d29922"/>
+      <text x="270" y="161" text-anchor="middle" fill="#e6edf3" font-size="10">recipes/*</text>
+      <line x1="270" y1="169" x2="270" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="225" y1="185" x2="315" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="225" y1="185" x2="225" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="195" y="200" width="60" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="225" y="214" text-anchor="middle" fill="#8b949e" font-size="9">list</text>
+      <line x1="270" y1="185" x2="270" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="248" y="200" width="44" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="270" y="214" text-anchor="middle" fill="#8b949e" font-size="9">:id</text>
+      <line x1="315" y1="185" x2="315" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="285" y="200" width="60" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="315" y="214" text-anchor="middle" fill="#8b949e" font-size="9">add/edit</text>
+
+      <!-- inventory -->
+      <line x1="390" y1="125" x2="390" y2="143" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="340" y="143" width="100" height="26" rx="4" fill="#1c2333" stroke="#39d353"/>
+      <text x="390" y="161" text-anchor="middle" fill="#e6edf3" font-size="10">inventory/*</text>
+      <line x1="390" y1="169" x2="390" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="345" y1="185" x2="435" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="345" y1="185" x2="345" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="318" y="200" width="54" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="345" y="214" text-anchor="middle" fill="#8b949e" font-size="9">raw-mat</text>
+      <line x1="390" y1="185" x2="390" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="367" y="200" width="46" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="390" y="214" text-anchor="middle" fill="#8b949e" font-size="9">fin-gds</text>
+      <line x1="435" y1="185" x2="435" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="414" y="200" width="44" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="436" y="214" text-anchor="middle" fill="#8b949e" font-size="9">wastage</text>
+
+      <!-- menu -->
+      <line x1="510" y1="125" x2="510" y2="143" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="462" y="143" width="96" height="26" rx="4" fill="#1c2333" stroke="#d29922"/>
+      <text x="510" y="161" text-anchor="middle" fill="#e6edf3" font-size="10">menu/*</text>
+      <line x1="510" y1="169" x2="510" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="475" y1="185" x2="545" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="475" y1="185" x2="475" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="452" y="200" width="46" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="475" y="214" text-anchor="middle" fill="#8b949e" font-size="9">active</text>
+      <line x1="510" y1="185" x2="510" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="487" y="200" width="46" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="510" y="214" text-anchor="middle" fill="#8b949e" font-size="9">seasonal</text>
+      <line x1="545" y1="185" x2="545" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="522" y="200" width="46" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="545" y="214" text-anchor="middle" fill="#8b949e" font-size="9">pricing</text>
+
+      <!-- meal-planning -->
+      <line x1="630" y1="125" x2="630" y2="143" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="572" y="143" width="116" height="26" rx="4" fill="#1c2333" stroke="#bc8cff"/>
+      <text x="630" y="161" text-anchor="middle" fill="#e6edf3" font-size="10">meal-planning/*</text>
+      <line x1="630" y1="169" x2="630" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="598" y1="185" x2="664" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="598" y1="185" x2="598" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="573" y="200" width="50" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="598" y="214" text-anchor="middle" fill="#8b949e" font-size="9">weekly</text>
+      <line x1="630" y1="185" x2="630" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="610" y="200" width="40" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="630" y="214" text-anchor="middle" fill="#8b949e" font-size="9">forecast</text>
+      <line x1="664" y1="185" x2="664" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="645" y="200" width="38" height="20" rx="3" fill="#161b22" stroke="#d29922"/>
+      <text x="664" y="214" text-anchor="middle" fill="#d29922" font-size="9">push🔒</text>
+
+      <!-- procurement -->
+      <line x1="760" y1="125" x2="760" y2="143" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="706" y="143" width="108" height="26" rx="4" fill="#1c2333" stroke="#f85149"/>
+      <text x="760" y="161" text-anchor="middle" fill="#e6edf3" font-size="10">procurement/*</text>
+      <line x1="760" y1="169" x2="760" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="716" y1="185" x2="808" y2="185" stroke="#30363d" stroke-width="1"/>
+      <line x1="716" y1="185" x2="716" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="694" y="200" width="44" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="716" y="214" text-anchor="middle" fill="#8b949e" font-size="9">indent</text>
+      <line x1="750" y1="185" x2="750" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="729" y="200" width="42" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="750" y="214" text-anchor="middle" fill="#8b949e" font-size="9">orders</text>
+      <line x1="785" y1="185" x2="785" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="764" y="200" width="42" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="785" y="214" text-anchor="middle" fill="#8b949e" font-size="9">grn</text>
+      <line x1="808" y1="185" x2="808" y2="200" stroke="#30363d" stroke-width="1"/>
+      <rect x="788" y="200" width="40" height="20" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="808" y="214" text-anchor="middle" fill="#8b949e" font-size="9">vendors</text>
+
+      <!-- admin block -->
+      <line x1="920" y1="125" x2="920" y2="143" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="872" y="143" width="96" height="26" rx="4" fill="#1c2333" stroke="#d29922"/>
+      <text x="920" y="157" text-anchor="middle" fill="#e6edf3" font-size="10">admin</text>
+      <text x="920" y="169" text-anchor="middle" fill="#d29922" font-size="9">🔒 ADMIN only</text>
+
+      <!-- Row 2 group -->
+      <line x1="490" y1="125" x2="490" y2="250" stroke="#30363d" stroke-width="1" stroke-dasharray="2,4"/>
+      <line x1="60" y1="250" x2="920" y2="250" stroke="#30363d" stroke-width="1"/>
+
+      <!-- sales -->
+      <line x1="120" y1="250" x2="120" y2="268" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="72" y="268" width="96" height="24" rx="4" fill="#1c2333" stroke="#58a6ff"/>
+      <text x="120" y="285" text-anchor="middle" fill="#e6edf3" font-size="10">sales (daily)</text>
+
+      <!-- customers -->
+      <line x1="240" y1="250" x2="240" y2="268" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="192" y="268" width="96" height="24" rx="4" fill="#1c2333" stroke="#58a6ff"/>
+      <text x="240" y="285" text-anchor="middle" fill="#e6edf3" font-size="10">customers (CRM)</text>
+
+      <!-- reports -->
+      <line x1="380" y1="250" x2="380" y2="268" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="332" y="268" width="96" height="24" rx="4" fill="#1c2333" stroke="#8b949e"/>
+      <text x="380" y="285" text-anchor="middle" fill="#e6edf3" font-size="10">reports/*</text>
+      <line x1="380" y1="292" x2="380" y2="308" stroke="#30363d" stroke-width="1"/>
+      <line x1="338" y1="308" x2="422" y2="308" stroke="#30363d" stroke-width="1"/>
+      <rect x="318" y="308" width="40" height="18" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="338" y="321" text-anchor="middle" fill="#8b949e" font-size="9">inv.</text>
+      <rect x="362" y="308" width="40" height="18" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="382" y="321" text-anchor="middle" fill="#8b949e" font-size="9">cost</text>
+      <rect x="406" y="308" width="40" height="18" rx="3" fill="#161b22" stroke="#30363d"/>
+      <text x="426" y="321" text-anchor="middle" fill="#8b949e" font-size="9">sales+</text>
+
+      <!-- staff -->
+      <line x1="530" y1="250" x2="530" y2="268" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="484" y="268" width="92" height="24" rx="4" fill="#1c2333" stroke="#d29922"/>
+      <text x="530" y="280" text-anchor="middle" fill="#e6edf3" font-size="10">staff/shifts</text>
+      <text x="530" y="292" text-anchor="middle" fill="#d29922" font-size="9">🔒 ADMIN/MGR</text>
+
+      <!-- users/branches -->
+      <line x1="680" y1="250" x2="680" y2="268" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="632" y="268" width="96" height="24" rx="4" fill="#1c2333" stroke="#d29922"/>
+      <text x="680" y="280" text-anchor="middle" fill="#e6edf3" font-size="10">users/branches</text>
+      <text x="680" y="292" text-anchor="middle" fill="#d29922" font-size="9">🔒 ADMIN</text>
+
+      <!-- audit -->
+      <line x1="820" y1="250" x2="820" y2="268" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="772" y="268" width="96" height="24" rx="4" fill="#1c2333" stroke="#d29922"/>
+      <text x="820" y="280" text-anchor="middle" fill="#e6edf3" font-size="10">audit logs</text>
+      <text x="820" y="292" text-anchor="middle" fill="#d29922" font-size="9">🔒 ADMIN</text>
+
+      <!-- Legend -->
+      <rect x="20" y="360" width="16" height="16" rx="3" fill="#1c2333" stroke="#3fb950"/>
+      <text x="42" y="373" fill="#e6edf3" font-size="11">Public route</text>
+      <rect x="140" y="360" width="16" height="16" rx="3" fill="#1c2333" stroke="#58a6ff"/>
+      <text x="162" y="373" fill="#e6edf3" font-size="11">Protected (any auth user)</text>
+      <rect x="340" y="360" width="16" height="16" rx="3" fill="#1c2333" stroke="#d29922"/>
+      <text x="362" y="373" fill="#e6edf3" font-size="11">🔒 Role-gated (ADMIN or MANAGER)</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. ROLE ACCESS MATRIX -->
+<!-- ============================================================ -->
+<div class="section" id="roles">
+  <div class="section-title">5. Role Access Matrix</div>
+  <div class="diagram-card">
+    <h3>What each role can access</h3>
+    <svg viewBox="0 0 860 380" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <!-- Header -->
+      <rect x="0" y="0" width="860" height="36" rx="6" fill="#1c2333"/>
+      <text x="200" y="23" text-anchor="middle" fill="#8b949e" font-size="12">Feature / Module</text>
+      <text x="440" y="23" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="700">ADMIN</text>
+      <text x="560" y="23" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="700">MANAGER</text>
+      <text x="680" y="23" text-anchor="middle" fill="#d29922" font-size="12" font-weight="700">STAFF</text>
+      <text x="780" y="23" text-anchor="middle" fill="#8b949e" font-size="12" font-weight="700">USER</text>
+
+      <!-- Row helper function via repeated pattern -->
+      <!-- Row 1 -->
+      <rect x="0" y="36" width="860" height="30" rx="0" fill="#161b22"/>
+      <text x="200" y="56" text-anchor="middle" fill="#e6edf3" font-size="11">Dashboard</text>
+      <text x="440" y="56" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="56" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="680" y="56" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="780" y="56" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+
+      <rect x="0" y="66" width="860" height="30" rx="0" fill="#1c2333"/>
+      <text x="200" y="86" text-anchor="middle" fill="#e6edf3" font-size="11">Recipes — View &amp; Log Production</text>
+      <text x="440" y="86" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="86" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="680" y="86" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="780" y="86" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+
+      <rect x="0" y="96" width="860" height="30" rx="0" fill="#161b22"/>
+      <text x="200" y="116" text-anchor="middle" fill="#e6edf3" font-size="11">Recipes — Add/Edit/Delete</text>
+      <text x="440" y="116" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="116" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="680" y="116" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="780" y="116" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <rect x="0" y="126" width="860" height="30" rx="0" fill="#1c2333"/>
+      <text x="200" y="146" text-anchor="middle" fill="#e6edf3" font-size="11">Inventory — View &amp; Stock In/Out</text>
+      <text x="440" y="146" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="146" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="680" y="146" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="780" y="146" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <rect x="0" y="156" width="860" height="30" rx="0" fill="#161b22"/>
+      <text x="200" y="176" text-anchor="middle" fill="#e6edf3" font-size="11">Inventory — Stock Transfers</text>
+      <text x="440" y="176" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="176" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="680" y="176" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="780" y="176" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <rect x="0" y="186" width="860" height="30" rx="0" fill="#1c2333"/>
+      <text x="200" y="206" text-anchor="middle" fill="#e6edf3" font-size="11">Procurement — Indent/PO/GRN</text>
+      <text x="440" y="206" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="206" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="680" y="206" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="780" y="206" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <rect x="0" y="216" width="860" height="30" rx="0" fill="#161b22"/>
+      <text x="200" y="236" text-anchor="middle" fill="#e6edf3" font-size="11">Procurement — Approve Vendors</text>
+      <text x="440" y="236" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="236" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="680" y="236" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="780" y="236" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <rect x="0" y="246" width="860" height="30" rx="0" fill="#1c2333"/>
+      <text x="200" y="266" text-anchor="middle" fill="#e6edf3" font-size="11">Sales — Daily Entry</text>
+      <text x="440" y="266" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="266" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="680" y="266" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="780" y="266" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <rect x="0" y="276" width="860" height="30" rx="0" fill="#161b22"/>
+      <text x="200" y="296" text-anchor="middle" fill="#e6edf3" font-size="11">Meal Planning — Push to Branches</text>
+      <text x="440" y="296" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="296" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="680" y="296" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="780" y="296" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <rect x="0" y="306" width="860" height="30" rx="0" fill="#1c2333"/>
+      <text x="200" y="326" text-anchor="middle" fill="#e6edf3" font-size="11">Staff Scheduling</text>
+      <text x="440" y="326" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="326" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="680" y="326" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="780" y="326" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <rect x="0" y="336" width="860" height="30" rx="0" fill="#161b22"/>
+      <text x="200" y="356" text-anchor="middle" fill="#e6edf3" font-size="11">User/Branch Management, Audit, Analytics</text>
+      <text x="440" y="356" text-anchor="middle" fill="#3fb950" font-size="14">✓</text>
+      <text x="560" y="356" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="680" y="356" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+      <text x="780" y="356" text-anchor="middle" fill="#f85149" font-size="14">✗</text>
+
+      <!-- Column lines -->
+      <line x1="330" y1="0" x2="330" y2="366" stroke="#30363d" stroke-width="1"/>
+      <line x1="500" y1="0" x2="500" y2="366" stroke="#30363d" stroke-width="1"/>
+      <line x1="620" y1="0" x2="620" y2="366" stroke="#30363d" stroke-width="1"/>
+      <line x1="730" y1="0" x2="730" y2="366" stroke="#30363d" stroke-width="1"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 6. PROCUREMENT FLOW -->
+<!-- ============================================================ -->
+<div class="section" id="procurement">
+  <div class="section-title">6. Procurement Workflow</div>
+  <div class="diagram-card">
+    <h3>Material Indent → Purchase Order → GRN → Inventory Update</h3>
+    <svg viewBox="0 0 920 220" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <defs>
+        <marker id="pArr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#f85149"/>
+        </marker>
+        <marker id="pArr2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#3fb950"/>
+        </marker>
+      </defs>
+
+      <!-- Step boxes -->
+      <rect x="10" y="80" width="110" height="60" rx="8" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <text x="65" y="105" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">1. Material</text>
+      <text x="65" y="119" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">Indent</text>
+      <text x="65" y="133" text-anchor="middle" fill="#8b949e" font-size="9">Branch raises</text>
+
+      <line x1="120" y1="110" x2="148" y2="110" stroke="#f85149" stroke-width="1.5" marker-end="url(#pArr)"/>
+
+      <!-- Approve decision -->
+      <polygon points="185,85 230,110 185,135 140,110" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="185" y="107" text-anchor="middle" fill="#d29922" font-size="9">HQ</text>
+      <text x="185" y="119" text-anchor="middle" fill="#d29922" font-size="9">Approve?</text>
+      <!-- Reject -->
+      <text x="185" y="152" text-anchor="middle" fill="#f85149" font-size="9">REJECTED ↓</text>
+
+      <line x1="230" y1="110" x2="258" y2="110" stroke="#d29922" stroke-width="1.5" marker-end="url(#pArr)"/>
+      <text x="244" y="103" text-anchor="middle" fill="#3fb950" font-size="9">Yes</text>
+
+      <rect x="258" y="80" width="110" height="60" rx="8" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <text x="313" y="105" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">2. Purchase</text>
+      <text x="313" y="119" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">Order (DRAFT)</text>
+      <text x="313" y="133" text-anchor="middle" fill="#8b949e" font-size="9">poNumber auto-gen</text>
+
+      <line x1="368" y1="110" x2="396" y2="110" stroke="#f85149" stroke-width="1.5" marker-end="url(#pArr)"/>
+
+      <!-- PO Status steps -->
+      <rect x="396" y="80" width="110" height="60" rx="8" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="451" y="105" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">3. PO → SENT</text>
+      <text x="451" y="119" text-anchor="middle" fill="#e6edf3" font-size="10">to supplier</text>
+      <text x="451" y="133" text-anchor="middle" fill="#8b949e" font-size="9">Email/notify</text>
+
+      <line x1="506" y1="110" x2="534" y2="110" stroke="#d29922" stroke-width="1.5" marker-end="url(#pArr)"/>
+
+      <rect x="534" y="80" width="110" height="60" rx="8" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="589" y="105" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">4. PO → </text>
+      <text x="589" y="119" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">APPROVED</text>
+      <text x="589" y="133" text-anchor="middle" fill="#8b949e" font-size="9">Admin confirms</text>
+
+      <line x1="644" y1="110" x2="672" y2="110" stroke="#d29922" stroke-width="1.5" marker-end="url(#pArr)"/>
+
+      <rect x="672" y="80" width="110" height="60" rx="8" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <text x="727" y="105" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">5. GRN</text>
+      <text x="727" y="119" text-anchor="middle" fill="#e6edf3" font-size="10">Goods received</text>
+      <text x="727" y="133" text-anchor="middle" fill="#8b949e" font-size="9">qty check + quality</text>
+
+      <line x1="782" y1="110" x2="810" y2="110" stroke="#3fb950" stroke-width="1.5" marker-end="url(#pArr2)"/>
+
+      <rect x="810" y="80" width="100" height="60" rx="8" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <text x="860" y="105" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">6. Inventory</text>
+      <text x="860" y="119" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">Updated</text>
+      <text x="860" y="133" text-anchor="middle" fill="#8b949e" font-size="9">StockTransaction IN</text>
+
+      <!-- Status flow at bottom -->
+      <text x="460" y="175" text-anchor="middle" fill="#8b949e" font-size="11">PO Status: DRAFT → SENT → APPROVED → PARTIALLY_RECEIVED → RECEIVED</text>
+      <text x="460" y="195" text-anchor="middle" fill="#8b949e" font-size="11">GRN Status: PENDING → COMPLETE  |  Indent Status: PENDING → APPROVED / REJECTED → FULFILLED</text>
+
+      <!-- Supplier rating side note -->
+      <text x="727" y="165" text-anchor="middle" fill="#8b949e" font-size="9">↓ updates supplier rating</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 7. PRODUCTION FLOW -->
+<!-- ============================================================ -->
+<div class="section" id="production">
+  <div class="section-title">7. Production Flow</div>
+  <div class="diagram-card">
+    <h3>Recipe → Log Production → Deduct Raw Materials → Add Finished Goods Stock</h3>
+    <svg viewBox="0 0 860 200" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <defs>
+        <marker id="prodArr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#d29922"/>
+        </marker>
+        <marker id="prodArr2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="#39d353"/>
+        </marker>
+      </defs>
+      <rect x="10" y="70" width="120" height="60" rx="8" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="70" y="96" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">1. Select Recipe</text>
+      <text x="70" y="110" text-anchor="middle" fill="#e6edf3" font-size="10">RecipeList page</text>
+      <text x="70" y="124" text-anchor="middle" fill="#8b949e" font-size="9">choose servings</text>
+
+      <line x1="130" y1="100" x2="155" y2="100" stroke="#d29922" stroke-width="1.5" marker-end="url(#prodArr)"/>
+
+      <rect x="155" y="70" width="130" height="60" rx="8" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="220" y="96" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">2. Preview</text>
+      <text x="220" y="110" text-anchor="middle" fill="#e6edf3" font-size="10">Deduction preview API</text>
+      <text x="220" y="124" text-anchor="middle" fill="#8b949e" font-size="9">checks stock sufficiency</text>
+
+      <line x1="285" y1="100" x2="310" y2="100" stroke="#d29922" stroke-width="1.5" marker-end="url(#prodArr)"/>
+
+      <!-- Sufficient? -->
+      <polygon points="350,75 395,100 350,125 305,100" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="350" y="97" text-anchor="middle" fill="#d29922" font-size="9">Stock</text>
+      <text x="350" y="109" text-anchor="middle" fill="#d29922" font-size="9">OK?</text>
+      <text x="350" y="148" text-anchor="middle" fill="#f85149" font-size="9">WARN if insufficient</text>
+
+      <line x1="395" y1="100" x2="420" y2="100" stroke="#d29922" stroke-width="1.5" marker-end="url(#prodArr)"/>
+
+      <rect x="420" y="70" width="130" height="60" rx="8" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="485" y="92" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="700">3. Log Production</text>
+      <text x="485" y="106" text-anchor="middle" fill="#e6edf3" font-size="10">ProductionLog saved</text>
+      <text x="485" y="120" text-anchor="middle" fill="#8b949e" font-size="9">servingsProduced, totalCost</text>
+
+      <line x1="550" y1="100" x2="575" y2="100" stroke="#39d353" stroke-width="1.5" marker-end="url(#prodArr2)"/>
+
+      <rect x="575" y="50" width="130" height="50" rx="8" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <text x="640" y="72" text-anchor="middle" fill="#f85149" font-size="10" font-weight="700">4a. Deduct Raw</text>
+      <text x="640" y="86" text-anchor="middle" fill="#f85149" font-size="10" font-weight="700">Materials</text>
+      <text x="640" y="96" text-anchor="middle" fill="#8b949e" font-size="9">InventoryItem -= qty</text>
+
+      <rect x="575" y="115" width="130" height="50" rx="8" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <text x="640" y="137" text-anchor="middle" fill="#39d353" font-size="10" font-weight="700">4b. Add Finished</text>
+      <text x="640" y="151" text-anchor="middle" fill="#39d353" font-size="10" font-weight="700">Goods Stock</text>
+      <text x="640" y="161" text-anchor="middle" fill="#8b949e" font-size="9">FinishedGoodStock += servings</text>
+
+      <line x1="705" y1="75" x2="730" y2="75" stroke="#39d353" stroke-width="1.5" marker-end="url(#prodArr2)"/>
+      <line x1="705" y1="140" x2="730" y2="140" stroke="#39d353" stroke-width="1.5" marker-end="url(#prodArr2)"/>
+
+      <rect x="730" y="55" width="120" height="110" rx="8" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <text x="790" y="82" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">5. Stock</text>
+      <text x="790" y="96" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">Transactions</text>
+      <text x="790" y="112" text-anchor="middle" fill="#8b949e" font-size="9">PRODUCTION type</text>
+      <text x="790" y="126" text-anchor="middle" fill="#8b949e" font-size="9">Audit log created</text>
+      <text x="790" y="140" text-anchor="middle" fill="#8b949e" font-size="9">costPerServing</text>
+      <text x="790" y="154" text-anchor="middle" fill="#8b949e" font-size="9">calculated</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 8. INVENTORY FLOW -->
+<!-- ============================================================ -->
+<div class="section" id="inventory">
+  <div class="section-title">8. Inventory Management Flow</div>
+  <div class="diagram-card">
+    <h3>All Ways Stock Moves — In, Out, Transfer, Wastage, Production</h3>
+    <svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <!-- Central InventoryItem box -->
+      <rect x="330" y="100" width="200" height="60" rx="10" fill="#1c2333" stroke="#39d353" stroke-width="2"/>
+      <text x="430" y="127" text-anchor="middle" fill="#39d353" font-size="13" font-weight="700">InventoryItem</text>
+      <text x="430" y="145" text-anchor="middle" fill="#8b949e" font-size="10">ingredient × branch → currentQty</text>
+
+      <!-- IN arrows -->
+      <rect x="10" y="30" width="130" height="50" rx="6" fill="#1c2333" stroke="#3fb950"/>
+      <text x="75" y="52" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="700">GRN Received</text>
+      <text x="75" y="66" text-anchor="middle" fill="#8b949e" font-size="9">ProcurementService</text>
+      <line x1="140" y1="55" x2="330" y2="115" stroke="#3fb950" stroke-width="1.5" marker-end="url(#pArr2)"/>
+      <text x="220" y="80" fill="#3fb950" font-size="9">STOCK_IN</text>
+
+      <rect x="10" y="110" width="130" height="50" rx="6" fill="#1c2333" stroke="#3fb950"/>
+      <text x="75" y="132" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="700">Manual Stock-In</text>
+      <text x="75" y="146" text-anchor="middle" fill="#8b949e" font-size="9">InventoryController</text>
+      <line x1="140" y1="135" x2="330" y2="130" stroke="#3fb950" stroke-width="1.5" marker-end="url(#pArr2)"/>
+
+      <rect x="10" y="190" width="130" height="50" rx="6" fill="#1c2333" stroke="#3fb950"/>
+      <text x="75" y="212" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="700">Transfer Received</text>
+      <text x="75" y="226" text-anchor="middle" fill="#8b949e" font-size="9">from another branch</text>
+      <line x1="140" y1="215" x2="330" y2="145" stroke="#3fb950" stroke-width="1.5" marker-end="url(#pArr2)"/>
+      <text x="220" y="180" fill="#3fb950" font-size="9">TRANSFER_IN</text>
+
+      <!-- OUT arrows -->
+      <rect x="720" y="30" width="130" height="50" rx="6" fill="#1c2333" stroke="#f85149"/>
+      <text x="785" y="52" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">Production</text>
+      <text x="785" y="66" text-anchor="middle" fill="#8b949e" font-size="9">ProductionService</text>
+      <line x1="530" y1="115" x2="720" y2="55" stroke="#f85149" stroke-width="1.5" marker-end="url(#pArr)"/>
+      <text x="630" y="80" fill="#f85149" font-size="9">PRODUCTION</text>
+
+      <rect x="720" y="110" width="130" height="50" rx="6" fill="#1c2333" stroke="#f85149"/>
+      <text x="785" y="132" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">Manual Stock-Out</text>
+      <text x="785" y="146" text-anchor="middle" fill="#8b949e" font-size="9">InventoryController</text>
+      <line x1="530" y1="130" x2="720" y2="135" stroke="#f85149" stroke-width="1.5" marker-end="url(#pArr)"/>
+      <text x="625" y="127" fill="#f85149" font-size="9">STOCK_OUT</text>
+
+      <rect x="720" y="190" width="130" height="50" rx="6" fill="#1c2333" stroke="#d29922"/>
+      <text x="785" y="212" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">Wastage Record</text>
+      <text x="785" y="226" text-anchor="middle" fill="#8b949e" font-size="9">InventoryService</text>
+      <line x1="530" y1="145" x2="720" y2="215" stroke="#d29922" stroke-width="1.5" marker-end="url(#pArr)"/>
+      <text x="630" y="190" fill="#d29922" font-size="9">WASTAGE</text>
+
+      <!-- Low stock alert -->
+      <rect x="330" y="190" width="200" height="40" rx="6" fill="#161b22" stroke="#d29922" stroke-dasharray="4,3"/>
+      <text x="430" y="208" text-anchor="middle" fill="#d29922" font-size="10">⚠️ LOW STOCK ALERT</text>
+      <text x="430" y="222" text-anchor="middle" fill="#8b949e" font-size="9">currentQty &lt; minStockLevel → notification</text>
+      <line x1="430" y1="160" x2="430" y2="190" stroke="#d29922" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- StockTransaction ledger note -->
+      <text x="430" y="248" text-anchor="middle" fill="#8b949e" font-size="9">Every change creates a StockTransaction record (running balance ledger)</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 9. MEAL PLANNING FLOW -->
+<!-- ============================================================ -->
+<div class="section" id="mealplan">
+  <div class="section-title">9. Meal Planning Flow</div>
+  <div class="diagram-card">
+    <h3>HQ Plans Meals → Forecasts Ingredients → Pushes to Branches</h3>
+    <svg viewBox="0 0 860 180" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <rect x="10" y="60" width="130" height="60" rx="8" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="75" y="86" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">1. Create</text>
+      <text x="75" y="100" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">Meal Plan</text>
+      <text x="75" y="114" text-anchor="middle" fill="#8b949e" font-size="9">weekNum + year</text>
+
+      <line x1="140" y1="90" x2="165" y2="90" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <rect x="165" y="60" width="130" height="60" rx="8" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="230" y="86" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">2. Add Items</text>
+      <text x="230" y="100" text-anchor="middle" fill="#e6edf3" font-size="10">recipe, day, mealType</text>
+      <text x="230" y="114" text-anchor="middle" fill="#8b949e" font-size="9">BREAKFAST/LUNCH/DINNER</text>
+
+      <line x1="295" y1="90" x2="320" y2="90" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <rect x="320" y="60" width="150" height="60" rx="8" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <text x="395" y="86" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">3. Ingredient</text>
+      <text x="395" y="100" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">Forecast</text>
+      <text x="395" y="114" text-anchor="middle" fill="#8b949e" font-size="9">qty needed vs available</text>
+
+      <line x1="470" y1="90" x2="495" y2="90" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <!-- Active Decision -->
+      <polygon points="540,65 590,90 540,115 490,90" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="540" y="87" text-anchor="middle" fill="#d29922" font-size="9">Set</text>
+      <text x="540" y="99" text-anchor="middle" fill="#d29922" font-size="9">ACTIVE?</text>
+
+      <line x1="590" y1="90" x2="615" y2="90" stroke="#bc8cff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <rect x="615" y="60" width="140" height="60" rx="8" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="685" y="86" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">4. Push to</text>
+      <text x="685" y="100" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">Branches</text>
+      <text x="685" y="114" text-anchor="middle" fill="#8b949e" font-size="9">🔒 ADMIN only</text>
+
+      <line x1="755" y1="90" x2="780" y2="90" stroke="#3fb950" stroke-width="1.5" marker-end="url(#a2)"/>
+
+      <rect x="780" y="60" width="70" height="60" rx="8" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="815" y="86" text-anchor="middle" fill="#3fb950" font-size="10" font-weight="700">Branch</text>
+      <text x="815" y="100" text-anchor="middle" fill="#3fb950" font-size="10" font-weight="700">MealPlan</text>
+      <text x="815" y="114" text-anchor="middle" fill="#8b949e" font-size="9">copy created</text>
+
+      <text x="430" y="158" text-anchor="middle" fill="#8b949e" font-size="10">MealPlanItem: recipe × day × mealType × expectedCovers → drives ingredient forecasting</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 10. SALES FLOW -->
+<!-- ============================================================ -->
+<div class="section" id="sales">
+  <div class="section-title">10. Sales Flow</div>
+  <div class="diagram-card">
+    <h3>Daily Sales Entry → Finished Goods Deduction → Revenue Tracking → Customer CRM</h3>
+    <svg viewBox="0 0 880 190" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <rect x="10" y="65" width="120" height="60" rx="8" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="70" y="91" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">1. Daily Sales</text>
+      <text x="70" y="105" text-anchor="middle" fill="#e6edf3" font-size="10">recipe, qty, price</text>
+      <text x="70" y="119" text-anchor="middle" fill="#8b949e" font-size="9">optional: customer</text>
+
+      <line x1="130" y1="95" x2="155" y2="95" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <rect x="155" y="65" width="130" height="60" rx="8" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="220" y="91" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">2. SalesEntry</text>
+      <text x="220" y="105" text-anchor="middle" fill="#e6edf3" font-size="10">saved to DB</text>
+      <text x="220" y="119" text-anchor="middle" fill="#8b949e" font-size="9">saleDate, shift, branch</text>
+
+      <line x1="285" y1="95" x2="310" y2="95" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <rect x="310" y="65" width="130" height="60" rx="8" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <text x="375" y="91" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">3. Finished Good</text>
+      <text x="375" y="105" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">Stock Deducted</text>
+      <text x="375" y="119" text-anchor="middle" fill="#8b949e" font-size="9">availableServings -= qty</text>
+
+      <line x1="440" y1="95" x2="465" y2="95" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <rect x="465" y="65" width="130" height="60" rx="8" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="530" y="87" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">4. Revenue</text>
+      <text x="530" y="101" text-anchor="middle" fill="#e6edf3" font-size="10">totalPrice = qty × price</text>
+      <text x="530" y="115" text-anchor="middle" fill="#8b949e" font-size="9">Analytics + Reports</text>
+
+      <line x1="595" y1="95" x2="620" y2="95" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#a1)"/>
+
+      <!-- Optional customer branch -->
+      <rect x="620" y="30" width="130" height="50" rx="8" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="685" y="52" text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="700">5a. Customer CRM</text>
+      <text x="685" y="66" text-anchor="middle" fill="#8b949e" font-size="9">loyaltyPoints += earned</text>
+      <text x="685" y="76" text-anchor="middle" fill="#8b949e" font-size="9">totalSpend += amount</text>
+
+      <rect x="620" y="105" width="130" height="50" rx="8" fill="#1c2333" stroke="#8b949e" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="685" y="127" text-anchor="middle" fill="#8b949e" font-size="10" font-weight="700">5b. Shift logged</text>
+      <text x="685" y="141" text-anchor="middle" fill="#8b949e" font-size="9">SalesEntry.shift_id</text>
+
+      <line x1="620" y1="55" x2="595" y2="95" stroke="#58a6ff" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="620" y1="130" x2="595" y2="110" stroke="#8b949e" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <line x1="750" y1="95" x2="775" y2="95" stroke="#3fb950" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="775" y="65" width="100" height="60" rx="8" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="825" y="91" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="700">6. Audit</text>
+      <text x="825" y="105" text-anchor="middle" fill="#e6edf3" font-size="10">AuditLog: CREATE</text>
+      <text x="825" y="119" text-anchor="middle" fill="#8b949e" font-size="9">SalesEntry async</text>
+
+      <text x="440" y="170" text-anchor="middle" fill="#8b949e" font-size="10">Customer tier: BRONZE (0-499 pts) → SILVER (500-999) → GOLD (1000+)</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 11. API ENDPOINT MAP -->
+<!-- ============================================================ -->
+<div class="section" id="api">
+  <div class="section-title">11. Backend API Endpoint Map</div>
+  <div class="diagram-card">
+    <h3>All 28 Controllers → Route Groups → HTTP Methods</h3>
+    <svg viewBox="0 0 980 480" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <!-- Left column -->
+      <!-- Auth -->
+      <rect x="10" y="10" width="220" height="70" rx="6" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="120" y="30" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="700">/api/auth</text>
+      <text x="18" y="48" fill="#e6edf3" font-size="10">POST /login  POST /register</text>
+      <text x="18" y="62" fill="#e6edf3" font-size="10">GET  /me</text>
+
+      <!-- Recipes -->
+      <rect x="10" y="90" width="220" height="100" rx="6" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="120" y="110" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">/api/recipes</text>
+      <text x="18" y="128" fill="#e6edf3" font-size="10">GET / POST / GET /:id</text>
+      <text x="18" y="142" fill="#e6edf3" font-size="10">PUT /:id  DELETE /:id</text>
+      <text x="18" y="156" fill="#e6edf3" font-size="10">GET /:id/nutrition  GET /:id/cost</text>
+      <text x="18" y="170" fill="#e6edf3" font-size="10">POST /:id/produce  (+ allergens)</text>
+
+      <!-- Ingredients -->
+      <rect x="10" y="200" width="220" height="70" rx="6" fill="#1c2333" stroke="#f0883e" stroke-width="1.5"/>
+      <text x="120" y="220" text-anchor="middle" fill="#f0883e" font-size="11" font-weight="700">/api/ingredients</text>
+      <text x="18" y="238" fill="#e6edf3" font-size="10">GET / POST / PUT /:id</text>
+      <text x="18" y="252" fill="#e6edf3" font-size="10">DELETE /:id  GET /categories</text>
+
+      <!-- Inventory -->
+      <rect x="10" y="280" width="220" height="100" rx="6" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <text x="120" y="300" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">/api/inventory</text>
+      <text x="18" y="318" fill="#e6edf3" font-size="10">GET /?branchId  POST /stock-in</text>
+      <text x="18" y="332" fill="#e6edf3" font-size="10">POST /stock-out  POST /wastage</text>
+      <text x="18" y="346" fill="#e6edf3" font-size="10">GET /low-stock  GET /transactions</text>
+      <text x="18" y="360" fill="#e6edf3" font-size="10">GET /finished-goods  (transfers)</text>
+
+      <!-- RecipeVersion -->
+      <rect x="10" y="390" width="220" height="60" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="120" y="410" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">/api/recipes/:id/versions</text>
+      <text x="18" y="428" fill="#e6edf3" font-size="10">GET /  GET /:ver  POST /save</text>
+
+      <!-- Middle column -->
+      <!-- Procurement group -->
+      <rect x="250" y="10" width="220" height="120" rx="6" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <text x="360" y="30" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">/api/procurement</text>
+      <text x="258" y="50" fill="#e6edf3" font-size="10">/suppliers  GET/POST/PUT/DELETE</text>
+      <text x="258" y="64" fill="#e6edf3" font-size="10">/indents  GET/POST/approve/reject</text>
+      <text x="258" y="78" fill="#e6edf3" font-size="10">/purchase-orders  CRUD + status</text>
+      <text x="258" y="92" fill="#e6edf3" font-size="10">/grn  GET/POST/complete</text>
+      <text x="258" y="106" fill="#e6edf3" font-size="10">/vendors/approved  GET/approve</text>
+
+      <!-- Sales -->
+      <rect x="250" y="140" width="220" height="70" rx="6" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="360" y="160" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">/api/sales</text>
+      <text x="258" y="178" fill="#e6edf3" font-size="10">POST / (create)  GET /?branch&amp;date</text>
+      <text x="258" y="192" fill="#e6edf3" font-size="10">GET /summary  DELETE /:id</text>
+
+      <!-- Meal Plan -->
+      <rect x="250" y="220" width="220" height="80" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="360" y="240" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">/api/meal-plans</text>
+      <text x="258" y="258" fill="#e6edf3" font-size="10">GET / POST / GET /:id</text>
+      <text x="258" y="272" fill="#e6edf3" font-size="10">POST /:id/activate  POST /:id/push</text>
+      <text x="258" y="286" fill="#e6edf3" font-size="10">GET /:id/forecast</text>
+
+      <!-- Menu -->
+      <rect x="250" y="310" width="220" height="80" rx="6" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="360" y="330" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">/api/menus</text>
+      <text x="258" y="348" fill="#e6edf3" font-size="10">CRUD menus + menu items</text>
+      <text x="258" y="362" fill="#e6edf3" font-size="10">POST /activate  GET /active</text>
+      <text x="258" y="376" fill="#e6edf3" font-size="10">/api/menu-prices (branch pricing)</text>
+
+      <!-- Customers -->
+      <rect x="250" y="400" width="220" height="60" rx="6" fill="#1c2333" stroke="#58a6ff" stroke-width="1.5"/>
+      <text x="360" y="420" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">/api/customers</text>
+      <text x="258" y="438" fill="#e6edf3" font-size="10">GET/POST/PUT/DELETE  loyalty ops</text>
+
+      <!-- Right column -->
+      <!-- Admin -->
+      <rect x="490" y="10" width="220" height="100" rx="6" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="600" y="30" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">/api/admin  🔒</text>
+      <text x="498" y="50" fill="#e6edf3" font-size="10">/users  GET/POST/PUT/DELETE</text>
+      <text x="498" y="64" fill="#e6edf3" font-size="10">/branches  CRUD</text>
+      <text x="498" y="78" fill="#e6edf3" font-size="10">/audit-logs  GET (paginated)</text>
+      <text x="498" y="92" fill="#e6edf3" font-size="10">/dashboard  GET stats</text>
+
+      <!-- Dashboard -->
+      <rect x="490" y="120" width="220" height="60" rx="6" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="600" y="140" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="700">/api/dashboard</text>
+      <text x="498" y="158" fill="#e6edf3" font-size="10">GET /summary  GET /charts</text>
+      <text x="498" y="172" fill="#e6edf3" font-size="10">GET /alerts  GET /recent-activity</text>
+
+      <!-- Analytics -->
+      <rect x="490" y="190" width="220" height="70" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="600" y="210" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">/api/analytics  🔒 ADMIN</text>
+      <text x="498" y="228" fill="#e6edf3" font-size="10">GET /sales  GET /cost</text>
+      <text x="498" y="242" fill="#e6edf3" font-size="10">GET /inventory  GET /branch-compare</text>
+
+      <!-- Shifts -->
+      <rect x="490" y="270" width="220" height="60" rx="6" fill="#1c2333" stroke="#8b949e" stroke-width="1.5"/>
+      <text x="600" y="290" text-anchor="middle" fill="#8b949e" font-size="11" font-weight="700">/api/shifts</text>
+      <text x="498" y="308" fill="#e6edf3" font-size="10">GET / POST / PUT /:id</text>
+      <text x="498" y="322" fill="#e6edf3" font-size="10">GET /by-branch  GET /by-user</text>
+
+      <!-- AI -->
+      <rect x="490" y="340" width="220" height="60" rx="6" fill="#1c2333" stroke="#f0883e" stroke-width="1.5"/>
+      <text x="600" y="360" text-anchor="middle" fill="#f0883e" font-size="11" font-weight="700">/api/ai</text>
+      <text x="498" y="378" fill="#e6edf3" font-size="10">POST /chat  (Groq LLM)</text>
+      <text x="498" y="392" fill="#e6edf3" font-size="10">GET /context  (AIContextService)</text>
+
+      <!-- Notifications -->
+      <rect x="490" y="410" width="220" height="50" rx="6" fill="#1c2333" stroke="#39d353" stroke-width="1.5"/>
+      <text x="600" y="430" text-anchor="middle" fill="#39d353" font-size="11" font-weight="700">/api/notifications</text>
+      <text x="498" y="448" fill="#e6edf3" font-size="10">GET /  POST /mark-read  GET /count</text>
+
+      <!-- Far right extras -->
+      <rect x="730" y="10" width="230" height="60" rx="6" fill="#1c2333" stroke="#f85149" stroke-width="1.5"/>
+      <text x="845" y="30" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">/api/stock-transfers</text>
+      <text x="738" y="48" fill="#e6edf3" font-size="10">POST / GET / dispatch / receive</text>
+
+      <rect x="730" y="80" width="230" height="60" rx="6" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="845" y="100" text-anchor="middle" fill="#d29922" font-size="11" font-weight="700">/api/allergens</text>
+      <text x="738" y="118" fill="#e6edf3" font-size="10">GET /matrix  GET /by-recipe</text>
+
+      <rect x="730" y="150" width="230" height="60" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="845" y="170" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">/api/production</text>
+      <text x="738" y="188" fill="#e6edf3" font-size="10">POST /preview  POST /log</text>
+      <text x="738" y="200" fill="#e6edf3" font-size="10">GET /history  GET /by-recipe</text>
+    </svg>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#d29922"></div> 🔒 ADMIN only</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> All authenticated users</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 12. REDUX STATE -->
+<!-- ============================================================ -->
+<div class="section" id="state">
+  <div class="section-title">12. Redux State Tree (Web)</div>
+  <div class="diagram-card">
+    <h3>Store Structure — Slices, Actions, Reducers</h3>
+    <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <!-- Root store -->
+      <rect x="330" y="10" width="140" height="36" rx="8" fill="#58a6ff"/>
+      <text x="400" y="33" text-anchor="middle" fill="#0d1117" font-size="13" font-weight="700">Redux Store</text>
+
+      <line x1="400" y1="46" x2="400" y2="66" stroke="#30363d" stroke-width="1.5"/>
+      <line x1="150" y1="66" x2="640" y2="66" stroke="#30363d" stroke-width="1.5"/>
+
+      <!-- auth slice -->
+      <line x1="180" y1="66" x2="180" y2="86" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="80" y="86" width="200" height="120" rx="8" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="180" y="106" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="700">auth slice</text>
+      <text x="88" y="124" fill="#8b949e" font-size="10">State:</text>
+      <text x="88" y="138" fill="#e6edf3" font-size="10">user, token, isAuthenticated</text>
+      <text x="88" y="152" fill="#e6edf3" font-size="10">loading, error</text>
+      <text x="88" y="168" fill="#8b949e" font-size="10">Actions:</text>
+      <text x="88" y="182" fill="#e6edf3" font-size="10">login, logout, loadUserFromStorage</text>
+
+      <!-- recipe slice -->
+      <line x1="400" y1="66" x2="400" y2="86" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="300" y="86" width="200" height="130" rx="8" fill="#1c2333" stroke="#d29922" stroke-width="1.5"/>
+      <text x="400" y="106" text-anchor="middle" fill="#d29922" font-size="12" font-weight="700">recipe slice</text>
+      <text x="308" y="124" fill="#8b949e" font-size="10">State:</text>
+      <text x="308" y="138" fill="#e6edf3" font-size="10">recipes[ ], selectedRecipe</text>
+      <text x="308" y="152" fill="#e6edf3" font-size="10">loading, error</text>
+      <text x="308" y="168" fill="#8b949e" font-size="10">Actions:</text>
+      <text x="308" y="182" fill="#e6edf3" font-size="10">fetchRecipes, fetchRecipeById</text>
+      <text x="308" y="196" fill="#e6edf3" font-size="10">createRecipe, updateRecipe</text>
+      <text x="308" y="210" fill="#e6edf3" font-size="10">deleteRecipe, clearSelected</text>
+
+      <!-- note about services -->
+      <line x1="610" y1="66" x2="610" y2="86" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="520" y="86" width="220" height="160" rx="8" fill="#1c2333" stroke="#8b949e" stroke-width="1.5"/>
+      <text x="630" y="106" text-anchor="middle" fill="#8b949e" font-size="12" font-weight="700">Service Layer (Axios)</text>
+      <text x="528" y="126" fill="#8b949e" font-size="10">NOT in Redux — called directly</text>
+      <text x="528" y="142" fill="#e6edf3" font-size="10">authService, recipeService</text>
+      <text x="528" y="156" fill="#e6edf3" font-size="10">inventoryService, menuService</text>
+      <text x="528" y="170" fill="#e6edf3" font-size="10">procurementService, salesService</text>
+      <text x="528" y="184" fill="#e6edf3" font-size="10">mealPlanService, branchService</text>
+      <text x="528" y="198" fill="#e6edf3" font-size="10">dashboardService, adminService</text>
+      <text x="528" y="214" fill="#e6edf3" font-size="10">notificationService, newServices</text>
+      <text x="528" y="230" fill="#8b949e" font-size="9">All share api.js (Axios + JWT interceptor)</text>
+
+      <!-- bottom note -->
+      <text x="400" y="260" text-anchor="middle" fill="#8b949e" font-size="10">Mobile (ForkifyERP) has same auth slice pattern via Redux Toolkit + initAuthThunk (loads JWT from SecureStore on startup)</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 13. MOBILE NAVIGATION -->
+<!-- ============================================================ -->
+<div class="section" id="mobile">
+  <div class="section-title">13. Mobile App Navigation (ForkifyERP 2 — Expo Router)</div>
+  <div class="diagram-card">
+    <h3>File-based Routing — Auth Guard → Tab Navigator → Screen Stacks</h3>
+    <svg viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <!-- Root -->
+      <rect x="380" y="10" width="200" height="34" rx="6" fill="#bc8cff"/>
+      <text x="480" y="32" text-anchor="middle" fill="#0d1117" font-size="13" font-weight="700">app/_layout.js (Root)</text>
+      <text x="480" y="55" text-anchor="middle" fill="#8b949e" font-size="10">Redux Provider + initAuthThunk</text>
+
+      <line x1="480" y1="60" x2="480" y2="76" stroke="#30363d" stroke-width="1.5"/>
+      <line x1="220" y1="76" x2="740" y2="76" stroke="#30363d" stroke-width="1.5"/>
+
+      <!-- (auth) group -->
+      <line x1="220" y1="76" x2="220" y2="94" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="130" y="94" width="180" height="34" rx="6" fill="#1c2333" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="220" y="116" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="700">(auth) group</text>
+      <line x1="220" y1="128" x2="220" y2="144" stroke="#30363d" stroke-width="1"/>
+      <rect x="155" y="144" width="130" height="28" rx="5" fill="#161b22" stroke="#30363d"/>
+      <text x="220" y="163" text-anchor="middle" fill="#e6edf3" font-size="11">login.js</text>
+
+      <!-- (app) group -->
+      <line x1="740" y1="76" x2="740" y2="94" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="640" y="94" width="200" height="34" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="740" y="116" text-anchor="middle" fill="#bc8cff" font-size="12" font-weight="700">(app) → auth guard</text>
+
+      <!-- (app) children -->
+      <line x1="740" y1="128" x2="740" y2="148" stroke="#30363d" stroke-width="1.5"/>
+      <line x1="430" y1="148" x2="960" y2="148" stroke="#30363d" stroke-width="1.5"/>
+
+      <!-- (tabs) -->
+      <line x1="480" y1="148" x2="480" y2="166" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="370" y="166" width="220" height="34" rx="6" fill="#1c2333" stroke="#bc8cff" stroke-width="1.5"/>
+      <text x="480" y="188" text-anchor="middle" fill="#bc8cff" font-size="12" font-weight="700">(tabs) — bottom tabs</text>
+      <line x1="480" y1="200" x2="480" y2="216" stroke="#30363d" stroke-width="1"/>
+      <line x1="310" y1="216" x2="660" y2="216" stroke="#30363d" stroke-width="1"/>
+      <!-- 5 tabs -->
+      <line x1="320" y1="216" x2="320" y2="232" stroke="#30363d" stroke-width="1"/>
+      <rect x="278" y="232" width="84" height="24" rx="4" fill="#161b22" stroke="#bc8cff"/>
+      <text x="320" y="249" text-anchor="middle" fill="#e6edf3" font-size="10">dashboard</text>
+      <line x1="400" y1="216" x2="400" y2="232" stroke="#30363d" stroke-width="1"/>
+      <rect x="360" y="232" width="80" height="24" rx="4" fill="#161b22" stroke="#bc8cff"/>
+      <text x="400" y="249" text-anchor="middle" fill="#e6edf3" font-size="10">inventory</text>
+      <line x1="480" y1="216" x2="480" y2="232" stroke="#30363d" stroke-width="1"/>
+      <rect x="441" y="232" width="78" height="24" rx="4" fill="#161b22" stroke="#bc8cff"/>
+      <text x="480" y="249" text-anchor="middle" fill="#e6edf3" font-size="10">recipes</text>
+      <line x1="560" y1="216" x2="560" y2="232" stroke="#30363d" stroke-width="1"/>
+      <rect x="520" y="232" width="80" height="24" rx="4" fill="#161b22" stroke="#bc8cff"/>
+      <text x="560" y="249" text-anchor="middle" fill="#e6edf3" font-size="10">procurement</text>
+      <line x1="640" y1="216" x2="640" y2="232" stroke="#30363d" stroke-width="1"/>
+      <rect x="605" y="232" width="70" height="24" rx="4" fill="#161b22" stroke="#bc8cff"/>
+      <text x="640" y="249" text-anchor="middle" fill="#e6edf3" font-size="10">more ···</text>
+
+      <!-- Other screens off (app) -->
+      <line x1="430" y1="148" x2="430" y2="166" stroke="#30363d" stroke-width="1.5"/>
+      <rect x="340" y="166" width="80" height="24" rx="4" fill="#161b22" stroke="#8b949e"/>
+      <!-- this overlaps, reposition -->
+
+      <!-- Screen groups off tabs/more -->
+      <text x="100" y="290" fill="#8b949e" font-size="10">inventory/: raw-materials, finished-goods, stock-in, stock-out, transfers, wastage</text>
+      <text x="100" y="308" fill="#8b949e" font-size="10">recipes/: list (tab), detail, add-edit, log-production</text>
+      <text x="100" y="326" fill="#8b949e" font-size="10">procurement/: suppliers, vendors, indent, orders, grn</text>
+      <text x="100" y="344" fill="#8b949e" font-size="10">More → admin/(analytics, audit, branches, users), sales/daily-sales, customers, meal-planning/weekly, reports/[type], staff/shifts</text>
+    </svg>
+  </div>
+</div>
+
+<div style="text-align:center; color: var(--muted); font-size:12px; margin-top:40px; padding:20px; border-top:1px solid var(--border)">
+  FoodERP / Forkify — Complete Diagram Reference · Spring Boot Backend + React Web + React Native Mobile
+</div>
+
+</body>
+</html>

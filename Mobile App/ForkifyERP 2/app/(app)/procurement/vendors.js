@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { procurementService } from '../../../src/services';
 import { usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, SearchBar } from '../../../src/components/common';
+import { Banner, SearchBar, ScreenHeader} from '../../../src/components/common';
 
 export default function VendorsScreen() {
   const router = useRouter();
@@ -48,10 +48,10 @@ export default function VendorsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>✅ Approved Vendors</Text><Text style={S.headerSub}>Manage vendor approval status</Text></View>
-      </View>
+      <ScreenHeader
+          title="✅ Approved Vendors"
+          subtitle="Manage vendor approval status"
+        />
 
       {/* Stats */}
       <View style={{ flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, paddingBottom: Spacing.sm }}>

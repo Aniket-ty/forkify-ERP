@@ -8,7 +8,7 @@ import { useRouter } from 'expo-router';
 import { inventoryService, recipeService } from '../../../src/services';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, SearchBar, FormField, FormInput, PrimaryButton } from '../../../src/components/common';
+import { Banner, SearchBar, FormField, FormInput, PrimaryButton, ScreenHeader} from '../../../src/components/common';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const REASONS = ['PRODUCTION', 'TRANSFER', 'WASTAGE', 'ADJUSTMENT', 'OTHER'];
@@ -65,16 +65,15 @@ export default function StockOutScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={S.headerTitle}>📤 Stock Out</Text>
-          <Text style={S.headerSub}>Record outgoing stock usage</Text>
-        </View>
-        <TouchableOpacity style={S.addBtn} onPress={() => setModalOpen(true)}>
+      <ScreenHeader
+          title="📤 Stock Out"
+          subtitle="Record outgoing stock usage"
+          right={
+            <TouchableOpacity style={S.addBtn} onPress={() => setModalOpen(true)}>
           <Text style={S.addBtnText}>+ New Entry</Text>
         </TouchableOpacity>
-      </View>
+          }
+        />
 
       <View style={{ flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, paddingBottom: Spacing.sm }}>
         {[{ label: 'Total', val: transactions.length, icon: '📋' }, { label: 'Today', val: transactions.filter(t => t.transactionDate === new Date().toISOString().split('T')[0]).length, icon: '📅' }].map((s, i) => (

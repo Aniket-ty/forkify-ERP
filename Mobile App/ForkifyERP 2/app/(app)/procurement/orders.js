@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { procurementService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, LoadingScreen, EmptyState, StatusBadge } from '../../../src/components/common';
+import { Banner, LoadingScreen, EmptyState, StatusBadge, ScreenHeader} from '../../../src/components/common';
 
 export default function PurchaseOrders() {
   const router = useRouter();
@@ -46,13 +46,9 @@ export default function PurchaseOrders() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}><Text style={styles.backIcon}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.title}>🛒  Purchase Orders</Text>
-          <Text style={styles.sub}>{orders.length} orders</Text>
-        </View>
-      </View>
+      <ScreenHeader title="🛒  Purchase Orders"
+          subtitle={`${orders.length} orders`}
+        />
 
       <Banner type="error"   message={error}   onDismiss={() => setError(null)} />
       <Banner type="success" message={success} onDismiss={() => setSuccess(null)} />

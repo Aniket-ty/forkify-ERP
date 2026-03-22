@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { procurementService, recipeService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, StatusBadge } from '../../../src/components/common';
+import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, StatusBadge, ScreenHeader} from '../../../src/components/common';
 
 const emptyItem = () => ({ ingredientId: '', quantity: '', notes: '' });
 const emptyForm = () => ({ priority: 'MEDIUM', notes: '', items: [emptyItem()] });
@@ -81,16 +81,14 @@ export default function MaterialIndent() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}><Text style={styles.backIcon}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.title}>📋  Material Indent</Text>
-          <Text style={styles.sub}>{indents.length} requests</Text>
-        </View>
-        <TouchableOpacity style={styles.addBtn} onPress={() => { setForm(emptyForm()); setModal(true); }}>
+      <ScreenHeader title="📋  Material Indent"
+          subtitle={`${indents.length} requests`}
+          right={
+            <TouchableOpacity style={styles.addBtn} onPress={() => { setForm(emptyForm()); setModal(true); }}>
           <Text style={styles.addBtnText}>+ Raise</Text>
         </TouchableOpacity>
-      </View>
+          }
+        />
 
       <Banner type="error"   message={error}   onDismiss={() => setError(null)} />
       <Banner type="success" message={success} onDismiss={() => setSuccess(null)} />

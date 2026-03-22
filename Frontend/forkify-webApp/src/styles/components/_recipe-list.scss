@@ -1,0 +1,128 @@
+.recipe-list {
+  padding: 0.5rem;
+  
+  .recipe-list-item {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    margin-bottom: 0.5rem;
+    transition: $transition;
+    background: transparent;
+    border: 2px solid transparent;
+    cursor: pointer;
+    @include hover-effect;
+    
+    &:hover {
+      background: rgba($primary-color, 0.05);
+    }
+    
+    &.selected {
+      background: rgba($primary-color, 0.1);
+      border-color: $primary-color;
+    }
+    
+    .recipe-item-content {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    
+    .recipe-image {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    
+    .recipe-info {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+      
+      .recipe-title {
+        font-weight: 600;
+        color: $text-dark;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+        @include truncate(2);
+        line-height: 1.4;
+      }
+      
+      .recipe-publisher {
+        font-size: 0.75rem;
+        color: $text-light;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .bookmark-indicator {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: $primary-color;
+        color: $white;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        @include flex-center;
+        
+        svg {
+          width: 0.75rem;
+          height: 0.75rem;
+        }
+      }
+    }
+  }
+}
+
+// Bookmark Button Component
+.bookmark-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: $light-bg;
+  border: none;
+  border-radius: 50%;
+  color: $text-dark;
+  cursor: pointer;
+  transition: $transition;
+  flex-shrink: 0;
+  
+  &:hover {
+    background: darken($light-bg, 5%);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &.bookmarked {
+    background: $primary-color;
+    color: $white;
+    
+    &:hover {
+      background: $primary-hover;
+    }
+  }
+  
+  .bookmark-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  &.p-2 {
+    padding: 0.5rem;
+  }
+  
+  &.p-3 {
+    padding: 0.75rem;
+  }
+  
+  &.p-4 {
+    padding: 1rem;
+  }
+}

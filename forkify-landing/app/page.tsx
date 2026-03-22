@@ -289,7 +289,7 @@ export default function Home() {
                 <a href="#cta" className="btn-primary">Start Free Trial →</a>
                 <a href="#features" className="btn-outline">Explore Features</a>
               </div>
-              <div className="hero-stats animate-fade-up delay-400">
+              {/* <div className="hero-stats animate-fade-up delay-400">
                 {[
                   { val: "28+", lbl: "API Endpoints" },
                   { val: "60+", lbl: "App Screens" },
@@ -300,7 +300,7 @@ export default function Home() {
                     <div className="hero-stat-lbl">{s.lbl}</div>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             {/* Right — dashboard mockup */}

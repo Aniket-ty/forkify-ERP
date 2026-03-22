@@ -1,0 +1,96 @@
+// ── Forkify ERP Design System ─────────────────────────────────────────────────
+// Palette: #0061d2 (blue), black, white — three colours throughout
+
+// ── Core Brand ───────────────────────────────────────────────────────────────
+$blue:        #0061d2;
+$blue-hover:  #0052b3;
+$blue-dark:   #004aaa;
+$blue-light:  #e8f0fd;
+$blue-mid:    #b3ccf5;
+
+// ── Neutral Scale ─────────────────────────────────────────────────────────────
+$white:       #ffffff;
+$black:       #000000;
+$gray-50:     #f8f9fc;
+$gray-100:    #f0f2f7;
+$gray-200:    #e2e6ef;
+$gray-300:    #c8cedb;
+$gray-400:    #9aa3b4;
+$gray-500:    #6b7385;
+$gray-600:    #4b5263;
+$gray-700:    #2e3344;
+$gray-800:    #1a1e2d;
+$gray-900:    #0d1017;
+
+// ── Semantic ─────────────────────────────────────────────────────────────────
+// All mapped to blue/neutral so the 3-colour rule is never broken
+$success-color: #0a6640;   // kept legible green for success states only
+$warning-color: #856404;   // kept amber for warning states only
+$error-color:   #c10000;   // kept red for error states only
+$info-color:    $blue;
+
+// ── Legacy aliases (used by existing component SCSS — DO NOT REMOVE) ─────────
+$primary-color:   $blue;
+$primary-hover:   $blue-hover;
+$secondary-color: $gray-600;
+$light-bg:        $gray-50;
+$text-dark:       $gray-900;
+$text-light:      $gray-500;
+$border-color:    $gray-200;
+
+// Old palette names — remapped to blue/neutral
+$green:   $blue;           // nutrition bars etc → blue
+$orange:  $blue;           // old primary accent → blue
+$red:     #c10000;         // kept for danger-only use
+$purple:  $blue;
+$teal:    $blue;
+$pink:    $gray-400;
+$yellow:  $warning-color;
+
+// Light background variants
+$green-light:  $blue-light;
+$blue-light-v: $blue-light;
+$orange-light: $blue-light;
+$purple-light: $blue-light;
+$teal-light:   $blue-light;
+$pink-light:   $gray-100;
+$red-light:    #fde8e8;
+$yellow-light: #fff8e1;
+
+// ── Spacing ───────────────────────────────────────────────────────────────────
+$spacing-xs:  0.25rem;
+$spacing-sm:  0.5rem;
+$spacing-md:  1rem;
+$spacing-lg:  1.5rem;
+$spacing-xl:  2rem;
+$spacing-2xl: 2.5rem;
+
+// ── Borders & Shadows ─────────────────────────────────────────────────────────
+$border-radius:    0.5rem;
+$border-radius-lg: 0.75rem;
+$border-radius-xl: 1rem;
+$shadow-sm:  0 1px 3px 0 rgba(0,0,0,.06);
+$shadow:     0 4px 12px 0 rgba(0,0,0,.08);
+$shadow-lg:  0 8px 24px 0 rgba(0,0,0,.12);
+$shadow-xl:  0 16px 40px 0 rgba(0,0,0,.16);
+$blue-shadow: 0 4px 14px rgba(0,97,210,.25);
+
+// ── Transitions ───────────────────────────────────────────────────────────────
+$transition-fast: 0.12s ease;
+$transition:      0.22s ease;
+$transition-slow: 0.4s ease;
+
+// ── Z-index ───────────────────────────────────────────────────────────────────
+$z-dropdown:       1000;
+$z-sticky:         1020;
+$z-fixed:          1030;
+$z-modal-backdrop: 1040;
+$z-modal:          1050;
+$z-popover:        1060;
+$z-tooltip:        1070;
+
+// ── Breakpoints ───────────────────────────────────────────────────────────────
+$breakpoint-mobile:  768px;
+$breakpoint-tablet:  1024px;
+$breakpoint-desktop: 1280px;
+$breakpoint-wide:    1536px;

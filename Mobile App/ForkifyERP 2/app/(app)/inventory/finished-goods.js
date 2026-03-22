@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import api from '../../../src/services/api';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, SearchBar } from '../../../src/components/common';
+import { Banner, SearchBar, ScreenHeader} from '../../../src/components/common';
 
 export default function FinishedGoodsScreen() {
   const router = useRouter();
@@ -33,13 +33,10 @@ export default function FinishedGoodsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={S.headerTitle}>🍽 Finished Goods</Text>
-          <Text style={S.headerSub}>Produced dishes in stock</Text>
-        </View>
-      </View>
+      <ScreenHeader
+          title="🍽 Finished Goods"
+          subtitle="Produced dishes in stock"
+        />
 
       {/* Summary */}
       <View style={{ flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, paddingBottom: Spacing.sm }}>

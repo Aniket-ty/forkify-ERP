@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { shiftService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, FormField, FormInput, PrimaryButton } from '../../../src/components/common';
+import { Banner, FormField, FormInput, PrimaryButton, ScreenHeader} from '../../../src/components/common';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -73,11 +73,15 @@ export default function ShiftsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>📅 Shift Scheduler</Text><Text style={S.headerSub}>{fromDate} – {toDate}</Text></View>
-        {canApprove && <TouchableOpacity style={S.addBtn} onPress={() => setModalOpen(true)}><Text style={S.addBtnText}>+ Shift</Text></TouchableOpacity>}
-      </View>
+      <ScreenHeader
+          title="📅 Shift Scheduler"
+          subtitle={`${fromDate} – ${toDate}`}
+          right={canApprove ? (
+            <TouchableOpacity style={S.addBtn} onPress={() => setModalOpen(true)}>
+              <Text style={S.addBtnText}>+ Shift</Text>
+            </TouchableOpacity>
+          ) : null}
+        />
 
       {/* Week nav */}
       <View style={S.weekNav}>

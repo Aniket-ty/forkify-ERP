@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { menuService } from '../../../src/services';
 import { usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, SearchBar, StatusBadge } from '../../../src/components/common';
+import { Banner, SearchBar, StatusBadge, ScreenHeader} from '../../../src/components/common';
 
 export default function ActiveMenuScreen() {
   const router = useRouter();
@@ -49,10 +49,10 @@ export default function ActiveMenuScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>📋 Menu Management</Text><Text style={S.headerSub}>{activeMenus.length} active menus</Text></View>
-      </View>
+      <ScreenHeader
+          title="📋 Menu Management"
+          subtitle={`${activeMenus.length} active menus`}
+        />
 
       <View style={{ flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, paddingBottom: Spacing.sm }}>
         {[{ label: 'Total', val: menus.length, icon: '📋' }, { label: 'Active', val: activeMenus.length, icon: '✅' }].map((s, i) => (

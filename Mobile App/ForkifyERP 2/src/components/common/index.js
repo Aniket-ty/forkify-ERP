@@ -241,3 +241,5 @@ const sharedStyles = StyleSheet.create({
   progressTrack:  { height: 4, backgroundColor: Colors.borderLight, borderRadius: 2, overflow: 'hidden' },
   progressFill:   { height: 4, borderRadius: 2 },
 });
+
+export { default as ScreenHeader } from './ScreenHeader';

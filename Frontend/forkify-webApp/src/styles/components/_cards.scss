@@ -1,0 +1,26 @@
+// Forkify ERP – Cards
+
+.card {
+  background: $white; border: 1px solid $gray-200;
+  border-radius: $border-radius-lg; overflow: hidden;
+
+  &-header {
+    padding: 16px 20px; border-bottom: 1px solid $gray-100;
+    display: flex; align-items: center; justify-content: space-between;
+    h2, h3 { font-size: 15px; font-weight: 700; color: $gray-900; }
+  }
+  &-body { padding: 20px; }
+  &-footer {
+    padding: 14px 20px; border-top: 1px solid $gray-100;
+    background: $gray-50;
+  }
+
+  &:hover { box-shadow: $shadow; }
+}
+
+.stat-card {
+  background: $white; border: 1px solid $gray-200;
+  border-radius: $border-radius-lg; padding: 20px;
+  transition: box-shadow $transition, border-color $transition;
+  &:hover { box-shadow: $shadow; border-color: $blue-mid; }
+}

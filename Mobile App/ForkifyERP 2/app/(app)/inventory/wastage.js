@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { inventoryService, recipeService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, StatusBadge } from '../../../src/components/common';
+import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, StatusBadge, ScreenHeader} from '../../../src/components/common';
 import api from '../../../src/services/api';
 
 const REASONS = ['EXPIRED','DAMAGED','SPOILED','OVERPRODUCTION','QUALITY_ISSUE','OTHER'];
@@ -94,18 +94,14 @@ export default function Wastage() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-          <Text style={styles.backIcon}>←</Text>
-        </TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.title}>🗑  Wastage Management</Text>
-          <Text style={styles.sub}>Log and approve ingredient losses</Text>
-        </View>
-        <TouchableOpacity style={styles.dangerBtn} onPress={() => { setForm(emptyForm()); setModalOpen(true); }}>
+      <ScreenHeader title="🗑  Wastage Management"
+          subtitle="Log and approve ingredient losses"
+          right={
+            <TouchableOpacity style={styles.dangerBtn} onPress={() => { setForm(emptyForm()); setModalOpen(true); }}>
           <Text style={styles.dangerBtnText}>⚠️ Record</Text>
         </TouchableOpacity>
-      </View>
+          }
+        />
 
       <Banner type="error"   message={error}   onDismiss={() => setError(null)} />
       <Banner type="success" message={success} onDismiss={() => setSuccess(null)} />

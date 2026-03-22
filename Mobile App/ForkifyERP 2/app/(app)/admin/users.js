@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { adminService, branchService } from '../../../src/services';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, SearchBar, FormField, FormInput, PrimaryButton } from '../../../src/components/common';
+import { Banner, SearchBar, FormField, FormInput, PrimaryButton, ScreenHeader} from '../../../src/components/common';
 
 const ROLES = ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_STAFF', 'ROLE_USER'];
 const ROLE_LABELS = { ROLE_ADMIN: 'Super Admin', ROLE_MANAGER: 'Branch Manager', ROLE_STAFF: 'Kitchen Staff', ROLE_USER: 'Inventory Clerk' };
@@ -74,11 +74,13 @@ export default function UserManagementScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>👤 User Management</Text><Text style={S.headerSub}>{users.length} users</Text></View>
-        <TouchableOpacity style={S.addBtn} onPress={openCreate}><Text style={S.addBtnText}>+ New User</Text></TouchableOpacity>
-      </View>
+      <ScreenHeader
+          title="👤 User Management"
+          subtitle={`${users.length} users`}
+          right={
+            <TouchableOpacity style={S.addBtn} onPress={openCreate}><Text style={S.addBtnText}>+ New User</Text></TouchableOpacity>
+          }
+        />
 
       <View style={{ paddingHorizontal: Spacing.lg, marginTop: Spacing.md, marginBottom: Spacing.sm }}>
         <Banner type="error" message={error} onDismiss={() => setError(null)} />

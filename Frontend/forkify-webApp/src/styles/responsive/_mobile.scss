@@ -1,0 +1,79 @@
+@include mobile {
+  // Typography
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+  
+  // Spacing
+  .mobile-p-0 { padding: 0 !important; }
+  .mobile-m-0 { margin: 0 !important; }
+  
+  // Layout
+  .mobile-stack {
+    flex-direction: column !important;
+    
+    > * {
+      width: 100% !important;
+    }
+  }
+  
+  .mobile-center {
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  
+  // Forms
+  input, select, textarea {
+    font-size: 16px !important; // Prevents iOS zoom
+  }
+  
+  // Tables
+  .table-responsive {
+    margin: 0 -0.75rem;
+    padding: 0 0.75rem;
+  }
+  
+  // Cards
+  .card {
+    margin: 0.5rem;
+    border-radius: 0.75rem;
+  }
+  
+  // Modals
+  .modal__content {
+    margin: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+  
+  // Safe Area Insets
+  @supports (padding: max(0px)) {
+    body {
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    .header,
+    .main-wrapper,
+    .footer {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+  }
+  
+  // Hide elements on mobile
+  .mobile-hide {
+    display: none !important;
+  }
+  
+  // Show elements on mobile
+  .mobile-show {
+    display: block !important;
+  }
+  
+  // Full width on mobile
+  .mobile-full {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

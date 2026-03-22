@@ -1,0 +1,49 @@
+@include desktop {
+  // Adjust grid columns
+  .dashboard-grid,
+  .planner-grid,
+  .supplier-content,
+  .reports-content {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  // Adjust sidebar
+  .sidebar-nav {
+    width: 250px;
+    
+    &.collapsed {
+      width: 70px;
+    }
+  }
+  
+  .main-content {
+    &.sidebar-open {
+      margin-left: 250px;
+    }
+    
+    &.sidebar-closed {
+      margin-left: 70px;
+    }
+  }
+  
+  // Adjust header
+  .header .header-top {
+    .search-section {
+      max-width: 400px;
+    }
+  }
+  
+  // Adjust containers
+  .main-wrapper {
+    padding: 1.5rem;
+  }
+  
+  // Hide/show elements
+  .desktop-hide {
+    display: none !important;
+  }
+  
+  .desktop-show {
+    display: block !important;
+  }
+}

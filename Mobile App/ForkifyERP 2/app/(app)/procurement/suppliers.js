@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { procurementService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput } from '../../../src/components/common';
+import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, ScreenHeader} from '../../../src/components/common';
 
 const emptyForm = () => ({ name: '', contactPerson: '', phone: '', email: '', address: '', category: '', notes: '' });
 
@@ -81,18 +81,14 @@ export default function SupplierManagement() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}><Text style={styles.backIcon}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.title}>🤝  Suppliers</Text>
-          <Text style={styles.sub}>{suppliers.length} suppliers</Text>
-        </View>
-        {canApprove && (
+      <ScreenHeader title="🤝  Suppliers"
+          subtitle={`${suppliers.length} suppliers`}
+          right={canApprove && (
           <TouchableOpacity style={styles.addBtn} onPress={openCreate}>
             <Text style={styles.addBtnText}>+ Add</Text>
           </TouchableOpacity>
         )}
-      </View>
+        />
 
       <Banner type="error"   message={error}   onDismiss={() => setError(null)} />
       <Banner type="success" message={success} onDismiss={() => setSuccess(null)} />

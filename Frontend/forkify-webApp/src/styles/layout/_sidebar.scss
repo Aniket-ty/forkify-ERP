@@ -1,0 +1,241 @@
+// Forkify ERP – Sidebar (Blue/Black/White only)
+
+.fk-sidebar {
+  width: 256px; min-width: 256px;
+  height: 100vh;
+  background: $blue;
+  display: flex; flex-direction: column;
+  position: fixed; left: 0; top: 0; z-index: $z-fixed;
+  transition: width $transition-slow cubic-bezier(.4,0,.2,1),
+              min-width $transition-slow cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+  font-family: inherit;
+
+  &.collapsed { width: 64px; min-width: 64px; }
+
+  // top accent line
+  &::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: $white;
+    opacity: .2;
+  }
+}
+
+// Brand row
+.fk-brand {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 16px 16px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba($white, .12);
+}
+.fk-brand-inner { display: flex; align-items: center; gap: 10px; overflow: hidden; }
+.fk-logo-mark {
+  width: 34px; height: 34px;
+  background: $white;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: $blue;
+}
+.fk-brand-text { overflow: hidden; transition: opacity $transition, width $transition-slow; }
+.fk-brand-name {
+  font-size: 16px; font-weight: 700; color: $white;
+  letter-spacing: -.3px; line-height: 1.1; white-space: nowrap;
+}
+.fk-brand-sub {
+  font-size: 10px; color: rgba($white, .55);
+  letter-spacing: .7px; text-transform: uppercase; white-space: nowrap;
+}
+.fk-collapse-btn {
+  width: 28px; height: 28px;
+  background: rgba($white, .12); border: 1px solid rgba($white, .2);
+  border-radius: 7px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: rgba($white, .7); transition: all $transition;
+  flex-shrink: 0; outline: none;
+  &:hover { background: rgba($white, .22); color: $white; }
+}
+.fk-sidebar.collapsed .fk-brand-text { opacity: 0; width: 0; }
+.fk-sidebar.collapsed .fk-collapse-btn { display: none; }
+
+// Branch switcher
+.fk-branch-wrap {
+  padding: 10px 12px 12px; flex-shrink: 0; position: relative;
+}
+.fk-branch-btn {
+  width: 100%; background: rgba($white, .1); border: 1px solid rgba($white, .18);
+  border-radius: 10px; padding: 9px 11px;
+  display: flex; align-items: center; gap: 9px;
+  cursor: pointer; transition: all $transition; text-align: left; color: $white;
+  &:hover { background: rgba($white, .18); border-color: rgba($white, .35); }
+}
+.fk-branch-icon {
+  width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; background: rgba($white, .18); color: $white;
+}
+.fk-branch-info { overflow: hidden; flex: 1; }
+.fk-branch-name {
+  font-size: 12.5px; font-weight: 600; color: $white;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2;
+}
+.fk-branch-city { font-size: 10.5px; color: rgba($white, .6); white-space: nowrap; }
+.fk-branch-chevron { color: rgba($white, .5); transition: transform $transition; flex-shrink: 0; }
+.fk-branch-chevron.open { transform: rotate(180deg); }
+
+.fk-branch-dropdown {
+  position: absolute; top: calc(100% - 4px); left: 12px; right: 12px;
+  background: $white; border: 1px solid $gray-200; border-radius: 10px;
+  overflow: hidden; z-index: 200; box-shadow: $shadow-lg;
+  animation: fkDropIn .15s ease;
+}
+@keyframes fkDropIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+.fk-branch-option {
+  display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+  cursor: pointer; transition: background $transition;
+  border-bottom: 1px solid $gray-100;
+  &:last-child { border-bottom: none; }
+  &:hover { background: $gray-50; }
+  &.active { background: $blue-light; }
+}
+.fk-branch-option-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: $gray-300; flex-shrink: 0;
+}
+.fk-branch-option.active .fk-branch-option-dot { background: $blue; }
+.fk-branch-option-name { font-size: 12.5px; font-weight: 600; color: $gray-800; flex: 1; }
+.fk-branch-option-city { font-size: 10.5px; color: $gray-400; }
+.fk-branch-hq-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 4px; background: $blue-light; color: $blue;
+}
+
+// Divider
+.fk-divider { height: 1px; background: rgba($white, .12); margin: 0 12px 8px; }
+
+// Nav scroll
+.fk-nav {
+  flex: 1; overflow-y: auto; overflow-x: hidden; padding: 4px 0 12px;
+  scrollbar-width: thin; scrollbar-color: rgba($white, .2) transparent;
+  &::-webkit-scrollbar { width: 3px; }
+  &::-webkit-scrollbar-thumb { background: rgba($white, .2); border-radius: 2px; }
+}
+
+// Section label
+.fk-section-label {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: rgba($white, .5);
+  padding: 10px 16px 4px; white-space: nowrap; overflow: hidden;
+  transition: opacity $transition;
+}
+.fk-sidebar.collapsed .fk-section-label { opacity: 0; }
+
+// Nav items
+.fk-nav-item { padding: 0 8px; margin-bottom: 1px; }
+.fk-nav-btn {
+  width: 100%; display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px; cursor: pointer;
+  transition: all $transition-fast; background: transparent;
+  border: none; text-align: left; color: rgba($white, .65);
+  min-height: 38px; outline: none;
+  &:hover { background: rgba($white, .12); color: $white; }
+  &.active {
+    background: $white; color: $blue;
+    .fk-nav-icon { color: $blue; }
+  }
+  &.locked { opacity: .35; cursor: not-allowed; pointer-events: none; }
+}
+.fk-nav-icon { width: 17px; height: 17px; flex-shrink: 0; }
+.fk-nav-label {
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+  overflow: hidden; flex: 1; transition: opacity $transition; letter-spacing: -.1px;
+}
+.fk-sidebar.collapsed .fk-nav-label { opacity: 0; width: 0; pointer-events: none; }
+.fk-nav-end {
+  display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+  transition: opacity $transition;
+}
+.fk-sidebar.collapsed .fk-nav-end { opacity: 0; pointer-events: none; }
+.fk-hq-badge {
+  font-size: 8.5px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+  padding: 2px 5px; border-radius: 4px;
+  background: rgba($white, .2); color: $white;
+}
+.fk-nav-chevron {
+  color: rgba($white, .4); transition: transform $transition;
+  width: 14px; height: 14px;
+  &.open { transform: rotate(90deg); }
+}
+.fk-nav-btn.active .fk-hq-badge { background: $blue-light; color: $blue; }
+.fk-nav-btn.active .fk-nav-chevron { color: rgba($blue, .6); }
+
+// Children
+.fk-children {
+  overflow: hidden; transition: max-height .25s cubic-bezier(.4,0,.2,1); max-height: 0;
+  &.open { max-height: 600px; }
+}
+.fk-child-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px 6px 38px; margin: 0 8px 1px;
+  border-radius: 7px; cursor: pointer; transition: all $transition-fast;
+  color: rgba($white, .55); font-size: 12.5px; white-space: nowrap;
+  position: relative;
+  &::before {
+    content: ''; position: absolute; left: 20px; top: 50%;
+    transform: translateY(-50%); width: 4px; height: 4px;
+    border-radius: 50%; background: rgba($white, .25); transition: background $transition-fast;
+  }
+  &:hover { background: rgba($white, .1); color: $white; }
+  &:hover::before { background: rgba($white, .6); }
+  &.active { background: rgba($white, .15); color: $white; font-weight: 500; }
+  &.active::before { background: $white; }
+  &.locked { opacity: .25; cursor: not-allowed; pointer-events: none; }
+}
+.fk-child-hq {
+  font-size: 8px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
+  padding: 1.5px 4px; border-radius: 3px;
+  background: rgba($white, .2); color: $white; margin-left: auto;
+}
+
+// Bottom
+.fk-bottom {
+  flex-shrink: 0; padding: 10px 8px;
+  border-top: 1px solid rgba($white, .12);
+}
+.fk-user-row {
+  display: flex; align-items: center; gap: 9px; padding: 8px 10px;
+  border-radius: 10px; background: rgba($white, .1);
+  border: 1px solid rgba($white, .16); margin-top: 4px;
+}
+.fk-avatar {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: $white; color: $blue;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+.fk-user-info {
+  flex: 1; overflow: hidden; transition: opacity $transition;
+}
+.fk-sidebar.collapsed .fk-user-info { opacity: 0; width: 0; pointer-events: none; }
+.fk-user-name {
+  font-size: 12.5px; font-weight: 600; color: $white;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2;
+}
+.fk-user-role { font-size: 10.5px; color: rgba($white, .6); white-space: nowrap; }
+.fk-logout-btn {
+  width: 28px; height: 28px; background: rgba($white, .1);
+  border: 1px solid rgba($white, .2); border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: rgba($white, .6); transition: all $transition;
+  flex-shrink: 0; outline: none;
+  &:hover { background: rgba($white, .22); color: $white; }
+}
+.fk-sidebar.collapsed .fk-logout-btn { display: none; }
+.fk-expand-btn {
+  width: 100%; display: flex; align-items: center; justify-content: center;
+  padding: 8px; background: rgba($white, .1);
+  border: 1px solid rgba($white, .18); border-radius: 9px;
+  cursor: pointer; color: rgba($white, .7); margin-top: 6px; transition: all $transition;
+  &:hover { background: rgba($white, .2); color: $white; }
+}
+.fk-version { font-size: 10px; color: rgba($white, .3); text-align: center; padding: 6px 0 2px; }

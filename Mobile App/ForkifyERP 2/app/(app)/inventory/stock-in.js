@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { inventoryService, recipeService } from '../../../src/services';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput } from '../../../src/components/common';
+import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, ScreenHeader} from '../../../src/components/common';
 
 const emptyForm = () => ({ ingredientId: '', quantity: '', supplier: '', referenceNo: '', unitCost: '', expiryDate: '', notes: '' });
 
@@ -78,18 +78,14 @@ export default function StockIn() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-          <Text style={styles.backIcon}>←</Text>
-        </TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.title}>📥  Stock In</Text>
-          <Text style={styles.sub}>Record incoming deliveries</Text>
-        </View>
-        <TouchableOpacity style={styles.addBtn} onPress={() => { setForm(emptyForm()); setModalOpen(true); }}>
+      <ScreenHeader title="📥  Stock In"
+          subtitle="Record incoming deliveries"
+          right={
+            <TouchableOpacity style={styles.addBtn} onPress={() => { setForm(emptyForm()); setModalOpen(true); }}>
           <Text style={styles.addBtnText}>+ Entry</Text>
         </TouchableOpacity>
-      </View>
+          }
+        />
 
       <Banner type="error"   message={error}   onDismiss={() => setError(null)} />
       <Banner type="success" message={success} onDismiss={() => setSuccess(null)} />

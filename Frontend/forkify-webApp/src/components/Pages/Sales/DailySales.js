@@ -421,9 +421,14 @@ export default function DailySales() {
     finally { setSaving(false); }
   };
 
-  const todayRevenue = history.reduce((s, e) => s + Number(e.totalRevenue || 0), 0);
-  const todayProfit  = history.reduce((s, e) => s + Number(e.grossProfit  || 0), 0);
-  const todayCovers  = history.reduce((s, e) => s + Number(e.quantitySold || 0), 0);
+  // QR-ORDER entries are pending orders placed by customers — NOT yet fulfilled sales.
+  // Only FULFILLED entries (logged by staff) count as real sales.
+  // Exclude QR-ORDER entries from all revenue/count calculations and the history table.
+  const salesHistory = history.filter(e => !e.notes || !e.notes.includes('[QR-ORDER:'));
+
+  const todayRevenue = salesHistory.reduce((s, e) => s + Number(e.totalRevenue || 0), 0);
+  const todayProfit  = salesHistory.reduce((s, e) => s + Number(e.grossProfit  || 0), 0);
+  const todayCovers  = salesHistory.reduce((s, e) => s + Number(e.quantitySold || 0), 0);
 
   return (
     <div className="ds-page">
@@ -446,7 +451,7 @@ export default function DailySales() {
       {error   && <div className="ds-banner error"><AlertTriangle size={14}/>{error}<button onClick={()=>setError(null)}>✕</button></div>}
       {success && <div className="ds-banner success"><CheckCircle size={14}/>{success}</div>}
 
-      {history.length > 0 && (
+      {salesHistory.length > 0 && (
         <div className="ds-kpis">
           {[
             { label:'Covers Sold',   val: todayCovers,                                                                 color:'#3b82f6', icon: Users },
@@ -575,16 +580,16 @@ export default function DailySales() {
         </div>
       </div>
 
-      {history.length > 0 && (
+      {salesHistory.length > 0 && (
         <div className="ds-history-card">
-          <div className="ds-history-title">Sales on {saleDate} — {history.length} entries</div>
+          <div className="ds-history-title">Sales on {saleDate} — {salesHistory.length} entries</div>
           <div className="ds-table-wrap">
             <table className="ds-table">
               <thead>
                 <tr><th>Dish</th><th>Customer</th><th>Qty</th><th>Price</th><th>Revenue</th><th>COGS</th><th>Profit</th><th>Pts</th><th>By</th></tr>
               </thead>
               <tbody>
-                {history.map(e => {
+                {salesHistory.map(e => {
                   const isQR = e.notes && e.notes.includes('[QR-ORDER:');
                   return (
                     <tr key={e.id} className="ds-tr" style={isQR ? {background:'#faf5ff'} : {}}>

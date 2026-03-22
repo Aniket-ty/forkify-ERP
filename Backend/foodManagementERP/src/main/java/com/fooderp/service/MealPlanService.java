@@ -72,7 +72,6 @@ public class MealPlanService {
             plan.setStatus(MealPlan.MealPlanStatus.DRAFT);
         }
 
-        // HQ admins creating a template leave branch null
         if (!isAdmin(caller) && caller.getBranchId() != null) {
             branchRepo.findById(caller.getBranchId()).ifPresent(plan::setBranch);
         } else if (branchId != null) {
@@ -97,10 +96,21 @@ public class MealPlanService {
             plan.setStatus(MealPlan.MealPlanStatus.valueOf(req.getStatus().toUpperCase()));
         } catch (Exception ignored) {}
 
-        // Clear and re-save items
-        itemRepo.deleteByMealPlanId(id);
-        MealPlan saved = mealPlanRepo.save(plan);
-        saveItems(saved, req.getItems());
+        // ── FIX: clear the in-memory items collection BEFORE calling save() ──
+        //
+        // BUG (original order):
+        //   1. itemRepo.deleteByMealPlanId(id)  → removes rows from DB
+        //   2. mealPlanRepo.save(plan)           → plan.items still holds the
+        //      old items in memory; Hibernate @OneToMany cascade re-inserts them!
+        //   3. saveItems(...)                    → adds the new items on top
+        //   Result: old items (re-cascaded) + new items = every item doubled.
+        //
+        // FIX: clear plan.getItems() first so Hibernate has nothing to cascade,
+        // then delete any DB orphans, then save the new items.
+        plan.getItems().clear();                  // nothing left to cascade
+        MealPlan saved = mealPlanRepo.save(plan); // safe — items collection empty
+        itemRepo.deleteByMealPlanId(id);          // belt-and-suspenders DB cleanup
+        saveItems(saved, req.getItems());          // insert the correct items
 
         return MealPlanDto.Response.from(mealPlanRepo.findById(saved.getId()).orElseThrow());
     }
@@ -116,22 +126,24 @@ public class MealPlanService {
         List<MealPlanDto.Response> results = new ArrayList<>();
 
         for (Branch branch : targets) {
-            // Skip HQ-type branch if desired (push only to BRANCH-type)
             if (branch.getType() == Branch.BranchType.HQ) continue;
 
-            // Check if a plan already exists for this branch/week/year — update it
             MealPlan existing = mealPlanRepo
                     .findByBranchIdAndWeekNumberAndYear(
                             branch.getId(), template.getWeekNumber(), template.getYear())
                     .orElse(null);
 
             if (existing != null) {
-                itemRepo.deleteByMealPlanId(existing.getId());
+                // Same fix here: clear before save to avoid cascade re-insert
+                existing.getItems().clear();
                 existing.setPlanName(template.getPlanName());
                 existing.setStatus(MealPlan.MealPlanStatus.ACTIVE);
                 existing.setSourcePlan(template);
-                copyItems(template, existing);
-                results.add(MealPlanDto.Response.from(mealPlanRepo.save(existing)));
+                MealPlan savedExisting = mealPlanRepo.save(existing);
+                itemRepo.deleteByMealPlanId(existing.getId());
+                copyItems(template, savedExisting);
+                results.add(MealPlanDto.Response.from(
+                        mealPlanRepo.findById(savedExisting.getId()).orElseThrow()));
             } else {
                 MealPlan copy = new MealPlan();
                 copy.setPlanName(template.getPlanName());
@@ -144,11 +156,11 @@ public class MealPlanService {
                 copy.setCreatedBy(template.getCreatedBy());
                 MealPlan saved = mealPlanRepo.save(copy);
                 copyItems(template, saved);
-                results.add(MealPlanDto.Response.from(mealPlanRepo.findById(saved.getId()).orElseThrow()));
+                results.add(MealPlanDto.Response.from(
+                        mealPlanRepo.findById(saved.getId()).orElseThrow()));
             }
         }
 
-        // Mark template as PUSHED
         template.setStatus(MealPlan.MealPlanStatus.PUSHED);
         mealPlanRepo.save(template);
 
@@ -156,17 +168,13 @@ public class MealPlanService {
     }
 
     // ── Ingredient forecast for a plan ────────────────────────────────────────
-    // Sums: each recipe ingredient qty × (expectedCovers / recipe.baseServings)
     public MealPlanDto.ForecastResponse getForecast(Long planId, Long branchId) {
         MealPlan plan = findById(planId);
 
-        // Aggregate required quantities per ingredient across all meal plan items
         Map<Long, Double> requiredByIngredient = new LinkedHashMap<>();
-
         for (MealPlanItem item : plan.getItems()) {
             Recipe recipe = item.getRecipe();
             double scale = (double) item.getExpectedCovers() / recipe.getServings();
-
             for (RecipeIngredient ri : recipe.getIngredients()) {
                 long ingId = ri.getIngredient().getId();
                 double qty  = round3(ri.getQuantity() * scale);
@@ -174,13 +182,11 @@ public class MealPlanService {
             }
         }
 
-        // Get all ingredients involved
         Map<Long, Ingredient> ingredients = new HashMap<>();
         plan.getItems().forEach(item ->
                 item.getRecipe().getIngredients().forEach(ri ->
                         ingredients.put(ri.getIngredient().getId(), ri.getIngredient())));
 
-        // Build forecast items
         List<MealPlanDto.ForecastResponse.ForecastItem> forecastItems = new ArrayList<>();
         List<MealPlanDto.ForecastResponse.ShortageItem> shortages = new ArrayList<>();
         BigDecimal totalCost = BigDecimal.ZERO;
@@ -190,7 +196,6 @@ public class MealPlanService {
             double required = round3(entry.getValue());
             Ingredient ing = ingredients.get(ingId);
 
-            // Look up current stock for this branch
             double currentStock = 0.0;
             if (branchId != null) {
                 currentStock = inventoryRepo.findByIngredientIdAndBranchId(ingId, branchId)
@@ -231,7 +236,6 @@ public class MealPlanService {
             }
         }
 
-        // Sort: shortages first, then by ingredient name
         forecastItems.sort(Comparator.comparing(MealPlanDto.ForecastResponse.ForecastItem::isSufficient)
                 .thenComparing(MealPlanDto.ForecastResponse.ForecastItem::getIngredientName));
 

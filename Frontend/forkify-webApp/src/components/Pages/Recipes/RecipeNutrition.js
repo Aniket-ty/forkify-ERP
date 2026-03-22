@@ -121,13 +121,13 @@ const RecipeNutrition = () => {
               </div>
 
               {/* Allergens */}
-              {(detail.allergens || []).length > 0 && (
+              {parseList(detail.allergens).length > 0 && (
                 <div className="rn-allergen-box">
                   <div className="rn-allergen-title">
                     <AlertTriangle size={13} /> Allergens
                   </div>
                   <div className="rn-allergen-tags">
-                    {detail.allergens.map((a, i) => (
+                    {parseList(detail.allergens).map((a, i) => (
                       <span key={i} className="rn-allergen-tag">{a}</span>
                     ))}
                   </div>
@@ -316,5 +316,13 @@ const RecipeNutrition = () => {
     </div>
   );
 };
+
+// Backend returns allergens as comma-separated string — normalise to array
+const parseList = (val) => {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.filter(Boolean);
+  return String(val).split(',').map(s => s.trim()).filter(Boolean);
+};
+
 
 export default RecipeNutrition;

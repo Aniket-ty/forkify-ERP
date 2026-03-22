@@ -16,6 +16,14 @@ const STATUS_COLORS = {
   ARCHIVED: { bg: '#f1f5f9', color: '#64748b', label: 'Archived' },
 };
 
+// Normalise tags: backend sends a comma-separated string, frontend expects array
+const parseTags = (tags) => {
+  if (!tags) return [];
+  if (Array.isArray(tags)) return tags.filter(Boolean);
+  return String(tags).split(',').map(t => t.trim()).filter(Boolean);
+};
+
+
 const RecipeList = () => {
   const dispatch   = useDispatch();
   const navigate   = useNavigate();
@@ -207,13 +215,13 @@ const RecipeList = () => {
                     </td>
                     <td>
                       <div className="rl-tags">
-                        {(recipe.tags || []).slice(0, 2).map((t, i) => (
+                        {parseTags(recipe.tags).slice(0, 2).map((t, i) => (
                           <span key={i} className="rl-tag">
                             <Tag size={10} /> {t}
                           </span>
                         ))}
-                        {(recipe.tags || []).length > 2 && (
-                          <span className="rl-tag-more">+{recipe.tags.length - 2}</span>
+                        {parseTags(recipe.tags).length > 2 && (
+                          <span className="rl-tag-more">+{parseTags(recipe.tags).length - 2}</span>
                         )}
                       </div>
                     </td>

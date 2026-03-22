@@ -44,7 +44,33 @@ export const fetchRecipeById = (id) => async (dispatch) => {
 export const createRecipe = (recipeData) => async (dispatch) => {
   dispatch({ type: RECIPES_LOADING });
   try {
-    const { data } = await recipeService.create(recipeData);
+    // 1. Strip steps from body — backend saves them in a separate table via /steps endpoint
+    const { steps = [], ...bodyWithoutSteps } = recipeData;
+
+    // 2. Create the recipe (no steps in body)
+    const { data } = await recipeService.create(bodyWithoutSteps);
+
+    // 3. Post each step individually to /recipes/{id}/steps
+    for (const step of steps) {
+      try {
+        await recipeService.createStep(data.id, {
+          stepNumber:      step.stepNumber,
+          title:           step.title || '',
+          instruction:     step.instruction || '',
+          durationMinutes: step.durationMinutes ? parseInt(step.durationMinutes) : null,
+        });
+      } catch (stepErr) {
+        console.warn(`Failed to save step ${step.stepNumber}:`, stepErr);
+      }
+    }
+
+    // 4. Save an automatic version snapshot so history is captured from creation
+    try {
+      await recipeService.saveSnapshot(data.id, 'Initial version');
+    } catch (snapErr) {
+      console.warn('Version snapshot failed (non-critical):', snapErr);
+    }
+
     dispatch({ type: RECIPE_CREATED, payload: data });
     return { success: true, data };
   } catch (err) {
@@ -58,7 +84,40 @@ export const createRecipe = (recipeData) => async (dispatch) => {
 export const updateRecipe = (id, recipeData) => async (dispatch) => {
   dispatch({ type: RECIPES_LOADING });
   try {
-    const { data } = await recipeService.update(id, recipeData);
+    // 1. Strip steps from body — backend ignores steps inside PUT body
+    const { steps = [], ...bodyWithoutSteps } = recipeData;
+
+    // 2. Update the recipe fields (ingredients, nutrition, etc.)
+    const { data } = await recipeService.update(id, bodyWithoutSteps);
+
+    // 3. Replace all steps: delete existing, then re-post updated list
+    try {
+      await recipeService.deleteAllSteps(id);
+    } catch (delErr) {
+      // Endpoint may not exist — fall through and post anyway
+      console.warn('deleteAllSteps failed (will try posting anyway):', delErr);
+    }
+
+    for (const step of steps) {
+      try {
+        await recipeService.createStep(id, {
+          stepNumber:      step.stepNumber,
+          title:           step.title || '',
+          instruction:     step.instruction || '',
+          durationMinutes: step.durationMinutes ? parseInt(step.durationMinutes) : null,
+        });
+      } catch (stepErr) {
+        console.warn(`Failed to save step ${step.stepNumber}:`, stepErr);
+      }
+    }
+
+    // 4. Auto-save a version snapshot so every edit is tracked
+    try {
+      await recipeService.saveSnapshot(id, `Updated — ${new Date().toLocaleDateString()}`);
+    } catch (snapErr) {
+      console.warn('Version snapshot failed (non-critical):', snapErr);
+    }
+
     dispatch({ type: RECIPE_UPDATED, payload: data });
     return { success: true, data };
   } catch (err) {

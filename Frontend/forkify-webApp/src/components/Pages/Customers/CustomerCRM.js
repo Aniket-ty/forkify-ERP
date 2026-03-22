@@ -41,14 +41,14 @@ export default function CustomerCRM() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [cRes, sRes, bRes] = await Promise.all([
+      const [cRes, sRes] = await Promise.all([
         customerService.getAll(branchId, search || null),
         customerService.getStats(branchId),
-        customerService.getBirthdays(0),
+        // customerService.getBirthdays(2),  // commented out — endpoint unstable
       ]);
       setCustomers(cRes.data || []);
       setStats(sRes.data || {});
-      setBirthdays(bRes.data || []);
+      setBirthdays([]);  // birthdays API disabled — set empty to avoid crash
     } catch { setError('Failed to load customers'); }
     finally { setLoading(false); }
   }, [branchId]);

@@ -41,7 +41,7 @@ const CostReport = () => {
   const exportCsv = () => {
     const rows = [
       ['Recipe','Category','Servings','Total Cost','Cost Per Serving','Calories','Ingredients'],
-      ...filtered.map(r => [r.name, r.category, r.servings, r.costPerServing ? (parseFloat(r.costPerServing)*r.servings).toFixed(2) : 0, parseFloat(r.costPerServing||0).toFixed(2), r.calories||0, (r.tags||[]).join(';')]),
+      ...filtered.map(r => [r.name, r.category, r.servings, r.costPerServing ? (parseFloat(r.costPerServing)*r.servings).toFixed(2) : 0, parseFloat(r.costPerServing||0).toFixed(2), r.calories||0, parseTags(r.tags).join(';')]),
     ];
     const csv  = rows.map(row => row.map(v=>`"${v??''}"`).join(',')).join('\n');
     const link = document.createElement('a');
@@ -128,7 +128,7 @@ const CostReport = () => {
                     <td className="cr-muted">{r.calories || 0} kcal</td>
                     <td>
                       <div className="cr-tags">
-                        {(r.tags||[]).slice(0,2).map((t,i)=><span key={i} className="cr-tag">{t}</span>)}
+                        {parseTags(r.tags).slice(0,2).map((t,i)=><span key={i} className="cr-tag">{t}</span>)}
                       </div>
                     </td>
                   </tr>
@@ -190,5 +190,13 @@ const CostReport = () => {
     </div>
   );
 };
+
+// Normalise tags: backend sends a comma-separated string, frontend expects array
+const parseTags = (tags) => {
+  if (!tags) return [];
+  if (Array.isArray(tags)) return tags.filter(Boolean);
+  return String(tags).split(',').map(t => t.trim()).filter(Boolean);
+};
+
 
 export default CostReport;

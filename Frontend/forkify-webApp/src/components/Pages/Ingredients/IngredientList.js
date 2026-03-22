@@ -122,7 +122,7 @@ const IngredientList = () => {
       carbsPerUnit:    ing.carbsPerUnit    || 0,
       fatPerUnit:      ing.fatPerUnit      || 0,
       fiberPerUnit:    ing.fiberPerUnit    || 0,
-      allergens:       ing.allergens       || [],
+      allergens:       parseList(ing.allergens),
     });
     setFormErrors({});
     setModalOpen(true);
@@ -263,7 +263,7 @@ const IngredientList = () => {
           <AlertTriangle size={20} />
           <div>
             <div className="il-stat-val">
-              {ingredients.filter(i => (i.allergens || []).length > 0).length}
+              {ingredients.filter(i => parseList(i.allergens).length > 0).length}
             </div>
             <div className="il-stat-lbl">With Allergens</div>
           </div>
@@ -397,9 +397,9 @@ const IngredientList = () => {
                     </td>
                     <td>
                       <div className="il-allergen-list">
-                        {(ing.allergens || []).length === 0
+                        {parseList(ing.allergens).length === 0
                           ? <span className="il-no-allergen">None</span>
-                          : (ing.allergens || []).map((a, i) => (
+                          : parseList(ing.allergens).map((a, i) => (
                               <span key={i} className="il-allergen-chip">{a}</span>
                             ))
                         }
@@ -786,5 +786,13 @@ const IngredientList = () => {
     </div>
   );
 };
+
+// Backend returns allergens as comma-separated string — normalise to array
+const parseList = (val) => {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.filter(Boolean);
+  return String(val).split(',').map(s => s.trim()).filter(Boolean);
+};
+
 
 export default IngredientList;

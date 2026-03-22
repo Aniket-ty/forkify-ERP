@@ -10,6 +10,16 @@ const recipeService = {
   delete:        (id)           => api.delete(`/recipes/${id}`),
   getCategories: ()             => api.get('/recipes/categories'),
 
+  // Recipe Steps — backend stores steps in a separate table via /recipes/{id}/steps
+  getSteps:      (recipeId)             => api.get(`/recipes/${recipeId}/steps`),
+  createStep:    (recipeId, stepData)   => api.post(`/recipes/${recipeId}/steps`, stepData),
+  updateStep:    (recipeId, stepId, stepData) => api.put(`/recipes/${recipeId}/steps/${stepId}`, stepData),
+  deleteStep:    (recipeId, stepId)     => api.delete(`/recipes/${recipeId}/steps/${stepId}`),
+  deleteAllSteps:(recipeId)             => api.delete(`/recipes/${recipeId}/steps`),
+
+  // Recipe Version Snapshots — saves current recipe state as a named version
+  saveSnapshot:  (recipeId, summary)    => api.post(`/recipe-versions/${recipeId}/snapshot`, { summary }),
+
   // Ingredients
   getAllIngredients:        (params = {}) => api.get('/ingredients', { params }),
   getIngredientById:       (id)           => api.get(`/ingredients/${id}`),

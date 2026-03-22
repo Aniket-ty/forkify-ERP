@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "recipe_steps")
@@ -20,19 +21,23 @@ public class RecipeStep {
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
-    // Step order: 1, 2, 3 ...
     @Column(name = "step_number", nullable = false)
     private Integer stepNumber;
 
-    // Short title e.g. "Marinate chicken"
-    @Column(length = 200)
-    private String title;
+    @Column(nullable = false)
+    private String title = "";
 
-    // Full instruction text
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String instruction;
+    private String instruction = "";
 
-    // Optional: how many minutes this step takes
     @Column(name = "duration_minutes")
     private Integer durationMinutes;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

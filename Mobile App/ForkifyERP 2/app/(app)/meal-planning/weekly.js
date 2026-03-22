@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { mealPlanService, recipeService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, FormField, FormInput, PrimaryButton, SearchBar } from '../../../src/components/common';
+import { Banner, FormField, FormInput, PrimaryButton, SearchBar, ScreenHeader} from '../../../src/components/common';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const MEALS = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
@@ -59,11 +59,10 @@ export default function MealPlanScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>🥗 Meal Planning</Text><Text style={S.headerSub}>{plans.length} plans</Text></View>
-        {canApprove && <TouchableOpacity style={S.addBtn} onPress={() => setModalOpen(true)}><Text style={S.addBtnText}>+ New Plan</Text></TouchableOpacity>}
-      </View>
+      <ScreenHeader title="🥗 Meal Planning"
+          subtitle={`${plans.length} plans`}
+          right={canApprove && <TouchableOpacity style={S.addBtn} onPress={() => setModalOpen(true)}><Text style={S.addBtnText}>+ New Plan</Text></TouchableOpacity>}
+        />
 
       <View style={{ paddingHorizontal: Spacing.lg, marginTop: Spacing.md, marginBottom: Spacing.sm }}>
         <Banner type="error" message={error} onDismiss={() => setError(null)} />

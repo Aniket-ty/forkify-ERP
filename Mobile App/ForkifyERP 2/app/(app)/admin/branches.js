@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { branchService, adminService } from '../../../src/services';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, SearchBar, FormField, FormInput, PrimaryButton } from '../../../src/components/common';
+import { Banner, SearchBar, FormField, FormInput, PrimaryButton, ScreenHeader} from '../../../src/components/common';
 
 const TYPES = ['HQ', 'BRANCH'];
 
@@ -55,11 +55,13 @@ export default function BranchManagementScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>🏪 Branch Management</Text><Text style={S.headerSub}>{branches.length} branches</Text></View>
-        <TouchableOpacity style={S.addBtn} onPress={openCreate}><Text style={S.addBtnText}>+ New</Text></TouchableOpacity>
-      </View>
+      <ScreenHeader
+          title="🏪 Branch Management"
+          subtitle={`${branches.length} branches`}
+          right={
+            <TouchableOpacity style={S.addBtn} onPress={openCreate}><Text style={S.addBtnText}>+ New</Text></TouchableOpacity>
+          }
+        />
 
       {/* Stats */}
       <View style={{ flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, paddingBottom: Spacing.sm }}>

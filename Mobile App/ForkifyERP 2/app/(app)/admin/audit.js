@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { adminService } from '../../../src/services';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, SearchBar } from '../../../src/components/common';
+import { Banner, SearchBar, ScreenHeader} from '../../../src/components/common';
 
 const ACTION_COLORS = {
   CREATE: { bg: Colors.successLight, color: '#15803d' },
@@ -45,10 +45,10 @@ export default function AuditLogsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>📝 Audit Logs</Text><Text style={S.headerSub}>{logs.length} entries</Text></View>
-      </View>
+      <ScreenHeader
+          title="📝 Audit Logs"
+          subtitle={`${logs.length} entries`}
+        />
 
       <View style={{ paddingHorizontal: Spacing.lg, marginTop: Spacing.md, marginBottom: Spacing.sm }}>
         <Banner type="error" message={error} onDismiss={() => setError(null)} />

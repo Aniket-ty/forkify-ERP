@@ -1,0 +1,457 @@
+.supplier-container {
+  width: 100%;
+  
+  .supplier-header {
+    @include flex-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-xl;
+    
+    @include mobile {
+      @include flex-column;
+      gap: $spacing-md;
+    }
+    
+    .header-left {
+      h1 {
+        @include flex-center;
+        gap: 0.5rem;
+        font-size: 2rem;
+        font-weight: 700;
+        color: $text-dark;
+        margin-bottom: 0.5rem;
+        
+        @include mobile {
+          font-size: 1.5rem;
+        }
+      }
+      
+      p {
+        color: $text-light;
+        font-size: 1rem;
+        
+        @include mobile {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+  
+  // Supplier Sidebar
+  .supplier-sidebar {
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: $white;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      margin-bottom: $spacing-lg;
+      
+      &:focus-within {
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+      }
+      
+      input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 0.95rem;
+        color: $text-dark;
+        
+        &::placeholder {
+          color: $text-light;
+        }
+      }
+    }
+    
+    .supplier-list {
+      display: grid;
+      gap: $spacing-md;
+      margin-bottom: $spacing-lg;
+      
+      .supplier-card {
+        background: $white;
+        border: 2px solid $border-color;
+        border-radius: $border-radius;
+        padding: $spacing-md;
+        cursor: pointer;
+        transition: $transition;
+        
+        &:hover {
+          border-color: $primary-color;
+        }
+        
+        &.active {
+          border-color: $primary-color;
+          background: rgba($primary-color, 0.05);
+        }
+        
+        .supplier-card-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: $spacing-sm;
+          
+          .supplier-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: $light-bg;
+            color: $primary-color;
+            @include flex-center;
+          }
+          
+          .supplier-info {
+            flex: 1;
+            
+            h4 {
+              font-weight: 600;
+              color: $text-dark;
+              margin-bottom: 0.125rem;
+            }
+            
+            .supplier-category {
+              font-size: 0.75rem;
+              color: $text-light;
+            }
+          }
+          
+          .supplier-rating {
+            @include flex-center;
+            gap: 0.25rem;
+            color: $warning-color;
+            font-weight: 600;
+            font-size: 0.875rem;
+            
+            svg {
+              width: 12px;
+              height: 12px;
+              fill: currentColor;
+            }
+          }
+        }
+        
+        .supplier-card-details {
+          display: flex;
+          gap: $spacing-md;
+          
+          .detail-item {
+            @include flex-center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            
+            svg {
+              width: 12px;
+              height: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Supplier Detail Header
+  .supplier-detail-header {
+    @include flex-between;
+    align-items: center;
+    margin-bottom: $spacing-xl;
+    
+    @include mobile {
+      @include flex-column;
+      gap: $spacing-lg;
+    }
+    
+    .supplier-title {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      
+      .supplier-avatar-large {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: $light-bg;
+        color: $primary-color;
+        @include flex-center;
+      }
+      
+      .supplier-title-info {
+        h2 {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: $text-dark;
+          margin-bottom: $spacing-sm;
+        }
+        
+        .supplier-meta {
+          display: flex;
+          gap: $spacing-lg;
+          flex-wrap: wrap;
+          
+          .meta-item {
+            @include flex-center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: $text-light;
+            
+            svg {
+              width: 16px;
+              height: 16px;
+              
+              &:first-child {
+                color: $warning-color;
+                fill: currentColor;
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    .supplier-actions {
+      display: flex;
+      gap: $spacing-sm;
+      
+      .btn-danger {
+        color: $error-color;
+        border-color: $error-color;
+        
+        &:hover:not(:disabled) {
+          background: rgba($error-color, 0.1);
+        }
+      }
+    }
+  }
+  
+  // Supplier Info Cards
+  .info-card {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    
+    h3 {
+      margin-bottom: $spacing-lg;
+      color: $text-dark;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+    
+    .info-list {
+      .info-item {
+        display: flex;
+        gap: $spacing-md;
+        padding: $spacing-sm 0;
+        border-bottom: 1px solid $border-color;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        svg {
+          color: $text-light;
+          flex-shrink: 0;
+          margin-top: 0.125rem;
+        }
+        
+        .item-details {
+          flex: 1;
+          
+          .item-label {
+            font-size: 0.75rem;
+            color: $text-light;
+            margin-bottom: 0.125rem;
+          }
+          
+          .item-value {
+            font-weight: 500;
+            color: $text-dark;
+            
+            a {
+              color: $primary-color;
+              text-decoration: none;
+              
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    .financial-stats {
+      .financial-stat {
+        padding: $spacing-md 0;
+        border-bottom: 1px solid $border-color;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        .stat-label {
+          font-size: 0.875rem;
+          color: $text-light;
+          margin-bottom: 0.25rem;
+        }
+        
+        .stat-value {
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: $text-dark;
+          margin-bottom: 0.25rem;
+        }
+        
+        .stat-trend {
+          font-size: 0.875rem;
+          font-weight: 600;
+          
+          &.up {
+            color: $success-color;
+          }
+          
+          &.down {
+            color: $error-color;
+          }
+          
+          &.neutral {
+            color: $text-light;
+          }
+        }
+      }
+    }
+    
+    .products-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: $spacing-lg;
+      
+      .product-tag {
+        padding: 0.25rem 0.75rem;
+        background: $light-bg;
+        color: $text-dark;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+    }
+    
+    .performance-meter {
+      .meter-label {
+        font-size: 0.875rem;
+        color: $text-light;
+        margin-bottom: 0.5rem;
+      }
+      
+      .meter-bar {
+        height: 8px;
+        background: $light-bg;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+        
+        .meter-fill {
+          height: 100%;
+          border-radius: 4px;
+          background: linear-gradient(to right, $error-color, $warning-color, $success-color);
+        }
+      }
+      
+      .meter-value {
+        font-weight: 700;
+        color: $text-dark;
+        text-align: right;
+      }
+    }
+  }
+  
+  // Recent Orders
+  .recent-orders {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    
+    .section-header {
+      @include flex-between;
+      margin-bottom: $spacing-lg;
+      
+      h3 {
+        color: $text-dark;
+        font-size: 1.125rem;
+        font-weight: 600;
+      }
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      
+      thead {
+        background: $light-bg;
+        
+        th {
+          padding: $spacing-md;
+          text-align: left;
+          font-weight: 600;
+          color: $text-dark;
+          border-bottom: 2px solid $border-color;
+        }
+      }
+      
+      tbody {
+        tr {
+          transition: $transition;
+          
+          &:hover {
+            background: rgba($primary-color, 0.02);
+          }
+          
+          td {
+            padding: $spacing-md;
+            border-bottom: 1px solid $border-color;
+            vertical-align: middle;
+          }
+        }
+        
+        .status-badge {
+          @include status-badge($success-color);
+          
+          &.delivered {
+            @include status-badge($success-color);
+          }
+          
+          &.processing {
+            @include status-badge($warning-color);
+          }
+          
+          &.pending {
+            @include status-badge($error-color);
+          }
+        }
+        
+        .action-buttons-small {
+          display: flex;
+          gap: 0.5rem;
+          
+          .btn-icon-xs {
+            @include flex-center;
+            width: 28px;
+            height: 28px;
+            border-radius: $border-radius;
+            background: $light-bg;
+            border: none;
+            color: $text-dark;
+            cursor: pointer;
+            
+            &:hover {
+              background: darken($light-bg, 5%);
+            }
+          }
+        }
+      }
+    }
+  }
+}

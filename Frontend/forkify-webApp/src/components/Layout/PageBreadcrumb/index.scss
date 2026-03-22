@@ -1,0 +1,95 @@
+$p-15 : 15px;
+$fs-18 : 18px;
+$grey-color: #e7e7e7;
+$green-btn-bg: #4ca185;
+$green-btn-border: #51a35d;
+$white: #ffffff;
+$error-red: #ff4d4f;
+$body-bg: linear-gradient(to right, #2c3e52, #7f7f7f);
+
+// colors used in whole project
+$primaryColor: #08173d;
+$secondaryColor: #0075FF;
+$linkColor: #0075FF;
+
+$darkBlueColor: #031639;
+$lightGrayColor: #58596C;
+
+// side menu related vars
+$side-menu-bgcolor: #08173d;
+$headerHoverText: #eff2fe;
+$collapsed-sidebar-width: 120px;
+$expanded-sidebar-width: 220px;
+$header-height: 68px;
+
+$lightTextColor: #656b79;
+$darkTextColor: #39414b;
+$headerText: rgba(255, 255, 255, .5);
+
+$hoverBgColor: #f3f3f3;
+
+$header-border-color: rgba(216, 218, 250, 0.20000000298023224);
+
+
+// .ant-breadcrumb {
+//   display: inline-block;
+//   // padding-top: 5px;
+
+//   .ant-breadcrumb-link {
+//     color: #4697ce;
+//     font-size: 12px;
+
+//     a {
+//       color: #4697ce;
+//       font-size: 12px;
+//     }
+
+//     &:hover {
+//       text-decoration: underline;
+//     }
+//   }
+
+//   span {
+//     &:last-child {
+//       .ant-breadcrumb-link {
+//         color: #a2a7b1;
+//         cursor: text;
+//         text-decoration: none;
+//       }
+//     }
+//   }
+// }
+
+
+.ant-breadcrumb {
+  display: inline-block;
+
+  .ant-breadcrumb-link {
+    // color: $secondaryColor;
+    font-size: 12px;
+
+    a {
+      color: $secondaryColor;
+      font-size: 12px;
+    }
+
+    &:hover {
+      // text-decoration: underline;
+    }
+  }
+
+  span {
+    &:last-child {
+      .ant-breadcrumb-link {
+        color: #6D6E82;
+        cursor: text;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.ant-breadcrumb .anticon{
+  font-size: 12px;
+  color: #6D6E82;
+}

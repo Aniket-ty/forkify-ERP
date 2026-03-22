@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { customerService } from '../../../src/services';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, SearchBar, FormField, FormInput, PrimaryButton } from '../../../src/components/common';
+import { Banner, SearchBar, FormField, FormInput, PrimaryButton, ScreenHeader} from '../../../src/components/common';
 
 export default function CustomersScreen() {
   const router = useRouter();
@@ -69,11 +69,13 @@ export default function CustomersScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>👥 Customer CRM</Text><Text style={S.headerSub}>Manage loyalty & relationships</Text></View>
-        <TouchableOpacity style={S.addBtn} onPress={() => setModalOpen(true)}><Text style={S.addBtnText}>+ Add</Text></TouchableOpacity>
-      </View>
+      <ScreenHeader
+          title="👥 Customer CRM"
+          subtitle="Manage loyalty & relationships"
+          right={
+            <TouchableOpacity style={S.addBtn} onPress={() => setModalOpen(true)}><Text style={S.addBtnText}>+ Add</Text></TouchableOpacity>
+          }
+        />
 
       {/* Stats */}
       {stats && (

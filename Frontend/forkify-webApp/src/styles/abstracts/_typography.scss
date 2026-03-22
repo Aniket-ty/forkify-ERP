@@ -1,0 +1,121 @@
+// Typography Scale
+$font-sizes: (
+  'xs': 0.75rem,    // 12px
+  'sm': 0.875rem,   // 14px
+  'base': 1rem,     // 16px
+  'lg': 1.125rem,   // 18px
+  'xl': 1.25rem,    // 20px
+  '2xl': 1.5rem,    // 24px
+  '3xl': 1.875rem,  // 30px
+  '4xl': 2.25rem,   // 36px
+  '5xl': 3rem,      // 48px
+);
+
+// Font Weights
+$font-weights: (
+  'light': 300,
+  'normal': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700,
+  'extrabold': 800,
+);
+
+// Line Heights
+$line-heights: (
+  'none': 1,
+  'tight': 1.25,
+  'snug': 1.375,
+  'normal': 1.5,
+  'relaxed': 1.625,
+  'loose': 2,
+);
+
+// Text Colors
+.text-primary { color: $primary-color; }
+.text-secondary { color: $secondary-color; }
+.text-dark { color: $text-dark; }
+.text-light { color: $text-light; }
+.text-white { color: $white; }
+.text-success { color: $success-color; }
+.text-warning { color: $warning-color; }
+.text-error { color: $error-color; }
+.text-info { color: $info-color; }
+
+// Font Sizes Utility Classes
+@each $name, $size in $font-sizes {
+  .text-#{$name} {
+    font-size: $size;
+    line-height: map-get($line-heights, 'normal');
+  }
+}
+
+// Font Weights Utility Classes
+@each $name, $weight in $font-weights {
+  .font-#{$name} {
+    font-weight: $weight;
+  }
+}
+
+// Text Alignment
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+// Text Transformation
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
+// Text Decoration
+.underline { text-decoration: underline; }
+.line-through { text-decoration: line-through; }
+.no-underline { text-decoration: none; }
+
+// Text Overflow
+.truncate {
+  @include truncate(1);
+}
+
+.line-clamp-2 {
+  @include truncate(2);
+}
+
+.line-clamp-3 {
+  @include truncate(3);
+}
+
+// Lists
+.list-none { list-style: none; }
+.list-disc { list-style: disc; }
+.list-decimal { list-style: decimal; }
+
+// Line Height Utilities
+@each $name, $height in $line-heights {
+  .leading-#{$name} {
+    line-height: $height;
+  }
+}
+
+// Letter Spacing
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-normal { letter-spacing: 0; }
+.tracking-wide { letter-spacing: 0.025em; }
+.tracking-wider { letter-spacing: 0.05em; }
+
+// Word Break
+.break-normal { word-break: normal; }
+.break-words { word-break: break-word; }
+.break-all { word-break: break-all; }
+
+// Whitespace
+.whitespace-normal { white-space: normal; }
+.whitespace-nowrap { white-space: nowrap; }
+.whitespace-pre { white-space: pre; }
+.whitespace-pre-line { white-space: pre-line; }
+.whitespace-pre-wrap { white-space: pre-wrap; }
+
+// Word Wrap
+.overflow-wrap-normal { overflow-wrap: normal; }
+.overflow-wrap-break { overflow-wrap: break-word; }

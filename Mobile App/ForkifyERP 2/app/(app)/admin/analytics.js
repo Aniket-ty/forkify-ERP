@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { analyticsService } from '../../../src/services';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, ProgressBar } from '../../../src/components/common';
+import { Banner, ProgressBar, ScreenHeader} from '../../../src/components/common';
 
 const PERIODS = [7, 14, 30, 90];
 
@@ -36,10 +36,10 @@ export default function AnalyticsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}><Text style={S.headerTitle}>📈 Analytics</Text><Text style={S.headerSub}>Business performance overview</Text></View>
-      </View>
+      <ScreenHeader
+          title="📈 Analytics"
+          subtitle="Business performance overview"
+        />
 
       {/* Period selector */}
       <View style={S.periodRow}>

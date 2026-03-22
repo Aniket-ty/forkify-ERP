@@ -1,0 +1,536 @@
+.nutrition-container {
+  width: 100%;
+  
+  .nutrition-header {
+    @include flex-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-xl;
+    
+    @include mobile {
+      @include flex-column;
+      gap: $spacing-md;
+    }
+    
+    .header-left {
+      h1 {
+        @include flex-center;
+        gap: 0.5rem;
+        font-size: 2rem;
+        font-weight: 700;
+        color: $text-dark;
+        margin-bottom: 0.5rem;
+        
+        @include mobile {
+          font-size: 1.5rem;
+        }
+      }
+      
+      p {
+        color: $text-light;
+        font-size: 1rem;
+        
+        @include mobile {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+  
+  // Nutrition Sidebar
+  .nutrition-sidebar {
+    .sidebar-section {
+      background: $white;
+      border-radius: $border-radius-lg;
+      padding: $spacing-lg;
+      margin-bottom: $spacing-lg;
+      
+      h3 {
+        margin-bottom: $spacing-lg;
+        color: $text-dark;
+        font-size: 1.125rem;
+        font-weight: 600;
+      }
+      
+      .recipe-list {
+        display: grid;
+        gap: $spacing-md;
+        margin-bottom: $spacing-md;
+        
+        .recipe-card {
+          padding: $spacing-md;
+          border: 2px solid $border-color;
+          border-radius: $border-radius;
+          cursor: pointer;
+          transition: $transition;
+          
+          &:hover {
+            border-color: $primary-color;
+          }
+          
+          &.active {
+            border-color: $primary-color;
+            background: rgba($primary-color, 0.05);
+          }
+          
+          .recipe-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: $spacing-sm;
+            
+            h4 {
+              flex: 1;
+              font-weight: 600;
+              color: $text-dark;
+            }
+            
+            .category-badge {
+              padding: 0.125rem 0.5rem;
+              background: $light-bg;
+              color: $text-dark;
+              border-radius: 1rem;
+              font-size: 0.75rem;
+              font-weight: 600;
+            }
+          }
+          
+          .recipe-card-details {
+            display: flex;
+            gap: $spacing-lg;
+            
+            .detail-item {
+              @include flex-center;
+              gap: 0.25rem;
+              font-size: 0.75rem;
+              color: $text-light;
+              
+              svg {
+                width: 14px;
+                height: 14px;
+              }
+            }
+          }
+        }
+      }
+      
+      .dietary-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        
+        .tag {
+          padding: 0.25rem 0.5rem;
+          border-radius: 1rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          
+          &.allergen {
+            background: rgba($error-color, 0.1);
+            color: $error-color;
+          }
+          
+          &.dietary {
+            background: rgba($success-color, 0.1);
+            color: $success-color;
+          }
+          
+          svg {
+            width: 12px;
+            height: 12px;
+            margin-right: 0.25rem;
+          }
+        }
+      }
+      
+      .health-score-card {
+        text-align: center;
+        
+        .score-circle {
+          position: relative;
+          width: 100px;
+          height: 100px;
+          margin: 0 auto $spacing-md;
+          border-radius: 50%;
+          background: conic-gradient($success-color 87%, $light-bg 0);
+          @include flex-column-center;
+          
+          &::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: $white;
+            border-radius: 50%;
+          }
+          
+          .score-value {
+            position: relative;
+            z-index: 1;
+            font-size: 2rem;
+            font-weight: 700;
+            color: $text-dark;
+          }
+          
+          .score-label {
+            position: relative;
+            z-index: 1;
+            font-size: 0.875rem;
+            color: $text-light;
+          }
+        }
+        
+        .score-details {
+          h4 {
+            color: $text-dark;
+            margin-bottom: 0.25rem;
+          }
+          
+          p {
+            color: $text-light;
+            font-size: 0.875rem;
+            margin-bottom: $spacing-md;
+          }
+          
+          .score-breakdown {
+            .breakdown-item {
+              @include flex-center;
+              gap: 0.5rem;
+              font-size: 0.75rem;
+              margin-bottom: 0.25rem;
+              
+              &.positive {
+                color: $success-color;
+              }
+              
+              &.warning {
+                color: $warning-color;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Recipe Header
+  .recipe-header-section {
+    @include flex-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-xl;
+    
+    @include mobile {
+      @include flex-column;
+      gap: $spacing-md;
+    }
+    
+    .recipe-title {
+      h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: $text-dark;
+        margin-bottom: $spacing-sm;
+      }
+      
+      .recipe-meta {
+        display: flex;
+        gap: $spacing-lg;
+        flex-wrap: wrap;
+        
+        .meta-item {
+          @include flex-center;
+          gap: 0.5rem;
+          font-size: 0.875rem;
+          color: $text-light;
+          
+          .servings-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            
+            button {
+              width: 24px;
+              height: 24px;
+              border-radius: 0.25rem;
+              background: $light-bg;
+              border: none;
+              color: $text-dark;
+              cursor: pointer;
+              
+              &:hover:not(:disabled) {
+                background: darken($light-bg, 5%);
+              }
+              
+              &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Nutrition Cards
+  .nutrition-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+    
+    .nutrition-card {
+      background: $white;
+      border-radius: $border-radius-lg;
+      padding: $spacing-lg;
+      position: relative;
+      transition: $transition;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow;
+      }
+      
+      .card-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: $border-radius;
+        @include flex-center;
+        margin-bottom: $spacing-md;
+      }
+      
+      .card-content {
+        h3 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: $text-dark;
+          margin-bottom: 0.25rem;
+        }
+        
+        p {
+          font-size: 0.875rem;
+          color: $text-light;
+          margin-bottom: 0.25rem;
+        }
+        
+        .card-unit {
+          font-size: 0.75rem;
+          color: $text-light;
+        }
+      }
+      
+      .card-trend {
+        position: absolute;
+        top: $spacing-lg;
+        right: $spacing-lg;
+        @include flex-center;
+        gap: 0.25rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+  
+  // Macros Section
+  .macros-section {
+    margin-bottom: $spacing-xl;
+    
+    h3 {
+      margin-bottom: $spacing-lg;
+      color: $text-dark;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    
+    .macro-card {
+      background: $white;
+      border-radius: $border-radius-lg;
+      padding: $spacing-lg;
+      
+      h4 {
+        margin-bottom: $spacing-md;
+        color: $text-dark;
+        font-weight: 600;
+      }
+      
+      .macro-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: $text-dark;
+        margin-bottom: $spacing-md;
+      }
+      
+      .macro-bar {
+        height: 8px;
+        background: $light-bg;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: $spacing-sm;
+        
+        .bar-fill {
+          height: 100%;
+          border-radius: 4px;
+          
+          &.protein {
+            background: $green;
+          }
+          
+          &.carbs {
+            background: $orange;
+          }
+          
+          &.fat {
+            background: $red;
+          }
+        }
+      }
+      
+      .macro-dv {
+        font-size: 0.875rem;
+        color: $text-light;
+      }
+    }
+  }
+  
+  // Detailed Analysis
+  .detailed-analysis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-xl;
+    
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+    
+    .ingredients-section,
+    .vitamins-section {
+      h3 {
+        margin-bottom: $spacing-lg;
+        color: $text-dark;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+    }
+    
+    .ingredients-list {
+      .ingredient-row {
+        @include flex-between;
+        padding: $spacing-md;
+        border-bottom: 1px solid $border-color;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        .ingredient-info {
+          .ingredient-name {
+            font-weight: 600;
+            color: $text-dark;
+            margin-bottom: 0.125rem;
+          }
+          
+          .ingredient-quantity {
+            font-size: 0.875rem;
+            color: $text-light;
+          }
+        }
+        
+        .ingredient-nutrition {
+          .nutrition-value {
+            display: block;
+            font-size: 0.875rem;
+            color: $text-light;
+            text-align: right;
+          }
+        }
+      }
+    }
+    
+    .vitamins-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: $spacing-md;
+      
+      .vitamin-card {
+        background: $white;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        padding: $spacing-md;
+        
+        .vitamin-name {
+          font-size: 0.875rem;
+          color: $text-dark;
+          margin-bottom: 0.5rem;
+        }
+        
+        .vitamin-value {
+          font-weight: 700;
+          color: $text-dark;
+          margin-bottom: 0.5rem;
+        }
+        
+        .vitamin-bar {
+          height: 4px;
+          background: $light-bg;
+          border-radius: 2px;
+          overflow: hidden;
+          
+          .bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: $primary-color;
+          }
+        }
+      }
+    }
+  }
+  
+  // Cost Analysis
+  .cost-analysis {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    
+    h3 {
+      margin-bottom: $spacing-lg;
+      color: $text-dark;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    
+    .cost-breakdown {
+      .cost-item {
+        @include flex-between;
+        padding: $spacing-md 0;
+        border-bottom: 1px solid $border-color;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        &.total {
+          font-weight: 700;
+          color: $text-dark;
+          padding-top: $spacing-lg;
+        }
+        
+        &.profit {
+          background: rgba($success-color, 0.05);
+          padding: $spacing-md;
+          border-radius: $border-radius;
+          margin-top: $spacing-md;
+        }
+        
+        .cost-value {
+          font-weight: 600;
+          color: $text-dark;
+        }
+      }
+    }
+  }
+}

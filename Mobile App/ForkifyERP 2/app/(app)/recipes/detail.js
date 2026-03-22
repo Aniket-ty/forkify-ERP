@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipeByIdThunk } from '../../../src/store';
 import { usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { LoadingScreen, Banner } from '../../../src/components/common';
+import { LoadingScreen, Banner, ScreenHeader} from '../../../src/components/common';
 
 export default function RecipeDetail() {
   const { id }     = useLocalSearchParams();
@@ -22,7 +22,7 @@ export default function RecipeDetail() {
   if (loading && !recipe) return <LoadingScreen message="Loading recipe..." />;
   if (!recipe) return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}><Text style={styles.backIcon}>← Back</Text></TouchableOpacity>
+      
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text style={{ fontSize: 48 }}>👨‍🍳</Text>
         <Text style={{ fontSize: Typography.lg, fontWeight: '700', color: Colors.text, marginTop: 12 }}>Recipe not found</Text>
@@ -45,12 +45,11 @@ export default function RecipeDetail() {
 
   return (
     <View style={styles.container}>
-      {/* Top bar */}
-      <View style={styles.topBar}>
-        <TouchableOpacity style={styles.backBtnRow} onPress={() => router.back()}>
-          <Text style={styles.backIcon}>←</Text>
-        </TouchableOpacity>
-        <View style={styles.topActions}>
+      <ScreenHeader
+          title={recipe.name}
+          subtitle={recipe.category}
+          right={
+            <View style={styles.topActions}>
           {recipe.hqOwned && <Text style={styles.hqChip}>🔒 HQ Recipe</Text>}
           {recipe.status === 'ACTIVE' && (
             <TouchableOpacity style={styles.produceBtn} onPress={() => router.push({ pathname: '/(app)/recipes/log-production', params: { id: recipe.id } })}>
@@ -62,8 +61,9 @@ export default function RecipeDetail() {
               <Text style={styles.editBtnText}>✏️ Edit</Text>
             </TouchableOpacity>
           )}
-        </View>
-      </View>
+            </View>
+          }
+        />
 
       <ScrollView contentContainerStyle={styles.content}>
         {/* Hero */}

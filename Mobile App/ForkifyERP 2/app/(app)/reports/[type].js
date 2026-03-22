@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { reportService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, ProgressBar } from '../../../src/components/common';
+import { Banner, ProgressBar, ScreenHeader} from '../../../src/components/common';
 
 const REPORT_CONFIG = {
   inventory: { title: '📦 Inventory Report',  icon: '📦', label: 'Inventory' },
@@ -192,7 +192,7 @@ export default function ReportScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={{ fontSize: 18 }}>←</Text></TouchableOpacity>
+        
         <View style={{ flex: 1 }}>
           <Text style={S.headerTitle}>{config.title}</Text>
           <Text style={S.headerSub}>Last {period} days</Text>

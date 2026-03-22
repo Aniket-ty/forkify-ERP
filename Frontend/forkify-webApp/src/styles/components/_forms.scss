@@ -1,0 +1,49 @@
+// Forkify ERP – Forms
+
+.form-group {
+  display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px;
+}
+.form-label {
+  font-size: 12px; font-weight: 600; color: $gray-700;
+  text-transform: uppercase; letter-spacing: .4px;
+}
+.form-control {
+  padding: 9px 12px; background: $white;
+  border: 1px solid $gray-200; border-radius: 8px;
+  font-size: 13px; color: $gray-900; font-family: inherit;
+  transition: all $transition; outline: none; width: 100%;
+  &::placeholder { color: $gray-400; }
+  &:hover { border-color: $gray-300; }
+  &:focus { border-color: $blue; box-shadow: 0 0 0 3px rgba($blue, .1); }
+  &:disabled { background: $gray-50; color: $gray-400; cursor: not-allowed; }
+}
+select.form-control { cursor: pointer; }
+textarea.form-control { resize: vertical; min-height: 80px; }
+
+.form-hint { font-size: 11px; color: $gray-400; }
+.form-error { font-size: 11px; color: #c10000; }
+
+.input-group {
+  display: flex; gap: 0;
+  .form-control { border-radius: 8px 0 0 8px; }
+  .input-group-btn {
+    padding: 9px 14px; background: $blue; border: 1px solid $blue;
+    border-radius: 0 8px 8px 0; color: $white; cursor: pointer;
+    font-size: 13px; font-weight: 600; transition: background $transition;
+    &:hover { background: $blue-hover; }
+  }
+}
+
+// ANT Design overrides – keep consistent
+.ant-input, .ant-select-selector, .ant-picker {
+  border-radius: 8px !important;
+  border-color: $gray-200 !important;
+  font-size: 13px !important;
+  &:hover { border-color: $gray-300 !important; }
+  &:focus, &.ant-input-focused { border-color: $blue !important; box-shadow: 0 0 0 3px rgba($blue,.1) !important; }
+}
+.ant-btn-primary {
+  background: $blue !important;
+  border-color: $blue !important;
+  &:hover { background: $blue-hover !important; border-color: $blue-hover !important; }
+}

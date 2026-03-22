@@ -1,0 +1,54 @@
+@include tablet {
+  // Adjust grid columns
+  .dashboard-grid,
+  .planner-grid,
+  .supplier-content,
+  .reports-content {
+    grid-template-columns: 1fr;
+  }
+  
+  // Adjust sidebar width
+  .sidebar-nav {
+    width: 220px;
+    
+    &.collapsed {
+      width: 60px;
+    }
+  }
+  
+  .main-content {
+    &.sidebar-open {
+      margin-left: 220px;
+    }
+    
+    &.sidebar-closed {
+      margin-left: 60px;
+    }
+  }
+  
+  // Adjust header
+  .header .header-top {
+    .search-section {
+      max-width: 300px;
+    }
+  }
+  
+  // Adjust forms
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  // Adjust cards
+  .kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  // Hide/show elements
+  .tablet-hide {
+    display: none !important;
+  }
+  
+  .tablet-show {
+    display: block !important;
+  }
+}

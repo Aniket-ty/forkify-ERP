@@ -1,0 +1,39 @@
+// ── ERP Design Tokens ──────────────────────────────────────────────────────
+// Shared across all ERP page components for consistent look and feel
+
+// Primary palette
+$erp-blue:        #0061d2;
+$erp-blue-light:  #e8f0fd;
+$erp-blue-mid:    #3385e0;
+$erp-blue-dark:   #0052b3;
+
+// Button backgrounds (visible with black text)
+$erp-btn-bg:      #e8f0fd;   // light blue - all action buttons
+$erp-btn-border:  #b3ccf5;
+$erp-btn-text:    #0052b3;   // dark blue text
+
+// Card / surface
+$erp-surface:     #ffffff;
+$erp-surface-alt: #f8fafc;
+$erp-border:      #e5e7eb;
+$erp-border-mid:  #d8dde8;
+
+// Text
+$erp-text-primary:   #1f2937;
+$erp-text-secondary: #6b7280;
+$erp-text-muted:     #9ca3af;
+
+// Modal
+$erp-modal-bg:       #ffffff;
+$erp-modal-header:   #f8fafc;
+$erp-modal-border:   #e5e7eb;
+
+// Status
+$erp-success-bg:   #f0fdf4;
+$erp-success-border: #bbf7d0;
+$erp-success-text: #15803d;
+$erp-error-bg:     #fef2f2;
+$erp-error-border: #fecaca;
+$erp-error-text:   #dc2626;
+$erp-warn-bg:      rgba(251,191,36,.12);
+$erp-warn-text:    #b45309;

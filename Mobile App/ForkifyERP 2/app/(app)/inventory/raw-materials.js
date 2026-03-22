@@ -8,7 +8,7 @@ import { useRouter } from 'expo-router';
 import { inventoryService, recipeService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
-import { Banner, StatusBadge, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, ProgressBar } from '../../../src/components/common';
+import { Banner, StatusBadge, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, ProgressBar, ScreenHeader} from '../../../src/components/common';
 
 const STATUS_COLORS = {
   GOOD:         { bg: '#f0fdf4', color: '#15803d' },
@@ -93,20 +93,15 @@ export default function RawMaterials() {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-          <Text style={styles.backIcon}>←</Text>
-        </TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.title}>🌾  Raw Materials</Text>
-          <Text style={styles.sub}>{filtered.length} items</Text>
-        </View>
-        {canApprove && (
-          <TouchableOpacity style={styles.addBtn} onPress={openAdd}>
-            <Text style={styles.addBtnText}>+ Add</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+      <ScreenHeader
+          title="🌾  Raw Materials"
+          subtitle={`${filtered.length} items`}
+          right={canApprove ? (
+            <TouchableOpacity style={styles.addBtn} onPress={openAdd}>
+              <Text style={styles.addBtnText}>+ Add</Text>
+            </TouchableOpacity>
+          ) : null}
+        />
 
       <Banner type="error"   message={error}   onDismiss={() => setError(null)} />
       <Banner type="success" message={success} onDismiss={() => setSuccess(null)} />

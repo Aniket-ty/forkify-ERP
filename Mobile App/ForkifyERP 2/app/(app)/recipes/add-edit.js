@@ -4,7 +4,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Modal } from 'rea
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { recipeService } from '../../../src/services';
 import { Colors, Typography, Radius, Spacing, Shadow } from '../../../src/theme';
-import { Banner, FormField, FormInput, PrimaryButton, LoadingScreen } from '../../../src/components/common';
+import { Banner, FormField, FormInput, PrimaryButton, LoadingScreen, ScreenHeader} from '../../../src/components/common';
 
 const STATUSES = ['ACTIVE', 'DRAFT', 'ARCHIVED'];
 const emptyIngredientLine = () => ({ ingredientId: '', quantity: '', notes: '' });
@@ -85,11 +85,10 @@ export default function AddEditRecipe() {
 
   return (
     <View style={S.container}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text style={S.backIcon}>←</Text></TouchableOpacity>
-        <Text style={S.title}>{isEdit ? '✏️  Edit Recipe' : '➕  New Recipe'}</Text>
-        <PrimaryButton label={saving ? 'Saving...' : 'Save'} onPress={handleSave} loading={saving} small />
-      </View>
+      <ScreenHeader
+          title={isEdit ? '✏️  Edit Recipe' : '➕  New Recipe'}
+          right={<PrimaryButton label={saving ? 'Saving...' : 'Save'} onPress={handleSave} loading={saving} small />}
+        />
       <ScrollView contentContainerStyle={S.content}>
         <Banner type="error"   message={error}   onDismiss={() => setError(null)} />
         <Banner type="success" message={success} onDismiss={() => setSuccess(null)} />

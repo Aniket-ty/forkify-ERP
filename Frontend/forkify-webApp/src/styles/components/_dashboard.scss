@@ -1,0 +1,98 @@
+// Forkify ERP – Dashboard (Blue/Black/White)
+
+.db-spin { animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// KPI card
+.kpi-card {
+  background: $white; border: 1px solid $gray-200;
+  border-radius: $border-radius-lg; padding: 20px;
+  transition: box-shadow $transition, border-color $transition;
+  &:hover { box-shadow: $shadow; border-color: $gray-300; }
+}
+.kpi-icon-wrap {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: $blue-light; display: flex; align-items: center;
+  justify-content: center; color: $blue;
+}
+.kpi-value { font-size: 26px; font-weight: 800; color: $gray-900; margin: 10px 0 2px; }
+.kpi-label { font-size: 12px; color: $gray-500; font-weight: 500; }
+.kpi-change {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600;
+  &.up { color: $blue; }
+  &.down { color: #c10000; }
+  &.neutral { color: $gray-400; }
+}
+
+// Section card
+.dash-card {
+  background: $white; border: 1px solid $gray-200;
+  border-radius: $border-radius-lg; overflow: hidden;
+}
+.dash-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; border-bottom: 1px solid $gray-100;
+}
+.dash-card-title {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 700; color: $gray-900;
+}
+.dash-card-icon { color: $blue; }
+.dash-link-btn {
+  width: 28px; height: 28px; background: $gray-50;
+  border: 1px solid $gray-200; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: $gray-400; transition: all $transition;
+  &:hover { background: $blue-light; border-color: $blue; color: $blue; }
+}
+
+// Progress bar
+.progress-bar {
+  height: 4px; background: $gray-100; border-radius: 2px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 2px; transition: width .4s ease;
+  background: $blue;
+  &.warn { background: #e6a817; }
+  &.danger { background: #c10000; }
+}
+
+// Status badge
+.status-badge {
+  font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 4px; text-transform: uppercase; letter-spacing: .3px;
+  &.draft     { background: $gray-100; color: $gray-600; }
+  &.sent      { background: $blue-light; color: $blue; }
+  &.received  { background: #e3f5ee; color: #0a6640; }
+  &.partial   { background: #fff3cd; color: #856404; }
+  &.cancelled { background: #fde8e8; color: #c10000; }
+  &.active    { background: $blue-light; color: $blue; }
+  &.inactive  { background: $gray-100; color: $gray-500; }
+}
+
+// Quick action button
+.quick-action-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; background: $gray-50; border: 1px solid $gray-200;
+  border-radius: 10px; color: $gray-700; font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all $transition; text-align: left;
+  &:hover { background: $blue-light; border-color: $blue; color: $blue; }
+}
+.quick-action-icon { color: $blue; flex-shrink: 0; }
+
+// Buttons used in dashboard
+.btn-primary-dash {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 16px; background: $blue; border: none;
+  border-radius: 8px; color: $white; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: background $transition;
+  &:hover { background: $blue-hover; }
+}
+.btn-ghost-dash {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; background: $white; border: 1px solid $gray-200;
+  border-radius: 8px; color: $gray-700; font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all $transition;
+  &:hover { background: $gray-50; border-color: $gray-300; }
+}

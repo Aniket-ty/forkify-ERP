@@ -5,7 +5,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { productionService, recipeService } from '../../../src/services';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Spacing, Shadow } from '../../../src/theme';
-import { Banner, FormInput, PrimaryButton, LoadingScreen } from '../../../src/components/common';
+import { Banner, FormInput, PrimaryButton, LoadingScreen, ScreenHeader} from '../../../src/components/common';
 
 export default function LogProduction() {
   const { id } = useLocalSearchParams();
@@ -45,13 +45,10 @@ export default function LogProduction() {
 
   return (
     <View style={S.container}>
-      <View style={S.header}>
-        <TouchableOpacity style={S.backBtn} onPress={() => router.back()}><Text>←</Text></TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <Text style={S.title}>▶  Log Production</Text>
-          <Text style={S.sub}>{recipe.name}</Text>
-        </View>
-      </View>
+      <ScreenHeader
+          title="▶  Log Production"
+          subtitle={recipe.name}
+        />
       <ScrollView contentContainerStyle={S.content}>
         <Banner type="error" message={error} onDismiss={() => setError(null)} />
         <Banner type="success" message={success} onDismiss={() => setSuccess(null)} />

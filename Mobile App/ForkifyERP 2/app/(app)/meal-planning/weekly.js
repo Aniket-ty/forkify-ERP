@@ -7,6 +7,7 @@ import { mealPlanService, recipeService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, FormField, FormInput, PrimaryButton, SearchBar, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const MEALS = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];

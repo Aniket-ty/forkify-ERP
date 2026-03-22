@@ -6,6 +6,7 @@ import { inventoryService, recipeService } from '../../../src/services';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 const emptyForm = () => ({ ingredientId: '', quantity: '', supplier: '', referenceNo: '', unitCost: '', expiryDate: '', notes: '' });
 

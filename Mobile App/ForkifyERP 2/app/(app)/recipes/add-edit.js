@@ -5,6 +5,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { recipeService } from '../../../src/services';
 import { Colors, Typography, Radius, Spacing, Shadow } from '../../../src/theme';
 import { Banner, FormField, FormInput, PrimaryButton, LoadingScreen, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 const STATUSES = ['ACTIVE', 'DRAFT', 'ARCHIVED'];
 const emptyIngredientLine = () => ({ ingredientId: '', quantity: '', notes: '' });

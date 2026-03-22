@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { branchService, adminService } from '../../../src/services';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, SearchBar, FormField, FormInput, PrimaryButton, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 const TYPES = ['HQ', 'BRANCH'];
 

@@ -6,6 +6,7 @@ import { procurementService, recipeService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, StatusBadge, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 const emptyItem = () => ({ ingredientId: '', quantity: '', notes: '' });
 const emptyForm = () => ({ priority: 'MEDIUM', notes: '', items: [emptyItem()] });

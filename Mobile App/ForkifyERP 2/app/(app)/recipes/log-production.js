@@ -6,6 +6,7 @@ import { productionService, recipeService } from '../../../src/services';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Spacing, Shadow } from '../../../src/theme';
 import { Banner, FormInput, PrimaryButton, LoadingScreen, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function LogProduction() {
   const { id } = useLocalSearchParams();

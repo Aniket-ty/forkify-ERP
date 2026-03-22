@@ -7,6 +7,7 @@ import api from '../../../src/services/api';
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, SearchBar, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function FinishedGoodsScreen() {
   const router = useRouter();

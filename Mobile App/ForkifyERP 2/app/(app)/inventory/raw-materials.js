@@ -9,6 +9,7 @@ import { inventoryService, recipeService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, StatusBadge, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, ProgressBar, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 const STATUS_COLORS = {
   GOOD:         { bg: '#f0fdf4', color: '#15803d' },

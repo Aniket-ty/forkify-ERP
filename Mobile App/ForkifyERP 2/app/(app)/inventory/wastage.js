@@ -7,6 +7,7 @@ import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, LoadingScreen, EmptyState, PrimaryButton, FormField, FormInput, StatusBadge, ScreenHeader} from '../../../src/components/common';
 import api from '../../../src/services/api';
+import { Ionicons } from '@expo/vector-icons';
 
 const REASONS = ['EXPIRED','DAMAGED','SPOILED','OVERPRODUCTION','QUALITY_ISSUE','OTHER'];
 const REASON_LABELS = { EXPIRED:'Expired', DAMAGED:'Damaged', SPOILED:'Spoiled', OVERPRODUCTION:'Overproduction', QUALITY_ISSUE:'Quality Issue', OTHER:'Other' };

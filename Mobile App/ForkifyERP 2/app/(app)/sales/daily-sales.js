@@ -15,6 +15,7 @@ import {
 import { useBranch } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, FormField, FormInput, PrimaryButton, StatusBadge, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 const TIER_COLOR = { GOLD: '#a16207', SILVER: '#475569', BRONZE: '#0052b3' };

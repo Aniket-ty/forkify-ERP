@@ -7,6 +7,7 @@ import { reportService } from '../../../src/services';
 import { useBranch, usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, ProgressBar, ScreenHeader} from '../../../src/components/common';
+import { Ionicons } from '@expo/vector-icons';
 
 const REPORT_CONFIG = {
   inventory: { title: '📦 Inventory Report',  icon: '📦', label: 'Inventory' },

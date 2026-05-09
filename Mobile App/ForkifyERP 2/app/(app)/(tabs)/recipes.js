@@ -9,6 +9,14 @@ import { usePermission } from '../../../src/hooks';
 import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme';
 import { Banner, StatusBadge, LoadingScreen, EmptyState } from '../../../src/components/common';
 
+// Backend returns tags/allergens as comma-separated string — normalise to array
+const parseList = (val) => {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.filter(Boolean);
+  return String(val).split(',').map(s => s.trim()).filter(Boolean);
+};
+
+
 export default function RecipesTab() {
   const router    = useRouter();
   const dispatch  = useDispatch();
@@ -118,12 +126,12 @@ export default function RecipesTab() {
                   {recipe.costPerServing != null && <Text style={[styles.metaChip, { color: Colors.primary }]}>₹{parseFloat(recipe.costPerServing).toFixed(2)}/serve</Text>}
                 </View>
 
-                {(recipe.tags || []).length > 0 && (
+                {parseList(recipe.tags).length > 0 && (
                   <View style={styles.tagsRow}>
-                    {recipe.tags.slice(0, 3).map((t, i) => (
+                    {parseList(recipe.tags).slice(0, 3).map((t, i) => (
                       <View key={i} style={styles.tag}><Text style={styles.tagText}>{t}</Text></View>
                     ))}
-                    {recipe.tags.length > 3 && <Text style={styles.tagMore}>+{recipe.tags.length - 3}</Text>}
+                    {parseList(recipe.tags).length > 3 && <Text style={styles.tagMore}>+{parseList(recipe.tags).length - 3}</Text>}
                   </View>
                 )}
 

@@ -42,10 +42,10 @@ export default function AddEditRecipe() {
           name: r.name || '', description: r.description || '', category: r.category || '',
           servings: String(r.servings || 4), prepTime: String(r.prepTime || ''), cookTime: String(r.cookTime || ''),
           instructions: r.instructions || '', status: r.status || 'DRAFT',
-          tags: (r.tags || []).join(', '), calories: String(r.calories || ''),
+          tags: Array.isArray(r.tags) ? r.tags.join(', ') : (r.tags || ''), calories: String(r.calories || ''),
           protein: String(r.protein || ''), carbs: String(r.carbs || ''),
           fat: String(r.fat || ''), fiber: String(r.fiber || ''),
-          allergens: (r.allergens || []).join(', '),
+          allergens: Array.isArray(r.allergens) ? r.allergens.join(', ') : (r.allergens || ''),
           ingredients: (r.ingredients || []).length > 0
             ? r.ingredients.map(i => ({ ingredientId: String(i.ingredientId), quantity: String(i.quantity), notes: i.notes || '' }))
             : [emptyIngredientLine()],

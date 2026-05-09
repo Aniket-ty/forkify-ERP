@@ -9,6 +9,14 @@ import { Colors, Typography, Radius, Shadow, Spacing } from '../../../src/theme'
 import { LoadingScreen, Banner, ScreenHeader} from '../../../src/components/common';
 import { Ionicons } from '@expo/vector-icons';
 
+// Backend returns tags/allergens as comma-separated string — normalise to array
+const parseList = (val) => {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.filter(Boolean);
+  return String(val).split(',').map(s => s.trim()).filter(Boolean);
+};
+
+
 export default function RecipeDetail() {
   const { id }     = useLocalSearchParams();
   const router     = useRouter();
@@ -120,11 +128,11 @@ export default function RecipeDetail() {
         </View>
 
         {/* Allergens */}
-        {(recipe.allergens || []).length > 0 && (
+        {parseList(recipe.allergens).length > 0 && (
           <View style={styles.allergenCard}>
             <Text style={styles.allergenTitle}>⚠️  Allergens</Text>
             <View style={styles.allergenRow}>
-              {recipe.allergens.map((a, i) => (
+              {parseList(recipe.allergens).map((a, i) => (
                 <View key={i} style={styles.allergenBadge}><Text style={styles.allergenText}>{a}</Text></View>
               ))}
             </View>
@@ -155,6 +163,38 @@ export default function RecipeDetail() {
             );
           })}
         </View>
+
+
+        {/* Cooking Steps */}
+        {(recipe.steps || []).length > 0 && (
+          <View style={[styles.section, Shadow.sm]}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>👨‍🍳  Cooking Steps</Text>
+              <Text style={styles.sectionNote}>{recipe.steps.length} steps · {recipe.steps.reduce((s, st) => s + (st.durationMinutes || 0), 0)} min</Text>
+            </View>
+            {recipe.steps
+              .slice()
+              .sort((a, b) => (a.stepNumber || 0) - (b.stepNumber || 0))
+              .map((step, i) => (
+              <View key={step.id || i} style={styles.stepRow}>
+                <View style={styles.stepNumWrap}>
+                  <Text style={styles.stepNum}>{step.stepNumber || i + 1}</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.stepTitleRow}>
+                    <Text style={styles.stepTitle}>{step.title}</Text>
+                    {step.durationMinutes ? (
+                      <Text style={styles.stepDuration}>⏱ {step.durationMinutes}m</Text>
+                    ) : null}
+                  </View>
+                  {step.instruction ? (
+                    <Text style={styles.stepInstruction}>{step.instruction}</Text>
+                  ) : null}
+                </View>
+              </View>
+            ))}
+          </View>
+        )}
 
         {/* Instructions */}
         {recipe.instructions && (
@@ -245,4 +285,11 @@ const styles = StyleSheet.create({
   nutCard:      { width: '30%', backgroundColor: Colors.bg, borderRadius: Radius.md, padding: 10, alignItems: 'center' },
   nutValue:     { fontSize: Typography.md, fontWeight: '800', color: Colors.text },
   nutLabel:     { fontSize: Typography.xs, color: Colors.textMuted, marginTop: 2 },
+  stepRow:         { flexDirection: 'row', gap: 12, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: Colors.borderLight, alignItems: 'flex-start' },
+  stepNumWrap:     { width: 30, height: 30, borderRadius: 15, backgroundColor: Colors.primary, alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 },
+  stepNum:         { fontSize: Typography.sm, fontWeight: '800', color: '#fff' },
+  stepTitleRow:    { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' },
+  stepTitle:       { fontSize: Typography.base, fontWeight: '700', color: Colors.text, flex: 1 },
+  stepDuration:    { fontSize: Typography.xs, fontWeight: '600', color: Colors.primary, backgroundColor: Colors.primaryLight, paddingHorizontal: 7, paddingVertical: 2, borderRadius: Radius.full },
+  stepInstruction: { fontSize: Typography.sm, color: Colors.textSecondary, lineHeight: 20 },
 });

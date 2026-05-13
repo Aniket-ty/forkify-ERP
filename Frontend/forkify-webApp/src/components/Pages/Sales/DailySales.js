@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   ShoppingCart, Plus, Trash2, RefreshCw, AlertTriangle,
-  CheckCircle, DollarSign, ChefHat, Calendar, X,
+  CheckCircle, IndianRupee, ChefHat, Calendar, X,
   ChevronDown, Search, Users, Award, Package,
   QrCode, Hash, ChevronUp, Zap, AlertCircle,
 } from 'lucide-react';
@@ -455,7 +455,7 @@ export default function DailySales() {
         <div className="ds-kpis">
           {[
             { label:'Covers Sold',   val: todayCovers,                                                                 color:'#3b82f6', icon: Users },
-            { label:'Revenue Today', val: `₹${todayRevenue.toFixed(0)}`,                                               color:'#10b981', icon: DollarSign },
+            { label:'Revenue Today', val: `₹${todayRevenue.toFixed(0)}`,                                               color:'#10b981', icon: IndianRupee },
             { label:'Gross Profit',  val: `₹${todayProfit.toFixed(0)}`,                                                color:'#0061d2', icon: ChefHat },
             { label:'Margin',        val: todayRevenue > 0 ? `${((todayProfit/todayRevenue)*100).toFixed(1)}%` : '0%', color:'#0061d2', icon: Award },
           ].map((k, i) => (

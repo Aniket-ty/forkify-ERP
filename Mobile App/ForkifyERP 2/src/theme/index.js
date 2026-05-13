@@ -1,4 +1,4 @@
-// src/theme/index.js — Forkify ERP Design Tokens v3
+// src/theme/index.js — Forkify Design Tokens v3
 export const Colors = {
   // Brand
   primary:      '#1d5fe8',

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   FileText, Plus, Eye, RefreshCw, Search,
   CheckCircle, Clock, XCircle, Truck, AlertTriangle,
-  X, Save, ChevronDown, Package, Calendar, DollarSign,
+  X, Save, ChevronDown, Package, Calendar, IndianRupee,
   Trash2,
 } from 'lucide-react';
 import procurementService from '../../../services/procurementService';

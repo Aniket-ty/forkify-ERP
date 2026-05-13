@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   FileText, Plus, Eye, Edit2, Trash2, Search,
-  Filter, Truck, Calendar, DollarSign, CheckCircle,
+  Filter, Truck, Calendar, IndianRupee, CheckCircle,
   Clock, XCircle, RefreshCw, AlertTriangle, X,
   Package, ChevronDown, Save, ArrowLeft,
 } from 'lucide-react';

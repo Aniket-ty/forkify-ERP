@@ -44,11 +44,13 @@ export default function CustomerCRM() {
       const [cRes, sRes] = await Promise.all([
         customerService.getAll(branchId, search || null),
         customerService.getStats(branchId),
-        // customerService.getBirthdays(2),  // commented out — endpoint unstable
       ]);
       setCustomers(cRes.data || []);
       setStats(sRes.data || {});
-      setBirthdays([]);  // birthdays API disabled — set empty to avoid crash
+      // birthdays fetched separately so a failure doesn't block the main load
+      customerService.getBirthdays(new Date().getMonth() + 1)
+        .then(r => setBirthdays(r.data || []))
+        .catch(() => setBirthdays([]));
     } catch { setError('Failed to load customers'); }
     finally { setLoading(false); }
   }, [branchId]);

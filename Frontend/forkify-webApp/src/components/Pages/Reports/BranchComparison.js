@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Store, RefreshCw, AlertTriangle, TrendingUp,
-  DollarSign, Package, Trash2, ShoppingCart, BarChart3,
+  IndianRupee, Package, Trash2, ShoppingCart, BarChart3,
   ChevronDown, Download,
 } from 'lucide-react';
 import api from '../../../services/api';
 import branchService from '../../../services/branchService';
 
 const METRICS = [
-  { key: 'revenue',      label: 'Revenue',        icon: DollarSign,   color: '#10b981', format: v => `₹${Number(v||0).toLocaleString('en-IN')}` },
+  { key: 'revenue',      label: 'Revenue',        icon: IndianRupee,   color: '#10b981', format: v => `₹${Number(v||0).toLocaleString('en-IN')}` },
   { key: 'orders',       label: 'Orders',          icon: ShoppingCart, color: '#3b82f6', format: v => v },
   { key: 'inventoryVal', label: 'Inventory Value', icon: Package,      color: '#0061d2', format: v => `₹${Number(v||0).toLocaleString('en-IN')}` },
   { key: 'wastage',      label: 'Wastage Loss',    icon: Trash2,       color: '#ef4444', format: v => `₹${Number(v||0).toFixed(0)}` },

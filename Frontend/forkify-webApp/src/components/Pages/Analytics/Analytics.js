@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  TrendingUp, TrendingDown, DollarSign, ShoppingCart,
+  TrendingUp, TrendingDown, IndianRupee, ShoppingCart,
   BarChart3, RefreshCw, AlertTriangle, ChefHat,
   Percent, Calendar, Filter,
 } from 'lucide-react';
@@ -79,7 +79,7 @@ export default function Analytics() {
           {/* KPI Cards */}
           <div className="an-kpis">
             {[
-              { label:'Revenue',      val: fmtK(data.revenue),      sub: `${Number(data.revenueGrowth||0)>0?'+':''}${data.revenueGrowth}% vs prev`, icon:DollarSign, color:'#10b981', up: Number(data.revenueGrowth||0)>=0 },
+              { label:'Revenue',      val: fmtK(data.revenue),      sub: `${Number(data.revenueGrowth||0)>0?'+':''}${data.revenueGrowth}% vs prev`, icon:IndianRupee, color:'#10b981', up: Number(data.revenueGrowth||0)>=0 },
               { label:'Gross Profit', val: fmtK(data.grossProfit),  sub: `${Number(data.foodCostPct||0).toFixed(1)}% food cost`, icon:TrendingUp, color:'#3b82f6' },
               { label:'Food Cost %',  val: `${data.foodCostPct}%`,  sub: Number(data.foodCostPct||0)>35?'⚠ Above target (35%)':'✓ Within target', icon:Percent, color:foodCostColor(data.foodCostPct) },
               { label:'Total Covers', val: (data.totalCovers||0).toLocaleString(), sub:`Avg ${fmtK(data.avgOrderValue)} per cover`, icon:ShoppingCart, color:'#0061d2' },

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  ChefHat, Clock, Users, DollarSign, ArrowLeft,
+  ChefHat, Clock, Users, IndianRupee, ArrowLeft,
   Edit2, Trash2, Lock, AlertTriangle, Flame, Play,
   Tag, Package, TrendingUp, RefreshCw, CheckCircle,
   ListOrdered, Timer, GitBranch,
@@ -323,7 +323,7 @@ const RecipeDetail = () => {
 
           {/* Cost card */}
           <div className="rd-cost-card">
-            <h3><DollarSign size={18} /> Cost Analysis</h3>
+            <h3><IndianRupee size={18} /> Cost Analysis</h3>
             <div className="rd-cost-big">
               <span className="rd-cost-value">₹{scaledCost}</span>
               <span className="rd-cost-label">total for {servings} serving{servings !== 1 ? 's' : ''}</span>

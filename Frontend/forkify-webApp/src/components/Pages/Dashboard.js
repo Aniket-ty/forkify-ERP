@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  TrendingUp, TrendingDown, Package, Users, DollarSign,
+  TrendingUp, TrendingDown, Package, Users, IndianRupee,
   AlertTriangle, CheckCircle, BarChart3, ShoppingCart,
   ChefHat, RefreshCw, Store, Clock, Truck, Trash2, ArrowRight,
 } from 'lucide-react';
@@ -48,7 +48,7 @@ const Dashboard = () => {
       value: `₹${Number(data.totalRevenue || 0).toLocaleString('en-IN')}`,
       change: revenueChange ? `${revenueChange > 0 ? '+' : ''}${revenueChange}% vs last month` : 'No prior data',
       trend: revenueChange > 0 ? 'up' : revenueChange < 0 ? 'down' : 'neutral',
-      icon: DollarSign,
+      icon: IndianRupee,
     },
     {
       title: 'Active Recipes',

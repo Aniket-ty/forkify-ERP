@@ -15,8 +15,12 @@ const SECTIONS = [
     label: 'Operations',
     items: [
       { label: 'Daily Sales',     icon: 'cart-outline',          path: '/(app)/sales/daily-sales'   },
-      { label: 'Menu Management', icon: 'restaurant-outline',    path: '/(app)/menu/active'          },
-      { label: 'Meal Planning',   icon: 'calendar-outline',      path: '/(app)/meal-planning/weekly' },
+      { label: 'Menu Management', icon: 'restaurant-outline',    path: '/(app)/menu/active'           },
+      { label: 'Seasonal Menus',  icon: 'leaf-outline',          path: '/(app)/menu/seasonal',  hqOnly: true },
+      { label: 'Branch Pricing',  icon: 'pricetag-outline',      path: '/(app)/menu/pricing'          },
+      { label: 'Meal Planning',   icon: 'calendar-outline',      path: '/(app)/meal-planning/weekly'  },
+      { label: 'Ingredient Forecast', icon: 'analytics-outline', path: '/(app)/meal-planning/forecast'},
+      { label: 'Push to Branches',icon: 'share-outline',         path: '/(app)/meal-planning/push', hqOnly: true },
       { label: 'Customer CRM',    icon: 'heart-outline',         path: '/(app)/customers'            },
       { label: 'Shift Scheduler', icon: 'time-outline',          path: '/(app)/staff/shifts', managerOnly: true },
     ],
@@ -143,7 +147,7 @@ export default function MoreTab() {
           );
         })}
 
-        <Text style={S.version}>Forkify ERP v2.1.0  ·  Restaurant Management System</Text>
+        <Text style={S.version}>Forkify v2.1.0  ·  Restaurant Management System</Text>
       </ScrollView>
 
       {/* Branch Switcher */}

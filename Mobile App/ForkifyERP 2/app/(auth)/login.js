@@ -119,7 +119,7 @@ export default function LoginScreen() {
               <Text style={LS.logoEmoji}>🍴</Text>
             </View>
           </View>
-          <Text style={LS.brandName}>Forkify ERP</Text>
+          <Text style={LS.brandName}>Forkify</Text>
           <Text style={LS.brandSub}>Restaurant Management Platform</Text>
         </View>
 
@@ -195,7 +195,7 @@ export default function LoginScreen() {
           </View>
         </View>
 
-        <Text style={LS.version}>Forkify ERP v2.1.0</Text>
+        <Text style={LS.version}>Forkify v2.1.0</Text>
       </ScrollView>
     </KeyboardAvoidingView>
   );

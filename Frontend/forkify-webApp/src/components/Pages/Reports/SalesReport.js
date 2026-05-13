@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   TrendingUp, RefreshCw, AlertTriangle, Download,
-  DollarSign, ShoppingCart, ChefHat, Calendar,
+  IndianRupee, ShoppingCart, ChefHat, Calendar,
   Search, X, Filter, BarChart3, TrendingDown,
   CheckCircle,
 } from 'lucide-react';
@@ -154,7 +154,7 @@ const SalesReport = () => {
       {/* KPI cards */}
       <div className="sr2-kpis">
         {[
-          { label: 'Total Revenue',  val: `₹${totalRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`, icon: DollarSign,   color: '#10b981', trend: 'up' },
+          { label: 'Total Revenue',  val: `₹${totalRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`, icon: IndianRupee,   color: '#10b981', trend: 'up' },
           { label: 'Gross Profit',   val: `₹${totalProfit.toLocaleString('en-IN',  { maximumFractionDigits: 0 })}`, icon: TrendingUp,   color: '#3b82f6', trend: 'up' },
           { label: 'Total COGS',     val: `₹${totalCOGS.toLocaleString('en-IN',   { maximumFractionDigits: 0 })}`, icon: TrendingDown, color: '#0061d2' },
           { label: 'Profit Margin',  val: `${marginPct}%`,                                                          icon: BarChart3,    color: marginPct >= 30 ? '#10b981' : '#f59e0b' },

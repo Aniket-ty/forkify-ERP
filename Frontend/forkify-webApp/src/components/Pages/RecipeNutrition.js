@@ -392,7 +392,7 @@ const RecipeNutrition = () => {
                     <div className="ingredient-nutrition">
                       <span className="nutrition-value">120 cal</span>
                       <span className="nutrition-value">8g protein</span>
-                      <span className="nutrition-value">$1.20</span>
+                      <span className="nutrition-value">₹1.20</span>
                     </div>
                   </div>
                 ))}
@@ -424,15 +424,15 @@ const RecipeNutrition = () => {
             <div className="cost-breakdown">
               <div className="cost-item">
                 <span>Ingredients Cost</span>
-                <span className="cost-value">${(currentRecipe.costPerServing * servings).toFixed(2)}</span>
+                <span className="cost-value">₹{(currentRecipe.costPerServing * servings).toFixed(2)}</span>
               </div>
               <div className="cost-item">
                 <span>Labor Cost (est.)</span>
-                <span className="cost-value">${(currentRecipe.costPerServing * servings * 0.3).toFixed(2)}</span>
+                <span className="cost-value">₹{(currentRecipe.costPerServing * servings * 0.3).toFixed(2)}</span>
               </div>
               <div className="cost-item">
                 <span>Overhead Cost</span>
-                <span className="cost-value">${(currentRecipe.costPerServing * servings * 0.2).toFixed(2)}</span>
+                <span className="cost-value">₹{(currentRecipe.costPerServing * servings * 0.2).toFixed(2)}</span>
               </div>
               <div className="cost-item total">
                 <span>Total Cost</span>

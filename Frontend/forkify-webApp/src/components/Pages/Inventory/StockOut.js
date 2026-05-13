@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   ArrowRightCircle, Search, RefreshCw, Calendar,
-  Package, ChefHat, Filter, X, TrendingDown, DollarSign,
+  Package, ChefHat, Filter, X, TrendingDown, IndianRupee,
 } from 'lucide-react';
 import inventoryService from '../../../services/inventoryService';
 import useBranch        from '../../../hooks/useBranch';

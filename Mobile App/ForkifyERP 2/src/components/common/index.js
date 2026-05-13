@@ -1,4 +1,4 @@
-// src/components/common/index.js — Forkify ERP Shared UI v3
+// src/components/common/index.js — Forkify Shared UI v3
 import React from 'react';
 import {
   View, Text, TouchableOpacity, ActivityIndicator,

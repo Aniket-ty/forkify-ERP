@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { BarChart3, Package, DollarSign, Trash2, Store, Truck, TrendingUp } from 'lucide-react';
+import { BarChart3, Package, IndianRupee, Trash2, Store, Truck, TrendingUp } from 'lucide-react';
 import usePermission from '../../../hooks/usePermission';
 
 const TABS = [
   { to: 'inventory', label: 'Inventory',        icon: Package    },
-  { to: 'cost',      label: 'Cost & Margins',    icon: DollarSign },
+  { to: 'cost',      label: 'Cost & Margins',    icon: IndianRupee },
   { to: 'wastage',   label: 'Wastage',           icon: Trash2     },
   { to: 'sales',     label: 'Sales',             icon: TrendingUp },
   { to: 'branches',  label: 'Branch Comparison', icon: Store,   hqOnly: true },

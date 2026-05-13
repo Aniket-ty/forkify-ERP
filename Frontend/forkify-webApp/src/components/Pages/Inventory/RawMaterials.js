@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Package, Search, Plus, Edit2, AlertTriangle,
-  DollarSign, Calendar, RefreshCw, Filter, X, Save,
+  IndianRupee, Calendar, RefreshCw, Filter, X, Save,
   TrendingDown, CheckCircle, XCircle, ArrowLeft,
 } from 'lucide-react';
 import inventoryService from '../../../services/inventoryService';
@@ -207,8 +207,8 @@ const RawMaterials = () => {
                       </div>
                     </td>
                     <td>{item.minStockLevel} {item.unit}</td>
-                    <td><span className="rm-cost"><DollarSign size={12} />{parseFloat(item.unitCost||0).toFixed(2)}</span></td>
-                    <td><span className="rm-cost">${parseFloat(item.totalValue||0).toFixed(2)}</span></td>
+                    <td><span className="rm-cost"><IndianRupee size={12} />{parseFloat(item.unitCost||0).toFixed(2)}</span></td>
+                    <td><span className="rm-cost">₹{parseFloat(item.totalValue||0).toFixed(2)}</span></td>
                     <td>
                       {item.expiryDate
                         ? <span className="rm-expiry"><Calendar size={12} />{item.expiryDate}</span>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Calculator, ChefHat, Clock, Users, Flame,
   TrendingUp, TrendingDown, AlertTriangle, RefreshCw,
-  DollarSign, Apple, Droplets, Sparkles,
+  IndianRupee, Apple, Droplets, Sparkles,
 } from 'lucide-react';
 import { fetchRecipes } from '../../../store/actions/recipeActions';
 import recipeService from '../../../services/recipeService';
@@ -171,7 +171,7 @@ const RecipeNutrition = () => {
                   { label: 'Carbs',     val: scale(detail.carbs),    unit: 'g',    icon: Apple,       color: '#3b82f6', trend: 'down' },
                   { label: 'Fat',       val: scale(detail.fat),      unit: 'g',    icon: Droplets,    color: '#f59e0b'               },
                   { label: 'Fiber',     val: scale(detail.fiber),    unit: 'g',    icon: TrendingUp,  color: '#0061d2'               },
-                  { label: 'Cost',      val: `₹${scaledCost}`,       unit: 'total',icon: DollarSign,  color: '#ec4899'               },
+                  { label: 'Cost',      val: `₹${scaledCost}`,       unit: 'total',icon: IndianRupee,  color: '#ec4899'               },
                 ].map(n => (
                   <div key={n.label} className="rn-nut-card" style={{ '--accent': n.color }}>
                     <div className="rn-nut-icon" style={{ background: n.color + '18' }}>
@@ -216,13 +216,13 @@ const RecipeNutrition = () => {
                             </div>
                             <span className="rn-bd-pct">{pct}%</span>
                           </div>
-                          <span className="rn-bd-cost">${scaledLineCost}</span>
+                          <span className="rn-bd-cost">₹{scaledLineCost}</span>
                         </div>
                       );
                     })}
                     <div className="rn-breakdown-total">
                       <span>Total</span>
-                      <strong>${scaledCost}</strong>
+                      <strong>₹{scaledCost}</strong>
                     </div>
                   </div>
                 </div>

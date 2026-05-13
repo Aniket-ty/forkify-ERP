@@ -12,7 +12,7 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  DollarSign,
+  IndianRupee,
   Package,
   Edit2,
   Trash2,
@@ -129,15 +129,15 @@ const SupplierManagement = () => {
     { label: 'Active Suppliers', value: '24', change: '+3', trend: 'up' },
     { label: 'Total Orders', value: '1,245', change: '+12%', trend: 'up' },
     { label: 'Avg Rating', value: '4.7', change: '+0.1', trend: 'up' },
-    { label: 'Total Spent', value: '$245,800', change: '+8.5%', trend: 'up' }
+    { label: 'Total Spent', value: '₹245,800', change: '+8.5%', trend: 'up' }
   ];
 
   const recentOrders = [
-    { id: '#PO-001', supplier: 'Fresh Farms Co.', amount: '$1,250', status: 'delivered', date: '2024-01-15' },
-    { id: '#PO-002', supplier: 'Spice Masters', amount: '$850', status: 'processing', date: '2024-01-16' },
-    { id: '#PO-003', supplier: 'Dairy Delight', amount: '$1,450', status: 'delivered', date: '2024-01-14' },
-    { id: '#PO-004', supplier: 'Meat Market', amount: '$2,150', status: 'pending', date: '2024-01-16' },
-    { id: '#PO-005', supplier: 'Ocean Fresh', amount: '$980', status: 'processing', date: '2024-01-15' }
+    { id: '#PO-001', supplier: 'Fresh Farms Co.', amount: '₹1,250', status: 'delivered', date: '2024-01-15' },
+    { id: '#PO-002', supplier: 'Spice Masters', amount: '₹850', status: 'processing', date: '2024-01-16' },
+    { id: '#PO-003', supplier: 'Dairy Delight', amount: '₹1,450', status: 'delivered', date: '2024-01-14' },
+    { id: '#PO-004', supplier: 'Meat Market', amount: '₹2,150', status: 'pending', date: '2024-01-16' },
+    { id: '#PO-005', supplier: 'Ocean Fresh', amount: '₹980', status: 'processing', date: '2024-01-15' }
   ];
 
   const getStatusBadge = (status) => {
@@ -241,8 +241,8 @@ const SupplierManagement = () => {
                     <span>{supplier.orders} orders</span>
                   </div>
                   <div className="detail-item">
-                    <DollarSign size={12} />
-                    <span>${(supplier.totalSpent / 1000).toFixed(0)}K</span>
+                    <IndianRupee size={12} />
+                    <span>₹{(supplier.totalSpent / 1000).toFixed(0)}K</span>
                   </div>
                   <div className="detail-item">
                     {getStatusBadge(supplier.status)}
@@ -358,7 +358,7 @@ const SupplierManagement = () => {
                   </div>
                 </div>
                 <div className="info-item">
-                  <DollarSign size={16} />
+                  <IndianRupee size={16} />
                   <div className="item-details">
                     <div className="item-label">Payment Terms</div>
                     <div className="item-value">{selectedSupplierData.paymentTerms}</div>
@@ -379,12 +379,12 @@ const SupplierManagement = () => {
               <div className="financial-stats">
                 <div className="financial-stat">
                   <div className="stat-label">Total Spent</div>
-                  <div className="stat-value">${selectedSupplierData.totalSpent.toLocaleString()}</div>
+                  <div className="stat-value">₹{selectedSupplierData.totalSpent.toLocaleString()}</div>
                   <div className="stat-trend up">+12.5%</div>
                 </div>
                 <div className="financial-stat">
                   <div className="stat-label">Avg Order Value</div>
-                  <div className="stat-value">${(selectedSupplierData.totalSpent / selectedSupplierData.orders).toFixed(0)}</div>
+                  <div className="stat-value">₹{(selectedSupplierData.totalSpent / selectedSupplierData.orders).toFixed(0)}</div>
                   <div className="stat-trend up">+5.2%</div>
                 </div>
                 <div className="financial-stat">
@@ -394,7 +394,7 @@ const SupplierManagement = () => {
                 </div>
                 <div className="financial-stat">
                   <div className="stat-label">Outstanding</div>
-                  <div className="stat-value">$2,450</div>
+                  <div className="stat-value">₹2,450</div>
                   <div className="stat-trend neutral">Due in 15 days</div>
                 </div>
               </div>
@@ -480,7 +480,7 @@ const SupplierManagement = () => {
                 <span>Send Message</span>
               </button>
               <button className="quick-action-card">
-                <DollarSign size={20} />
+                <IndianRupee size={20} />
                 <span>Make Payment</span>
               </button>
               <button className="quick-action-card">

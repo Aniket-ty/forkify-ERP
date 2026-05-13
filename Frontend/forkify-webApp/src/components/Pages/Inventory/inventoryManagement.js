@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Package, AlertTriangle, TrendingDown, DollarSign,
+  Package, AlertTriangle, TrendingDown, IndianRupee,
   ShoppingCart, Trash2, BarChart3, ArrowDownCircle,
   RefreshCw, Calendar, ArrowRightCircle,
 } from 'lucide-react';
@@ -82,7 +82,7 @@ const InventoryManagement = () => {
                 { label: 'Low Stock',         val: summary.lowStockCount, icon: AlertTriangle,color: '#f59e0b', urgent: summary.lowStockCount > 0 },
                 { label: 'Expiring (7 days)', val: summary.expiringCount, icon: Calendar,     color: '#0061d2', urgent: summary.expiringCount > 0 },
                 { label: 'Pending Wastage',   val: summary.pendingWastage,icon: Trash2,       color: '#ef4444', urgent: summary.pendingWastage > 0 },
-                { label: 'Total Value',       val: `₹${Number(summary.totalValue || 0).toLocaleString('en', {minimumFractionDigits:2})}`, icon: DollarSign, color: '#10b981' },
+                { label: 'Total Value',       val: `₹${Number(summary.totalValue || 0).toLocaleString('en', {minimumFractionDigits:2})}`, icon: IndianRupee, color: '#10b981' },
               ].map((s, i) => (
                 <div key={i} className={`inv-stat-card ${s.urgent ? 'urgent' : ''}`}
                   style={{ '--accent': s.color }}>

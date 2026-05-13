@@ -68,6 +68,22 @@ export default function RecipesTab() {
 
       <Banner type="error" message={error} onDismiss={() => dispatch(clearRecipeError())} />
 
+      {/* Quick-access tools */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.toolScroll} contentContainerStyle={styles.toolContent}>
+        <TouchableOpacity style={styles.toolBtn} onPress={() => router.push('/(app)/recipes/ingredients')}>
+          <Text style={styles.toolIcon}>🥕</Text>
+          <Text style={styles.toolLabel}>Ingredients</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.toolBtn} onPress={() => router.push('/(app)/recipes/nutrition')}>
+          <Text style={styles.toolIcon}>🥗</Text>
+          <Text style={styles.toolLabel}>Nutrition</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.toolBtn} onPress={() => router.push('/(app)/recipes/allergens')}>
+          <Text style={styles.toolIcon}>⚠️</Text>
+          <Text style={styles.toolLabel}>Allergens</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
       {/* Search */}
       <View style={styles.searchWrap}>
         <View style={styles.searchBar}>
@@ -144,6 +160,9 @@ export default function RecipesTab() {
                   <TouchableOpacity style={styles.actionBtn} onPress={() => router.push({ pathname: '/(app)/recipes/add-edit', params: { id: recipe.id } })}>
                     <Text style={styles.actionBtnText}>✏️ Edit</Text>
                   </TouchableOpacity>
+                  <TouchableOpacity style={styles.actionBtn} onPress={() => router.push({ pathname: '/(app)/recipes/versions', params: { id: recipe.id } })}>
+                    <Text style={styles.actionBtnText}>📋 History</Text>
+                  </TouchableOpacity>
                   {canEditMasterData && (
                     <TouchableOpacity style={[styles.actionBtn, styles.actionBtnDanger]} onPress={() => setConfirmDel(recipe)}>
                       <Text style={[styles.actionBtnText, { color: Colors.danger }]}>🗑 Delete</Text>
@@ -186,6 +205,11 @@ const styles = StyleSheet.create({
   sub:         { fontSize: Typography.xs, color: Colors.textMuted },
   addBtn:      { paddingHorizontal: 14, paddingVertical: 8, backgroundColor: Colors.primaryLight, borderRadius: Radius.md, borderWidth: 1, borderColor: '#b3ccf5' },
   addBtnText:  { fontSize: Typography.sm, fontWeight: '600', color: Colors.primaryDark },
+  toolScroll:  { backgroundColor: Colors.card, borderBottomWidth: 1, borderBottomColor: Colors.border },
+  toolContent: { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, flexDirection: 'row', gap: 8 },
+  toolBtn:     { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: Colors.primaryLight, borderRadius: Radius.md, paddingHorizontal: 12, paddingVertical: 7, borderWidth: 1, borderColor: '#b3ccf5' },
+  toolIcon:    { fontSize: 15 },
+  toolLabel:   { fontSize: Typography.xs, fontWeight: '600', color: Colors.primary },
   searchWrap:  { padding: Spacing.md, backgroundColor: Colors.card, borderBottomWidth: 1, borderBottomColor: Colors.border },
   searchBar:   { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 9, backgroundColor: Colors.bg, borderRadius: Radius.md, borderWidth: 1, borderColor: Colors.border },
   searchInput: { flex: 1, fontSize: Typography.base, color: Colors.text },

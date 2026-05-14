@@ -1,7 +1,7 @@
 import api from './api';
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://forkify-erp.onrender.com/api';
 
 // Unauthenticated axios instance for public QR endpoints
 const publicApi = axios.create({

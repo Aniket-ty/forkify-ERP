@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 // ── API base URL ──────────────────────────────────────────────────────────────
-// In development:  set REACT_APP_API_URL=http://localhost:8080/api in .env
+// In development:  set REACT_APP_API_URL=https://forkify-erp.onrender.com/api in .env
 // In production:   set REACT_APP_API_URL=https://your-server.com/api in .env.production
 // Falls back to localhost:8080 so the app still works without a .env file
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://forkify-erp.onrender.com/api';
 
 // ── Axios instance ────────────────────────────────────────────────────────────
 const api = axios.create({

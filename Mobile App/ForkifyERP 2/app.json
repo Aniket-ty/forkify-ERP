@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#0061d2"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.forkify.erp"
@@ -30,11 +32,20 @@
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-asset"
     ],
     "scheme": "forkify-erp",
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "3e075ec2-35fd-4b42-ab70-88d4b8c47ef6"
+      }
     }
   }
 }

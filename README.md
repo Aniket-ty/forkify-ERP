@@ -280,13 +280,13 @@ export JWT_EXPIRATION=86400000
 java -jar target/*.jar
 ```
 
-The API starts on **http://localhost:8080**
+The API starts on **https://forkify-erp.onrender.com**
 
 > Hibernate is set to `ddl-auto=update` — all tables are created automatically on first run.
 
 #### Create the first admin user
 ```bash
-curl -X POST http://localhost:8080/api/auth/register \
+curl -X POST https://forkify-erp.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","email":"admin@forkify.com","password":"Admin@123","fullName":"Admin User"}'
 ```
@@ -306,7 +306,7 @@ npm install
 
 Create `.env` in `food-management/`:
 ```env
-REACT_APP_API_URL=http://localhost:8080/api
+REACT_APP_API_URL=https://forkify-erp.onrender.com/api
 ```
 
 ```bash
@@ -331,7 +331,7 @@ npm install
 
 Create `.env`:
 ```env
-EXPO_PUBLIC_API_URL=http://localhost:8080/api
+EXPO_PUBLIC_API_URL=https://forkify-erp.onrender.com/api
 ```
 
 ```bash

@@ -261,7 +261,7 @@ export default function Home() {
           </ul>
           <div className="nav-cta">
             <a href="#pricing" className="btn-outline" style={{ padding: "9px 18px", fontSize: 13 }}>View Pricing</a>
-            <a href="#cta" className="btn-primary" style={{ padding: "9px 18px", fontSize: 13 }}>Get Started →</a>
+            <a href="https://forkify-erp.vercel.app/" className="btn-primary" style={{ padding: "9px 18px", fontSize: 13 }}>Log In →</a>
           </div>
         </div>
       </nav>

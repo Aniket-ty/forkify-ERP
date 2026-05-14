@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   ChefHat, Users, ArrowLeft, CheckCircle, XCircle,
-  AlertTriangle, DollarSign, Package, RefreshCw,
+  AlertTriangle, IndianRupee, Package, RefreshCw,
   Play, Minus, Plus, Info,
 } from 'lucide-react';
 import productionService from '../../../services/productionService';
@@ -195,7 +195,7 @@ const LogProduction = () => {
           {/* Cost summary */}
           {preview && (
             <div className="lp-card lp-cost-card">
-              <div className="lp-card-title"><DollarSign size={16} /> Estimated Cost</div>
+              <div className="lp-card-title"><IndianRupee size={16} /> Estimated Cost</div>
               <div className="lp-cost-big">
                 ₹{Number(preview.estimatedCost || 0).toFixed(2)}
               </div>

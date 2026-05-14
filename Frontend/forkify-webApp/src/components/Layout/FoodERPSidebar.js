@@ -332,7 +332,7 @@ const FoodERPSidebar = ({ isCollapsed, onToggleCollapse, onLogout }) => {
           </button>
         )}
         {!isCollapsed && (
-          <div className="fk-version">v2.1.0 · Forkify ERP</div>
+          <div className="fk-version">v2.1.0 · Forkify</div>
         )}
       </div>
     </aside>

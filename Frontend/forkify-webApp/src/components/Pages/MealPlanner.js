@@ -15,7 +15,7 @@ import {
   XCircle,
   TrendingUp,
   BarChart3,
-  DollarSign,
+  IndianRupee,
   Heart,
   Flame,
   Apple,
@@ -154,9 +154,9 @@ const MealPlanner = () => {
                   </div>
                 </div>
                 <div className="nutrition-stat">
-                  <DollarSign size={20} />
+                  <IndianRupee size={20} />
                   <div className="stat-details">
-                    <div className="stat-value">$245.50</div>
+                    <div className="stat-value">₹245.50</div>
                     <div className="stat-label">Weekly Cost</div>
                   </div>
                 </div>
@@ -206,7 +206,7 @@ const MealPlanner = () => {
                     {mealPlans.current.days[selectedDay]?.totalCalories || 1400} calories
                   </span>
                   <span className="meta-item">
-                    <DollarSign size={16} />
+                    <IndianRupee size={16} />
                     ${mealPlans.current.days[selectedDay]?.totalCost || 14.70} total cost
                   </span>
                   <span className="meta-item">
@@ -247,8 +247,8 @@ const MealPlanner = () => {
                         <span>{meal.prepTime} min</span>
                       </div>
                       <div className="meal-stat">
-                        <DollarSign size={14} />
-                        <span>${meal.cost}</span>
+                        <IndianRupee size={14} />
+                        <span>₹{meal.cost}</span>
                       </div>
                     </div>
                     <div className="meal-tags">
@@ -274,7 +274,7 @@ const MealPlanner = () => {
                 <h3><ShoppingCart size={20} /> Shopping List</h3>
                 <div className="list-stats">
                   <span className="stat">6 items</span>
-                  <span className="stat">$45.80 total</span>
+                  <span className="stat">₹45.80 total</span>
                 </div>
               </div>
               <div className="shopping-list">

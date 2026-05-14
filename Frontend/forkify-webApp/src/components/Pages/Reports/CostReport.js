@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  DollarSign, TrendingUp, TrendingDown, RefreshCw,
+  IndianRupee, TrendingUp, TrendingDown, RefreshCw,
   Search, Download, AlertTriangle, Filter, X,
 } from 'lucide-react';
 import recipeService from '../../../services/recipeService';
@@ -54,7 +54,7 @@ const CostReport = () => {
     <div className="cr-page">
       <div className="cr-header">
         <div>
-          <h2 className="cr-title"><DollarSign size={20}/> Cost Report</h2>
+          <h2 className="cr-title"><IndianRupee size={20}/> Cost Report</h2>
           <p className="cr-sub">Recipe ingredient cost breakdown and analysis</p>
         </div>
         <div className="cr-header-right">

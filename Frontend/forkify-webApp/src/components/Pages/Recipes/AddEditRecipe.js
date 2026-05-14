@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ChefHat, ArrowLeft, Plus, Trash2, Search,
-  DollarSign, Save, AlertTriangle, RefreshCw,
+  IndianRupee, Save, AlertTriangle, RefreshCw,
   Check, X,
 } from 'lucide-react';
 import { createRecipe, updateRecipe, fetchRecipeById } from '../../../store/actions/recipeActions';
@@ -405,14 +405,14 @@ const AddEditRecipe = () => {
           {/* Live cost box */}
           <div className="aer-cost-box">
             <div className="aer-cost-top">
-              <DollarSign size={18} />
+              <IndianRupee size={18} />
               <div>
                 <div className="aer-cost-label">Live Cost Estimate</div>
-                <div className="aer-cost-value">${liveCost.toFixed(2)}</div>
+                <div className="aer-cost-value">₹{liveCost.toFixed(2)}</div>
               </div>
             </div>
             <div className="aer-cost-per">
-              Per serving: <strong>${costPerServing}</strong>
+              Per serving: <strong>₹{costPerServing}</strong>
             </div>
             <p className="aer-cost-note">
               Updates automatically as you add ingredients
@@ -514,7 +514,7 @@ const AddEditRecipe = () => {
                 ))}
                 <div className="aer-ing-total">
                   <span>Total ingredient cost</span>
-                  <strong>${liveCost.toFixed(2)}</strong>
+                  <strong>₹{liveCost.toFixed(2)}</strong>
                 </div>
               </div>
             )}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   Package, Search, Plus, Edit2, Trash2, Filter,
-  AlertTriangle, RefreshCw, DollarSign, ChevronDown,
+  AlertTriangle, RefreshCw, IndianRupee, ChevronDown,
   X, Check, Save, Flame, TrendingUp,
 } from 'lucide-react';
 import recipeService from '../../../services/recipeService';
@@ -249,7 +249,7 @@ const IngredientList = () => {
           </div>
         </div>
         <div className="il-stat-card">
-          <DollarSign size={20} />
+          <IndianRupee size={20} />
           <div>
             <div className="il-stat-val">
               ${ingredients.length > 0
@@ -364,7 +364,7 @@ const IngredientList = () => {
                     </td>
                     <td>
                       <span className="il-cost">
-                        <DollarSign size={12} />
+                        <IndianRupee size={12} />
                         {parseFloat(ing.costPerUnit || 0).toFixed(2)}
                       </span>
                     </td>
@@ -522,7 +522,7 @@ const IngredientList = () => {
                   <div className="il-field">
                     <label>Cost per Unit (₹ / $) *</label>
                     <div className="il-input-prefix">
-                      <DollarSign size={14} />
+                      <IndianRupee size={14} />
                       <input
                         type="number" min="0" step="0.01"
                         className={formErrors.costPerUnit ? 'err' : ''}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   ChefHat, Search, Plus, Edit2, Trash2, Eye, Play,
-  Clock, Users, DollarSign, Filter, Tag, Flame,
+  Clock, Users, IndianRupee, Filter, Tag, Flame,
   AlertTriangle, RefreshCw, Lock, TrendingUp,
 } from 'lucide-react';
 import { fetchRecipes, deleteRecipe, clearRecipeError } from '../../../store/actions/recipeActions';
@@ -36,19 +36,20 @@ const RecipeList = () => {
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [showAI,        setShowAI]        = useState(false); // ← NEW
 
-  const load = useCallback((s, c) => {
+  const load = useCallback(() => {
     const params = {};
-    if (s !== undefined ? s : search)                params.search   = s !== undefined ? s : search;
-    if ((c !== undefined ? c : category) !== 'all')  params.category = c !== undefined ? c : category;
+    if (search)             params.search   = search;
+    if (category !== 'all') params.category = category;
     dispatch(fetchRecipes(params));
-  }, [dispatch]); // eslint-disable-line
+  }, [dispatch, search, category]);
 
-  useEffect(() => { load(search, category); }, [load, search, category]);
+  useEffect(() => { load(); }, [load]);
 
   useEffect(() => {
-    import('../../../services/recipeService').then(m =>
-      m.default.getCategories().then(r => setCategories(r.data || []))
-    );
+    import('../../../services/recipeService')
+      .then(m => m.default.getCategories())
+      .then(r => setCategories(r.data || []))
+      .catch(() => setCategories([]));
   }, []);
 
   const handleDelete = async (id) => {
@@ -207,7 +208,7 @@ const RecipeList = () => {
                     </td>
                     <td>
                       <span className="rl-cost">
-                        <DollarSign size={12} />
+                        <IndianRupee size={12} />
                         {recipe.costPerServing != null
                           ? parseFloat(recipe.costPerServing).toFixed(2)
                           : '—'}

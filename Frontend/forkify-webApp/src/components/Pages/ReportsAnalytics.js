@@ -4,7 +4,7 @@ import {
   BarChart3,
   TrendingUp,
   TrendingDown,
-  DollarSign,
+  IndianRupee,
   Users,
   Package,
   ChefHat,
@@ -43,16 +43,16 @@ const ReportsAnalytics = () => {
   ];
 
   const kpis = [
-    { label: 'Total Revenue', value: '$245,800', change: '+12.5%', trend: 'up', icon: DollarSign },
+    { label: 'Total Revenue', value: '₹245,800', change: '+12.5%', trend: 'up', icon: IndianRupee },
     { label: 'Active Recipes', value: '156', change: '+8.2%', trend: 'up', icon: ChefHat },
-    { label: 'Inventory Value', value: '$48,500', change: '-2.3%', trend: 'down', icon: Package },
+    { label: 'Inventory Value', value: '₹48,500', change: '-2.3%', trend: 'down', icon: Package },
     { label: 'Customer Orders', value: '1,245', change: '+15.7%', trend: 'up', icon: ShoppingCart },
     { label: 'Active Suppliers', value: '24', change: '+2', trend: 'up', icon: Users },
-    { label: 'Avg Order Value', value: '$198', change: '+5.2%', trend: 'up', icon: Target }
+    { label: 'Avg Order Value', value: '₹198', change: '+5.2%', trend: 'up', icon: Target }
   ];
 
   const reports = [
-    { id: 'sales', title: 'Sales Report', desc: 'Revenue and sales trends', icon: DollarSign },
+    { id: 'sales', title: 'Sales Report', desc: 'Revenue and sales trends', icon: IndianRupee },
     { id: 'inventory', title: 'Inventory Report', desc: 'Stock levels and turnover', icon: Package },
     { id: 'recipes', title: 'Recipe Performance', desc: 'Top recipes and profitability', icon: ChefHat },
     { id: 'suppliers', title: 'Supplier Analysis', desc: 'Supplier performance and costs', icon: Users },
@@ -61,11 +61,11 @@ const ReportsAnalytics = () => {
   ];
 
   const topRecipes = [
-    { name: 'Margherita Pizza', orders: 156, revenue: '$1,950', profit: '$780', rating: 4.8 },
-    { name: 'Caesar Salad', orders: 142, revenue: '$1,420', profit: '$568', rating: 4.6 },
-    { name: 'Spaghetti Carbonara', orders: 128, revenue: '$1,664', profit: '$666', rating: 4.7 },
-    { name: 'Grilled Salmon', orders: 98, revenue: '$1,960', profit: '$882', rating: 4.9 },
-    { name: 'Chocolate Mousse', orders: 112, revenue: '$1,120', profit: '$504', rating: 4.8 }
+    { name: 'Margherita Pizza', orders: 156, revenue: '₹1,950', profit: '₹780', rating: 4.8 },
+    { name: 'Caesar Salad', orders: 142, revenue: '₹1,420', profit: '₹568', rating: 4.6 },
+    { name: 'Spaghetti Carbonara', orders: 128, revenue: '₹1,664', profit: '₹666', rating: 4.7 },
+    { name: 'Grilled Salmon', orders: 98, revenue: '₹1,960', profit: '₹882', rating: 4.9 },
+    { name: 'Chocolate Mousse', orders: 112, revenue: '₹1,120', profit: '₹504', rating: 4.8 }
   ];
 
   return (
@@ -199,7 +199,7 @@ const ReportsAnalytics = () => {
                         }}
                       ></div>
                     </div>
-                    <div className="bar-value">${value.toLocaleString()}</div>
+                    <div className="bar-value">₹{value.toLocaleString()}</div>
                   </div>
                 ))}
               </div>

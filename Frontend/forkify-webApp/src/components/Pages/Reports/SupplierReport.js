@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   Truck, RefreshCw, AlertTriangle, Download,
   Star, Package, CheckCircle, Clock, XCircle,
-  Search, X, DollarSign, BarChart3,
+  Search, X, IndianRupee, BarChart3,
 } from 'lucide-react';
 import procurementService from '../../../services/procurementService';
 import useBranch          from '../../../hooks/useBranch';
@@ -90,7 +90,7 @@ const SupplierReport = () => {
         {[
           { label: 'Total Suppliers', val: suppliers.length,          icon: Truck,       color: '#3b82f6' },
           { label: 'Approved Vendors',val: activeCount,               icon: CheckCircle, color: '#10b981' },
-          { label: 'Total Spend',     val: `₹${totalSpend.toLocaleString('en-IN', {maximumFractionDigits:0})}`, icon: DollarSign, color: '#0061d2' },
+          { label: 'Total Spend',     val: `₹${totalSpend.toLocaleString('en-IN', {maximumFractionDigits:0})}`, icon: IndianRupee, color: '#0061d2' },
           { label: 'PO Completion',   val: totalPOs > 0 ? `${Math.round((receivedPOs/totalPOs)*100)}%` : '—', icon: BarChart3, color: '#0061d2' },
         ].map((k, i) => (
           <div key={i} className="sr-kpi">

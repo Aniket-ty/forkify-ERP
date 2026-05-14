@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   Trash2, AlertTriangle, RefreshCw, Download,
   TrendingDown, Calendar, Filter, X, Search,
-  CheckCircle, Clock, XCircle, DollarSign,
+  CheckCircle, Clock, XCircle, IndianRupee,
 } from 'lucide-react';
 import inventoryService from '../../../services/inventoryService';
 import useBranch        from '../../../hooks/useBranch';
@@ -94,7 +94,7 @@ const WastageReport = () => {
       {/* KPI strip */}
       <div className="wr-kpis">
         {[
-          { label: 'Total Approved Loss', val: `₹${totalLoss.toFixed(2)}`, icon: DollarSign, color: '#ef4444' },
+          { label: 'Total Approved Loss', val: `₹${totalLoss.toFixed(2)}`, icon: IndianRupee, color: '#ef4444' },
           { label: 'Approved Records',    val: approvedCount,               icon: CheckCircle, color: '#10b981' },
           { label: 'Pending Approval',    val: pendingCount,                icon: Clock,       color: '#f59e0b', urgent: pendingCount > 0 },
           { label: 'Top Reason',          val: topReason ? REASON_LABELS[topReason[0]] || topReason[0] : '—', icon: Trash2, color: '#6b7280' },
@@ -176,7 +176,7 @@ const WastageReport = () => {
                     <td><strong>{r.ingredientName}</strong></td>
                     <td>{r.quantity} {r.unit}</td>
                     <td><span className="wr-reason-chip">{REASON_LABELS[r.reason] || r.reason}</span></td>
-                    <td><span className="wr-loss">${parseFloat(r.costLoss || 0).toFixed(2)}</span></td>
+                    <td><span className="wr-loss">₹{parseFloat(r.costLoss || 0).toFixed(2)}</span></td>
                     <td className="wr-muted">{r.loggedBy || '—'}</td>
                     <td className="wr-muted">{r.approvedBy || '—'}</td>
                     <td>
@@ -190,7 +190,7 @@ const WastageReport = () => {
             </tbody>
           </table>
           <div className="wr-footer">
-            {filtered.length} record{filtered.length !== 1 ? 's' : ''} · Total approved loss: <strong>${totalLoss.toFixed(2)}</strong>
+            {filtered.length} record{filtered.length !== 1 ? 's' : ''} · Total approved loss: <strong>₹{totalLoss.toFixed(2)}</strong>
           </div>
         </div>
       )}

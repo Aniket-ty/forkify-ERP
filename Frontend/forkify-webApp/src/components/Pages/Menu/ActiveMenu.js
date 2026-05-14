@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Utensils, ChefHat, DollarSign, RefreshCw, AlertTriangle,
+  Utensils, ChefHat, IndianRupee, RefreshCw, AlertTriangle,
   CheckCircle, Send, Tag, QrCode, ExternalLink,
 } from 'lucide-react';
 import menuService from '../../../services/menuService';
@@ -61,7 +61,7 @@ const ActiveMenu = () => {
   const catColor = (cat) => MEAL_COLORS[cat] || 'rgba(255,255,255,.4)';
 
   // Build the public QR URL for display purposes
-  const publicMenuUrl = active
+  const publicMenuUrl = (active && branchId)
     ? `${window.location.origin}/menu/${active.id}?branchId=${branchId}`
     : null;
 
@@ -198,7 +198,7 @@ const ActiveMenu = () => {
                           <ChefHat size={10}/>{item.recipeName}
                         </span>
                         <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:11, color:'#9aa3b4' }}>
-                          <DollarSign size={10}/>Cost: ₹{Number(item.ingredientCost||0).toFixed(2)}
+                          <IndianRupee size={10}/>Cost: ₹{Number(item.ingredientCost||0).toFixed(2)}
                         </span>
                         {(item.calories ?? item.recipe?.calories) > 0 && (
                           <span style={{ display:'flex', alignItems:'center', gap:3, fontSize:11, fontWeight:600, color:'#3385e0', background:'rgba(251,146,60,.1)', border:'1px solid rgba(251,146,60,.2)', borderRadius:20, padding:'1px 6px' }}>

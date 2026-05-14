@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GitBranch, RefreshCw, ArrowLeft, RotateCcw, Clock, DollarSign, ChefHat, AlertTriangle, CheckCircle, X } from 'lucide-react';
+import { GitBranch, RefreshCw, ArrowLeft, RotateCcw, Clock, IndianRupee, ChefHat, AlertTriangle, CheckCircle, X } from 'lucide-react';
 import { recipeVersionService } from '../../../services/newServices';
 import recipeService from '../../../services/recipeService';
 
@@ -107,7 +107,7 @@ export default function RecipeVersionHistory() {
                     </div>
                     <div className="rv-item-right">
                       {v.costPerServing && (
-                        <span className="rv-cost"><DollarSign size={11}/>₹{Number(v.costPerServing).toFixed(2)}/serving</span>
+                        <span className="rv-cost"><IndianRupee size={11}/>₹{Number(v.costPerServing).toFixed(2)}/serving</span>
                       )}
                       <span className="rv-time"><Clock size={11}/>{v.createdAt?.split('T')[0]}</span>
                       <span className="rv-author">{v.createdBy || 'System'}</span>
